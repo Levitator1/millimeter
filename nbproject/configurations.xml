@@ -1,935 +1,218 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<configurationDescriptor version="100">
-  <logicalFolder name="root" displayName="root" projectFiles="true" kind="ROOT">
-    <df root="." name="0">
-      <df name="include">
-        <df name="avr">
-          <df name="atmega328p">
-            <in>HWTimer.hpp</in>
-          </df>
-          <in>Config.hpp</in>
-          <in>HWTimerCommon.hpp</in>
-          <in>atomic.hpp</in>
-          <in>avr_types.hpp</in>
-          <in>device_property.hpp</in>
-          <in>pushbits.h</in>
-          <in>pushbits.hpp</in>
-        </df>
-        <df name="commands">
-          <in>MeasureInductance.hpp</in>
-        </df>
-        <df name="util">
-          <in>pushval.hpp</in>
-          <in>ref.hpp</in>
-        </df>
-        <in>Config.hpp</in>
-        <in>Console.hpp</in>
-        <in>InductanceMeter.hpp</in>
-        <in>LevSerial.hpp</in>
-        <in>Measurement.hpp</in>
-        <in>Time.hpp</in>
-        <in>levAlgo.hpp</in>
-        <in>ringbuffer.hpp</in>
-      </df>
-      <df name="unused">
-        <in>pushbits.hpp</in>
-        <in>unused_stuff.hpp</in>
-      </df>
-      <in>AnalogComparator.cpp</in>
-      <in>Application.cpp</in>
-      <in>CommandHandler.cpp</in>
-      <in>Console.cpp</in>
-      <in>HWTimerCommon.cpp</in>
-      <in>HWTimer_atmega328p.cpp</in>
-      <in>InductanceMeter.cpp</in>
-      <in>Interactive.cpp</in>
-      <in>LevSerial.cpp</in>
-      <in>MeasureInductance.cpp</in>
-      <in>UnknownCommand.cpp</in>
-      <in>atomic.cpp</in>
-      <in>main.cpp</in>
-      <in>util.cpp</in>
-    </df>
-    <logicalFolder name="arduino"
-                   displayName="arduino"
-                   projectFiles="true"
-                   root="/usr/share/arduino/hardware/arduino/cores/arduino">
-      <logicalFolder name="avr-libc" displayName="avr-libc" projectFiles="true">
-        <itemPath>/usr/share/arduino/hardware/arduino//cores/arduino/avr-libc/malloc.c</itemPath>
-        <itemPath>/usr/share/arduino/hardware/arduino//cores/arduino/avr-libc/realloc.c</itemPath>
+<configurationDescriptor version="65">
+  <logicalFolder name="root" displayName="root" projectFiles="true">
+    <logicalFolder name="HeaderFiles"
+                   displayName="Header Files"
+                   projectFiles="true">
+      <logicalFolder name="include" displayName="include" projectFiles="true">
+        <logicalFolder name="avr" displayName="avr" projectFiles="true">
+          <logicalFolder name="atmega328p" displayName="atmega328p" projectFiles="true">
+            <itemPath>include/avr/atmega328p/HWTimer.hpp</itemPath>
+          </logicalFolder>
+          <itemPath>include/avr/pushbits.hpp</itemPath>
+          <itemPath>include/avr/avr_types.hpp</itemPath>
+          <itemPath>include/avr/HWTimerCommon.hpp</itemPath>
+          <itemPath>include/avr/atomic.hpp</itemPath>
+          <itemPath>include/avr/device_property.hpp</itemPath>
+          <itemPath>include/avr/AnalogComparator.hpp</itemPath>
+        </logicalFolder>
+        <logicalFolder name="commands" displayName="commands" projectFiles="true">
+          <itemPath>include/commands/MeasureInductance.hpp</itemPath>
+          <itemPath>include/commands/UnknownCommand.hpp</itemPath>
+        </logicalFolder>
+        <logicalFolder name="util" displayName="util" projectFiles="true">
+          <itemPath>include/util/util.hpp</itemPath>
+          <itemPath>include/util/pushval.hpp</itemPath>
+          <itemPath>include/util/ref.hpp</itemPath>
+        </logicalFolder>
+        <itemPath>include/ringbuffer.hpp</itemPath>
+        <itemPath>include/Interactive.hpp</itemPath>
+        <itemPath>include/types.hpp</itemPath>
+        <itemPath>include/LevSerial.hpp</itemPath>
+        <itemPath>include/Config.hpp</itemPath>
+        <itemPath>include/Measurement.hpp</itemPath>
+        <itemPath>include/levAlgo.hpp</itemPath>
+        <itemPath>include/Application.hpp</itemPath>
+        <itemPath>include/Time.hpp</itemPath>
+        <itemPath>include/InductanceMeter.hpp</itemPath>
+        <itemPath>include/Console.hpp</itemPath>
+        <itemPath>include/CommandHandler.hpp</itemPath>
       </logicalFolder>
-      <itemPath>/usr/share/arduino/hardware/arduino//cores/arduino/CDC.cpp</itemPath>
-      <itemPath>/usr/share/arduino/hardware/arduino//cores/arduino/HID.cpp</itemPath>
-      <itemPath>/usr/share/arduino/hardware/arduino//cores/arduino/HardwareSerial.cpp</itemPath>
-      <itemPath>/usr/share/arduino/hardware/arduino//cores/arduino/IPAddress.cpp</itemPath>
-      <itemPath>/usr/share/arduino/hardware/arduino//cores/arduino/Print.cpp</itemPath>
-      <itemPath>/usr/share/arduino/hardware/arduino//cores/arduino/Stream.cpp</itemPath>
-      <itemPath>/usr/share/arduino/hardware/arduino//cores/arduino/Tone.cpp</itemPath>
-      <itemPath>/usr/share/arduino/hardware/arduino//cores/arduino/USBCore.cpp</itemPath>
-      <itemPath>/usr/share/arduino/hardware/arduino//cores/arduino/WInterrupts.c</itemPath>
-      <itemPath>/usr/share/arduino/hardware/arduino//cores/arduino/WMath.cpp</itemPath>
-      <itemPath>/usr/share/arduino/hardware/arduino//cores/arduino/WString.cpp</itemPath>
-      <itemPath>/usr/share/arduino/hardware/arduino//cores/arduino/main.cpp</itemPath>
-      <itemPath>/usr/share/arduino/hardware/arduino//cores/arduino/new.cpp</itemPath>
-      <itemPath>/usr/share/arduino/hardware/arduino//cores/arduino/wiring.c</itemPath>
-      <itemPath>/usr/share/arduino/hardware/arduino//cores/arduino/wiring_analog.c</itemPath>
-      <itemPath>/usr/share/arduino/hardware/arduino//cores/arduino/wiring_digital.c</itemPath>
-      <itemPath>/usr/share/arduino/hardware/arduino//cores/arduino/wiring_pulse.c</itemPath>
-      <itemPath>/usr/share/arduino/hardware/arduino//cores/arduino/wiring_shift.c</itemPath>
+    </logicalFolder>
+    <logicalFolder name="LinkerScript"
+                   displayName="Linker Files"
+                   projectFiles="true">
+    </logicalFolder>
+    <logicalFolder name="SourceFiles"
+                   displayName="Source Files"
+                   projectFiles="true">
+      <itemPath>AnalogComparator.cpp</itemPath>
+      <itemPath>Application.cpp</itemPath>
+      <itemPath>CommandHandler.cpp</itemPath>
+      <itemPath>Console.cpp</itemPath>
+      <itemPath>HWTimerCommon.cpp</itemPath>
+      <itemPath>HWTimer_atmega328p.cpp</itemPath>
+      <itemPath>InductanceMeter.cpp</itemPath>
+      <itemPath>Interactive.cpp</itemPath>
+      <itemPath>LevSerial.cpp</itemPath>
+      <itemPath>MeasureInductance.cpp</itemPath>
+      <itemPath>UnknownCommand.cpp</itemPath>
+      <itemPath>atomic.cpp</itemPath>
+      <itemPath>main.cpp</itemPath>
+      <itemPath>util.cpp</itemPath>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"
-                   projectFiles="false"
-                   kind="IMPORTANT_FILES_FOLDER">
+                   projectFiles="false">
       <itemPath>Makefile</itemPath>
-      <itemPath>nbproject/private/launcher.properties</itemPath>
     </logicalFolder>
   </logicalFolder>
-  <sourceFolderFilter>^(nbproject)$</sourceFolderFilter>
   <sourceRootList>
-    <Elem>.</Elem>
+    <Elem>include</Elem>
   </sourceRootList>
   <projectmakefile>Makefile</projectmakefile>
   <confs>
-    <conf name="Default" type="0">
+    <conf name="default" type="2">
       <toolsSet>
-        <compilerSet>AVR_GNU|GNU</compilerSet>
-        <dependencyChecking>false</dependencyChecking>
-        <rebuildPropChanged>false</rebuildPropChanged>
+        <developmentServer>localhost</developmentServer>
+        <targetDevice>ATmega328P</targetDevice>
+        <targetHeader></targetHeader>
+        <targetPluginBoard></targetPluginBoard>
+        <platformTool>noID</platformTool>
+        <languageToolchain>AVR</languageToolchain>
+        <languageToolchainVersion>1.00</languageToolchainVersion>
+        <platform>2</platform>
       </toolsSet>
-      <flagsDictionary>
-        <element flagsID="0" commonFlags="-Os -fno-exceptions -std=gnu++11"/>
-        <element flagsID="1" commonFlags="-Os -std=gnu11"/>
-        <element flagsID="2" commonFlags="-fno-exceptions -std=gnu++11 -Os"/>
-      </flagsDictionary>
-      <codeAssistance>
-        <buildAnalyzer>false</buildAnalyzer>
-      </codeAssistance>
-      <makefileType>
-        <makeTool>
-          <buildCommandWorkingDir>.</buildCommandWorkingDir>
-          <buildCommand>${MAKE} -f Makefile -j 8</buildCommand>
-          <cleanCommand>${MAKE} -f Makefile clean</cleanCommand>
-          <executablePath>build-pro328/ardmeter.elf</executablePath>
-          <cTool>
-            <incDir>
-              <pElem>/usr/share/arduino/hardware/arduino/cores/arduino</pElem>
-              <pElem>/usr/share/arduino/hardware/arduino/variants/standard</pElem>
-              <pElem>.</pElem>
-            </incDir>
-            <preprocessorList>
-              <Elem>ARDUINO=105</Elem>
-              <Elem>F_CPU=8000000L</Elem>
-              <Elem>__PROG_TYPES_COMPAT__</Elem>
-            </preprocessorList>
-          </cTool>
-          <ccTool>
-            <incDir>
-              <pElem>/usr/share/arduino/hardware/arduino/cores/arduino</pElem>
-              <pElem>/usr/share/arduino/hardware/arduino/variants/standard</pElem>
-            </incDir>
-            <preprocessorList>
-              <Elem>ARDUINO=105</Elem>
-              <Elem>F_CPU=8000000L</Elem>
-              <Elem>__PROG_TYPES_COMPAT__</Elem>
-            </preprocessorList>
-          </ccTool>
-        </makeTool>
-        <preBuild>
-          <preBuildCommandWorkingDir>.</preBuildCommandWorkingDir>
-          <preBuildCommand></preBuildCommand>
-        </preBuild>
-      </makefileType>
-      <item path="/usr/share/arduino/hardware/arduino//cores/arduino/CDC.cpp"
-            ex="false"
-            tool="1"
-            flavor2="8">
-        <ccTool flags="0">
-        </ccTool>
-      </item>
-      <item path="/usr/share/arduino/hardware/arduino//cores/arduino/HID.cpp"
-            ex="false"
-            tool="1"
-            flavor2="8">
-        <ccTool flags="0">
-        </ccTool>
-      </item>
-      <item path="/usr/share/arduino/hardware/arduino//cores/arduino/HardwareSerial.cpp"
-            ex="false"
-            tool="1"
-            flavor2="8">
-        <ccTool flags="0">
-        </ccTool>
-      </item>
-      <item path="/usr/share/arduino/hardware/arduino//cores/arduino/IPAddress.cpp"
-            ex="false"
-            tool="1"
-            flavor2="8">
-        <ccTool flags="0">
-        </ccTool>
-      </item>
-      <item path="/usr/share/arduino/hardware/arduino//cores/arduino/Print.cpp"
-            ex="false"
-            tool="1"
-            flavor2="8">
-        <ccTool flags="0">
-        </ccTool>
-      </item>
-      <item path="/usr/share/arduino/hardware/arduino//cores/arduino/Stream.cpp"
-            ex="false"
-            tool="1"
-            flavor2="8">
-        <ccTool flags="0">
-        </ccTool>
-      </item>
-      <item path="/usr/share/arduino/hardware/arduino//cores/arduino/Tone.cpp"
-            ex="false"
-            tool="1"
-            flavor2="8">
-        <ccTool flags="0">
-        </ccTool>
-      </item>
-      <item path="/usr/share/arduino/hardware/arduino//cores/arduino/USBCore.cpp"
-            ex="false"
-            tool="1"
-            flavor2="8">
-        <ccTool flags="0">
-        </ccTool>
-      </item>
-      <item path="/usr/share/arduino/hardware/arduino//cores/arduino/WInterrupts.c"
-            ex="false"
-            tool="0"
-            flavor2="10">
-        <cTool flags="1">
-        </cTool>
-      </item>
-      <item path="/usr/share/arduino/hardware/arduino//cores/arduino/WMath.cpp"
-            ex="false"
-            tool="1"
-            flavor2="8">
-        <ccTool flags="0">
-        </ccTool>
-      </item>
-      <item path="/usr/share/arduino/hardware/arduino//cores/arduino/WString.cpp"
-            ex="false"
-            tool="1"
-            flavor2="8">
-        <ccTool flags="0">
-        </ccTool>
-      </item>
-      <item path="/usr/share/arduino/hardware/arduino//cores/arduino/avr-libc/malloc.c"
-            ex="false"
-            tool="0"
-            flavor2="10">
-        <cTool flags="1">
-        </cTool>
-      </item>
-      <item path="/usr/share/arduino/hardware/arduino//cores/arduino/avr-libc/realloc.c"
-            ex="false"
-            tool="0"
-            flavor2="10">
-        <cTool flags="1">
-        </cTool>
-      </item>
-      <item path="/usr/share/arduino/hardware/arduino//cores/arduino/main.cpp"
-            ex="false"
-            tool="1"
-            flavor2="8">
-        <ccTool flags="0">
-        </ccTool>
-      </item>
-      <item path="/usr/share/arduino/hardware/arduino//cores/arduino/new.cpp"
-            ex="false"
-            tool="1"
-            flavor2="8">
-        <ccTool flags="0">
-        </ccTool>
-      </item>
-      <item path="/usr/share/arduino/hardware/arduino//cores/arduino/wiring.c"
-            ex="false"
-            tool="0"
-            flavor2="10">
-        <cTool flags="1">
-        </cTool>
-      </item>
-      <item path="/usr/share/arduino/hardware/arduino//cores/arduino/wiring_analog.c"
-            ex="false"
-            tool="0"
-            flavor2="10">
-        <cTool flags="1">
-        </cTool>
-      </item>
-      <item path="/usr/share/arduino/hardware/arduino//cores/arduino/wiring_digital.c"
-            ex="false"
-            tool="0"
-            flavor2="10">
-        <cTool flags="1">
-        </cTool>
-      </item>
-      <item path="/usr/share/arduino/hardware/arduino//cores/arduino/wiring_pulse.c"
-            ex="false"
-            tool="0"
-            flavor2="10">
-        <cTool flags="1">
-        </cTool>
-      </item>
-      <item path="/usr/share/arduino/hardware/arduino//cores/arduino/wiring_shift.c"
-            ex="false"
-            tool="0"
-            flavor2="10">
-        <cTool flags="1">
-        </cTool>
-      </item>
-      <item path="AnalogComparator.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="Application.cpp" ex="false" tool="1" flavor2="8">
-        <ccTool flags="0">
-        </ccTool>
-      </item>
-      <item path="CommandHandler.cpp" ex="false" tool="1" flavor2="8">
-        <ccTool flags="2">
-        </ccTool>
-      </item>
-      <item path="Console.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="HWTimerCommon.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="HWTimer_atmega328p.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="InductanceMeter.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="Interactive.cpp" ex="false" tool="1" flavor2="8">
-        <ccTool flags="0">
-        </ccTool>
-      </item>
-      <item path="LevSerial.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="MeasureInductance.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="UnknownCommand.cpp" ex="false" tool="1" flavor2="8">
-        <ccTool flags="0">
-        </ccTool>
-      </item>
-      <item path="atomic.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <folder path="arduino">
-        <ccTool>
-          <incDir>
-            <pElem>.</pElem>
-          </incDir>
-        </ccTool>
-      </folder>
-      <item path="include/Config.hpp" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="include/Console.hpp" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="include/InductanceMeter.hpp" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="include/LevSerial.hpp" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="include/Measurement.hpp" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="include/Time.hpp" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="include/avr/Config.hpp" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="include/avr/HWTimerCommon.hpp" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="include/avr/atmega328p/HWTimer.hpp" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="include/avr/atomic.hpp" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="include/avr/avr_types.hpp" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="include/avr/device_property.hpp" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="include/avr/pushbits.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="include/avr/pushbits.hpp" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="include/commands/MeasureInductance.hpp"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="include/levAlgo.hpp" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="include/ringbuffer.hpp" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="include/util/pushval.hpp" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="include/util/ref.hpp" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="main.cpp" ex="false" tool="1" flavor2="8">
-        <ccTool flags="0">
-        </ccTool>
-      </item>
-      <item path="unused/pushbits.hpp" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="unused/unused_stuff.hpp" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="util.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-    </conf>
-    <conf name="Release" type="0">
-      <toolsSet>
-        <compilerSet>AVR_GNU|GNU</compilerSet>
-        <dependencyChecking>false</dependencyChecking>
-        <rebuildPropChanged>false</rebuildPropChanged>
-      </toolsSet>
-      <flagsDictionary>
-        <element flagsID="0" commonFlags="-Os -fno-exceptions -std=gnu++11"/>
-        <element flagsID="1" commonFlags="-Os -std=gnu11"/>
-        <element flagsID="2" commonFlags="-fno-exceptions -std=gnu++11 -Os"/>
-      </flagsDictionary>
-      <codeAssistance>
-        <buildAnalyzer>false</buildAnalyzer>
-      </codeAssistance>
-      <makefileType>
-        <makeTool>
-          <buildCommandWorkingDir>.</buildCommandWorkingDir>
-          <buildCommand>${MAKE} -f Makefile -j 8 NDEBUG=1</buildCommand>
-          <cleanCommand>${MAKE} -f Makefile clean</cleanCommand>
-          <executablePath>build-pro328/ardmeter.elf</executablePath>
-          <cTool>
-            <incDir>
-              <pElem>/usr/share/arduino/hardware/arduino/cores/arduino</pElem>
-              <pElem>/usr/share/arduino/hardware/arduino/variants/standard</pElem>
-              <pElem>.</pElem>
-            </incDir>
-            <preprocessorList>
-              <Elem>ARDUINO=105</Elem>
-              <Elem>F_CPU=8000000L</Elem>
-              <Elem>__PROG_TYPES_COMPAT__</Elem>
-            </preprocessorList>
-          </cTool>
-          <ccTool>
-            <incDir>
-              <pElem>/usr/share/arduino/hardware/arduino/cores/arduino</pElem>
-              <pElem>/usr/share/arduino/hardware/arduino/variants/standard</pElem>
-            </incDir>
-            <preprocessorList>
-              <Elem>ARDUINO=105</Elem>
-              <Elem>F_CPU=8000000L</Elem>
-              <Elem>__PROG_TYPES_COMPAT__</Elem>
-            </preprocessorList>
-          </ccTool>
-        </makeTool>
-        <preBuild>
-          <preBuildCommandWorkingDir>.</preBuildCommandWorkingDir>
-          <preBuildCommand></preBuildCommand>
-        </preBuild>
-      </makefileType>
-      <item path="/usr/share/arduino/hardware/arduino//cores/arduino/CDC.cpp"
-            ex="false"
-            tool="1"
-            flavor2="8">
-        <ccTool flags="0">
-        </ccTool>
-      </item>
-      <item path="/usr/share/arduino/hardware/arduino//cores/arduino/HID.cpp"
-            ex="false"
-            tool="1"
-            flavor2="8">
-        <ccTool flags="0">
-        </ccTool>
-      </item>
-      <item path="/usr/share/arduino/hardware/arduino//cores/arduino/HardwareSerial.cpp"
-            ex="false"
-            tool="1"
-            flavor2="8">
-        <ccTool flags="0">
-        </ccTool>
-      </item>
-      <item path="/usr/share/arduino/hardware/arduino//cores/arduino/IPAddress.cpp"
-            ex="false"
-            tool="1"
-            flavor2="8">
-        <ccTool flags="0">
-        </ccTool>
-      </item>
-      <item path="/usr/share/arduino/hardware/arduino//cores/arduino/Print.cpp"
-            ex="false"
-            tool="1"
-            flavor2="8">
-        <ccTool flags="0">
-        </ccTool>
-      </item>
-      <item path="/usr/share/arduino/hardware/arduino//cores/arduino/Stream.cpp"
-            ex="false"
-            tool="1"
-            flavor2="8">
-        <ccTool flags="0">
-        </ccTool>
-      </item>
-      <item path="/usr/share/arduino/hardware/arduino//cores/arduino/Tone.cpp"
-            ex="false"
-            tool="1"
-            flavor2="8">
-        <ccTool flags="0">
-        </ccTool>
-      </item>
-      <item path="/usr/share/arduino/hardware/arduino//cores/arduino/USBCore.cpp"
-            ex="false"
-            tool="1"
-            flavor2="8">
-        <ccTool flags="0">
-        </ccTool>
-      </item>
-      <item path="/usr/share/arduino/hardware/arduino//cores/arduino/WInterrupts.c"
-            ex="false"
-            tool="0"
-            flavor2="10">
-        <cTool flags="1">
-        </cTool>
-      </item>
-      <item path="/usr/share/arduino/hardware/arduino//cores/arduino/WMath.cpp"
-            ex="false"
-            tool="1"
-            flavor2="8">
-        <ccTool flags="0">
-        </ccTool>
-      </item>
-      <item path="/usr/share/arduino/hardware/arduino//cores/arduino/WString.cpp"
-            ex="false"
-            tool="1"
-            flavor2="8">
-        <ccTool flags="0">
-        </ccTool>
-      </item>
-      <item path="/usr/share/arduino/hardware/arduino//cores/arduino/avr-libc/malloc.c"
-            ex="false"
-            tool="0"
-            flavor2="10">
-        <cTool flags="1">
-        </cTool>
-      </item>
-      <item path="/usr/share/arduino/hardware/arduino//cores/arduino/avr-libc/realloc.c"
-            ex="false"
-            tool="0"
-            flavor2="10">
-        <cTool flags="1">
-        </cTool>
-      </item>
-      <item path="/usr/share/arduino/hardware/arduino//cores/arduino/main.cpp"
-            ex="false"
-            tool="1"
-            flavor2="8">
-        <ccTool flags="0">
-        </ccTool>
-      </item>
-      <item path="/usr/share/arduino/hardware/arduino//cores/arduino/new.cpp"
-            ex="false"
-            tool="1"
-            flavor2="8">
-        <ccTool flags="0">
-        </ccTool>
-      </item>
-      <item path="/usr/share/arduino/hardware/arduino//cores/arduino/wiring.c"
-            ex="false"
-            tool="0"
-            flavor2="10">
-        <cTool flags="1">
-        </cTool>
-      </item>
-      <item path="/usr/share/arduino/hardware/arduino//cores/arduino/wiring_analog.c"
-            ex="false"
-            tool="0"
-            flavor2="10">
-        <cTool flags="1">
-        </cTool>
-      </item>
-      <item path="/usr/share/arduino/hardware/arduino//cores/arduino/wiring_digital.c"
-            ex="false"
-            tool="0"
-            flavor2="10">
-        <cTool flags="1">
-        </cTool>
-      </item>
-      <item path="/usr/share/arduino/hardware/arduino//cores/arduino/wiring_pulse.c"
-            ex="false"
-            tool="0"
-            flavor2="10">
-        <cTool flags="1">
-        </cTool>
-      </item>
-      <item path="/usr/share/arduino/hardware/arduino//cores/arduino/wiring_shift.c"
-            ex="false"
-            tool="0"
-            flavor2="10">
-        <cTool flags="1">
-        </cTool>
-      </item>
-      <item path="AnalogComparator.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="Application.cpp" ex="false" tool="1" flavor2="8">
-        <ccTool flags="0">
-        </ccTool>
-      </item>
-      <item path="CommandHandler.cpp" ex="false" tool="1" flavor2="8">
-        <ccTool flags="2">
-        </ccTool>
-      </item>
-      <item path="Console.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="HWTimerCommon.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="HWTimer_atmega328p.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="InductanceMeter.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="Interactive.cpp" ex="false" tool="1" flavor2="8">
-        <ccTool flags="0">
-        </ccTool>
-      </item>
-      <item path="LevSerial.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="MeasureInductance.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="UnknownCommand.cpp" ex="false" tool="1" flavor2="8">
-        <ccTool flags="0">
-        </ccTool>
-      </item>
-      <item path="atomic.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <folder path="arduino">
-        <ccTool>
-          <incDir>
-            <pElem>.</pElem>
-          </incDir>
-        </ccTool>
-      </folder>
-      <item path="include/Config.hpp" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="include/Console.hpp" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="include/InductanceMeter.hpp" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="include/LevSerial.hpp" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="include/Measurement.hpp" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="include/Time.hpp" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="include/avr/Config.hpp" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="include/avr/HWTimerCommon.hpp" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="include/avr/atmega328p/HWTimer.hpp" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="include/avr/atomic.hpp" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="include/avr/avr_types.hpp" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="include/avr/device_property.hpp" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="include/avr/pushbits.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="include/avr/pushbits.hpp" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="include/commands/MeasureInductance.hpp"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="include/levAlgo.hpp" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="include/ringbuffer.hpp" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="include/util/pushval.hpp" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="include/util/ref.hpp" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="main.cpp" ex="false" tool="1" flavor2="8">
-        <ccTool flags="0">
-        </ccTool>
-      </item>
-      <item path="unused/pushbits.hpp" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="unused/unused_stuff.hpp" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="util.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-    </conf>
-    <conf name="Debug" type="0">
-      <toolsSet>
-        <compilerSet>AVR_GNU|GNU</compilerSet>
-        <dependencyChecking>false</dependencyChecking>
-        <rebuildPropChanged>false</rebuildPropChanged>
-      </toolsSet>
-      <flagsDictionary>
-        <element flagsID="0" commonFlags="-Os -fno-exceptions -std=gnu++11"/>
-        <element flagsID="1" commonFlags="-Os -std=gnu11"/>
-        <element flagsID="2" commonFlags="-fno-exceptions -std=gnu++11 -Os"/>
-      </flagsDictionary>
-      <codeAssistance>
-        <buildAnalyzer>false</buildAnalyzer>
-      </codeAssistance>
-      <makefileType>
-        <makeTool>
-          <buildCommandWorkingDir>.</buildCommandWorkingDir>
-          <buildCommand>${MAKE} -f Makefile -j 8 CXXFLAGS=</buildCommand>
-          <cleanCommand>${MAKE} -f Makefile clean</cleanCommand>
-          <executablePath>build-pro328/ardmeter.elf</executablePath>
-          <cTool>
-            <incDir>
-              <pElem>/usr/share/arduino/hardware/arduino/cores/arduino</pElem>
-              <pElem>/usr/share/arduino/hardware/arduino/variants/standard</pElem>
-              <pElem>.</pElem>
-            </incDir>
-            <preprocessorList>
-              <Elem>ARDUINO=105</Elem>
-              <Elem>F_CPU=8000000L</Elem>
-              <Elem>__PROG_TYPES_COMPAT__</Elem>
-            </preprocessorList>
-          </cTool>
-          <ccTool>
-            <incDir>
-              <pElem>/usr/share/arduino/hardware/arduino/cores/arduino</pElem>
-              <pElem>/usr/share/arduino/hardware/arduino/variants/standard</pElem>
-            </incDir>
-            <preprocessorList>
-              <Elem>ARDUINO=105</Elem>
-              <Elem>F_CPU=8000000L</Elem>
-              <Elem>__PROG_TYPES_COMPAT__</Elem>
-            </preprocessorList>
-          </ccTool>
-        </makeTool>
-        <preBuild>
-          <preBuildCommandWorkingDir>.</preBuildCommandWorkingDir>
-          <preBuildCommand></preBuildCommand>
-        </preBuild>
-      </makefileType>
-      <item path="/usr/share/arduino/hardware/arduino//cores/arduino/CDC.cpp"
-            ex="false"
-            tool="1"
-            flavor2="8">
-        <ccTool flags="0">
-        </ccTool>
-      </item>
-      <item path="/usr/share/arduino/hardware/arduino//cores/arduino/HID.cpp"
-            ex="false"
-            tool="1"
-            flavor2="8">
-        <ccTool flags="0">
-        </ccTool>
-      </item>
-      <item path="/usr/share/arduino/hardware/arduino//cores/arduino/HardwareSerial.cpp"
-            ex="false"
-            tool="1"
-            flavor2="8">
-        <ccTool flags="0">
-        </ccTool>
-      </item>
-      <item path="/usr/share/arduino/hardware/arduino//cores/arduino/IPAddress.cpp"
-            ex="false"
-            tool="1"
-            flavor2="8">
-        <ccTool flags="0">
-        </ccTool>
-      </item>
-      <item path="/usr/share/arduino/hardware/arduino//cores/arduino/Print.cpp"
-            ex="false"
-            tool="1"
-            flavor2="8">
-        <ccTool flags="0">
-        </ccTool>
-      </item>
-      <item path="/usr/share/arduino/hardware/arduino//cores/arduino/Stream.cpp"
-            ex="false"
-            tool="1"
-            flavor2="8">
-        <ccTool flags="0">
-        </ccTool>
-      </item>
-      <item path="/usr/share/arduino/hardware/arduino//cores/arduino/Tone.cpp"
-            ex="false"
-            tool="1"
-            flavor2="8">
-        <ccTool flags="0">
-        </ccTool>
-      </item>
-      <item path="/usr/share/arduino/hardware/arduino//cores/arduino/USBCore.cpp"
-            ex="false"
-            tool="1"
-            flavor2="8">
-        <ccTool flags="0">
-        </ccTool>
-      </item>
-      <item path="/usr/share/arduino/hardware/arduino//cores/arduino/WInterrupts.c"
-            ex="false"
-            tool="0"
-            flavor2="10">
-        <cTool flags="1">
-        </cTool>
-      </item>
-      <item path="/usr/share/arduino/hardware/arduino//cores/arduino/WMath.cpp"
-            ex="false"
-            tool="1"
-            flavor2="8">
-        <ccTool flags="0">
-        </ccTool>
-      </item>
-      <item path="/usr/share/arduino/hardware/arduino//cores/arduino/WString.cpp"
-            ex="false"
-            tool="1"
-            flavor2="8">
-        <ccTool flags="0">
-        </ccTool>
-      </item>
-      <item path="/usr/share/arduino/hardware/arduino//cores/arduino/avr-libc/malloc.c"
-            ex="false"
-            tool="0"
-            flavor2="10">
-        <cTool flags="1">
-        </cTool>
-      </item>
-      <item path="/usr/share/arduino/hardware/arduino//cores/arduino/avr-libc/realloc.c"
-            ex="false"
-            tool="0"
-            flavor2="10">
-        <cTool flags="1">
-        </cTool>
-      </item>
-      <item path="/usr/share/arduino/hardware/arduino//cores/arduino/main.cpp"
-            ex="false"
-            tool="1"
-            flavor2="8">
-        <ccTool flags="0">
-        </ccTool>
-      </item>
-      <item path="/usr/share/arduino/hardware/arduino//cores/arduino/new.cpp"
-            ex="false"
-            tool="1"
-            flavor2="8">
-        <ccTool flags="0">
-        </ccTool>
-      </item>
-      <item path="/usr/share/arduino/hardware/arduino//cores/arduino/wiring.c"
-            ex="false"
-            tool="0"
-            flavor2="10">
-        <cTool flags="1">
-        </cTool>
-      </item>
-      <item path="/usr/share/arduino/hardware/arduino//cores/arduino/wiring_analog.c"
-            ex="false"
-            tool="0"
-            flavor2="10">
-        <cTool flags="1">
-        </cTool>
-      </item>
-      <item path="/usr/share/arduino/hardware/arduino//cores/arduino/wiring_digital.c"
-            ex="false"
-            tool="0"
-            flavor2="10">
-        <cTool flags="1">
-        </cTool>
-      </item>
-      <item path="/usr/share/arduino/hardware/arduino//cores/arduino/wiring_pulse.c"
-            ex="false"
-            tool="0"
-            flavor2="10">
-        <cTool flags="1">
-        </cTool>
-      </item>
-      <item path="/usr/share/arduino/hardware/arduino//cores/arduino/wiring_shift.c"
-            ex="false"
-            tool="0"
-            flavor2="10">
-        <cTool flags="1">
-        </cTool>
-      </item>
-      <item path="AnalogComparator.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="Application.cpp" ex="false" tool="1" flavor2="8">
-        <ccTool flags="0">
-        </ccTool>
-      </item>
-      <item path="CommandHandler.cpp" ex="false" tool="1" flavor2="8">
-        <ccTool flags="2">
-        </ccTool>
-      </item>
-      <item path="Console.cpp" ex="false" tool="1" flavor2="9">
-      </item>
-      <item path="HWTimerCommon.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="HWTimer_atmega328p.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="InductanceMeter.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="Interactive.cpp" ex="false" tool="1" flavor2="8">
-        <ccTool flags="0">
-        </ccTool>
-      </item>
-      <item path="LevSerial.cpp" ex="false" tool="1" flavor2="9">
-      </item>
-      <item path="MeasureInductance.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="UnknownCommand.cpp" ex="false" tool="1" flavor2="8">
-        <ccTool flags="0">
-        </ccTool>
-      </item>
-      <item path="atomic.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <folder path="arduino">
-        <ccTool>
-          <incDir>
-            <pElem>.</pElem>
-          </incDir>
-        </ccTool>
-      </folder>
-      <item path="include/Config.hpp" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="include/Console.hpp" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="include/InductanceMeter.hpp" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="include/LevSerial.hpp" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="include/Measurement.hpp" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="include/Time.hpp" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="include/avr/Config.hpp" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="include/avr/HWTimerCommon.hpp" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="include/avr/atmega328p/HWTimer.hpp" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="include/avr/atomic.hpp" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="include/avr/avr_types.hpp" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="include/avr/device_property.hpp" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="include/avr/pushbits.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="include/avr/pushbits.hpp" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="include/commands/MeasureInductance.hpp"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="include/levAlgo.hpp" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="include/ringbuffer.hpp" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="include/util/pushval.hpp" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="include/util/ref.hpp" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="main.cpp" ex="false" tool="1" flavor2="8">
-        <ccTool flags="0">
-        </ccTool>
-      </item>
-      <item path="unused/pushbits.hpp" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="unused/unused_stuff.hpp" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="util.cpp" ex="false" tool="1" flavor2="0">
-      </item>
+      <packs>
+        <pack name="ATmega_DFP" vendor="Microchip" version="2.3.126"/>
+      </packs>
+      <ScriptingSettings>
+      </ScriptingSettings>
+      <compileType>
+        <linkerTool>
+          <linkerLibItems>
+          </linkerLibItems>
+        </linkerTool>
+        <archiverTool>
+        </archiverTool>
+        <loading>
+          <useAlternateLoadableFile>false</useAlternateLoadableFile>
+          <parseOnProdLoad>false</parseOnProdLoad>
+          <alternateLoadableFile></alternateLoadableFile>
+        </loading>
+        <subordinates>
+        </subordinates>
+      </compileType>
+      <makeCustomizationType>
+        <makeCustomizationPreStepEnabled>false</makeCustomizationPreStepEnabled>
+        <makeUseCleanTarget>false</makeUseCleanTarget>
+        <makeCustomizationPreStep></makeCustomizationPreStep>
+        <makeCustomizationPostStepEnabled>false</makeCustomizationPostStepEnabled>
+        <makeCustomizationPostStep></makeCustomizationPostStep>
+        <makeCustomizationPutChecksumInUserID>false</makeCustomizationPutChecksumInUserID>
+        <makeCustomizationEnableLongLines>false</makeCustomizationEnableLongLines>
+        <makeCustomizationNormalizeHexFile>false</makeCustomizationNormalizeHexFile>
+      </makeCustomizationType>
+      <AVR-AR>
+        <property key="archiver-flags" value="-r"/>
+      </AVR-AR>
+      <AVR-AS>
+        <property key="announce-version" value="false"/>
+        <property key="include-paths" value=""/>
+        <property key="suppress-warnings" value="false"/>
+      </AVR-AS>
+      <AVR-AS-PRE>
+        <property key="announce-version" value="false"/>
+        <property key="include-paths" value=""/>
+        <property key="preprocessor-macros" value=""/>
+        <property key="preprocessor-macros-undefined" value=""/>
+        <property key="suppress-warnings" value="false"/>
+      </AVR-AS-PRE>
+      <AVR-CPP>
+        <property key="additional-warnings" value="true"/>
+        <property key="call-prologues" value="false"/>
+        <property key="default-bitfield-type" value="true"/>
+        <property key="default-char-type" value="true"/>
+        <property key="extra-include-directories" value=""/>
+        <property key="garbage-collect-data" value="true"/>
+        <property key="garbage-collect-functions" value="true"/>
+        <property key="inhibit-all" value="false"/>
+        <property key="make-warnings-into-errors" value="false"/>
+        <property key="no-interrupts" value="false"/>
+        <property key="no-system-directories" value="false"/>
+        <property key="optimization-level" value="-O1"/>
+        <property key="pack-struct" value="true"/>
+        <property key="preprocess-only" value="false"/>
+        <property key="preprocessor-macros" value=""/>
+        <property key="preprocessor-macros-undefined" value=""/>
+        <property key="save-temps" value="false"/>
+        <property key="short-calls" value="false"/>
+        <property key="short-enums" value="true"/>
+        <property key="strict-ansi" value="false"/>
+        <property key="strict-ansi-errors" value="false"/>
+        <property key="support-ansi" value="false"/>
+        <property key="syntax-only" value="false"/>
+        <property key="undefined-identifier" value="false"/>
+        <property key="verbose" value="false"/>
+      </AVR-CPP>
+      <AVR-GCC>
+        <property key="additional-warnings" value="true"/>
+        <property key="call-prologues" value="false"/>
+        <property key="default-bitfield-type" value="true"/>
+        <property key="default-char-type" value="true"/>
+        <property key="extra-include-directories" value=""/>
+        <property key="extra-warnings" value="false"/>
+        <property key="garbage-collect-data" value="true"/>
+        <property key="garbage-collect-functions" value="true"/>
+        <property key="inhibit-all" value="false"/>
+        <property key="make-warnings-into-errors" value="false"/>
+        <property key="no-interrupts" value="false"/>
+        <property key="no-system-directories" value="false"/>
+        <property key="optimization-level" value="-O1"/>
+        <property key="pack-struct" value="true"/>
+        <property key="preprocessor-macros" value=""/>
+        <property key="preprocessor-macros-undefined" value=""/>
+        <property key="save-temps" value="false"/>
+        <property key="short-calls" value="false"/>
+        <property key="short-enums" value="true"/>
+        <property key="strict-ansi" value="false"/>
+        <property key="strict-ansi-errors" value="false"/>
+        <property key="support-ansi" value="false"/>
+        <property key="syntax-only" value="false"/>
+        <property key="undefined-identifier" value="false"/>
+        <property key="verbose" value="false"/>
+      </AVR-GCC>
+      <AVR-Global>
+        <property key="common-include-directories" value=""/>
+        <property key="eep" value="false"/>
+        <property key="external-ram-check" value="false"/>
+        <property key="hex" value="true"/>
+        <property key="lss" value="false"/>
+        <property key="omit-pack-options" value="false"/>
+        <property key="relax-branches" value="false"/>
+        <property key="srec" value="false"/>
+        <property key="user-pack-device-support" value=""/>
+        <property key="user-pack-include" value=""/>
+        <property key="usersig" value="false"/>
+      </AVR-Global>
+      <AVR-LD>
+        <property key="eeprom-segment" value=""/>
+        <property key="exclude-standard-libraries" value="false"/>
+        <property key="extra-lib-directories" value=""/>
+        <property key="flash-segment" value=""/>
+        <property key="generate-map-file" value="true"/>
+        <property key="initial-stack-address" value=""/>
+        <property key="input-libraries" value="libm"/>
+        <property key="no-default-libs" value="false"/>
+        <property key="no-shared-libraries" value="false"/>
+        <property key="no-startup-files" value="false"/>
+        <property key="omit-symbol-information" value="false"/>
+        <property key="other-options" value=""/>
+        <property key="remove-unused-sections" value="true"/>
+        <property key="rodata-writable" value="false"/>
+        <property key="sram-segment" value=""/>
+        <property key="v-printf" value="false"/>
+      </AVR-LD>
     </conf>
   </confs>
 </configurationDescriptor>

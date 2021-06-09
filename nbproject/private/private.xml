@@ -1,53 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
-    <code-assistance-data xmlns="http://www.netbeans.org/ns/make-project-private/1">
-        <code-model-enabled>true</code-model-enabled>
-    </code-assistance-data>
-    <data xmlns="http://www.netbeans.org/ns/make-project-private/1">
-        <activeConfTypeElem>0</activeConfTypeElem>
-        <activeConfIndexElem>1</activeConfIndexElem>
-    </data>
-    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group>
-            <file>file:/home/j/project/ardmeter/include/CommandHandler.hpp</file>
-            <file>file:/home/j/project/ardmeter/include/ringbuffer.hpp</file>
-            <file>file:/home/j/project/ardmeter/include/InductanceMeter.hpp</file>
-            <file>file:/home/j/project/ardmeter/include/util/util.hpp</file>
-            <file>file:/home/j/project/ardmeter/unused/pushbits.hpp</file>
-            <file>file:/home/j/project/ardmeter/MeasureInductance.cpp</file>
-            <file>file:/home/j/project/ardmeter/HWTimer_atmega328p.cpp</file>
-            <file>file:/home/j/project/ardmeter/unused/unused_stuff.hpp</file>
-            <file>file:/home/j/project/ardmeter/include/avr/device_property.hpp</file>
-            <file>file:/home/j/project/ardmeter/LevSerial.cpp</file>
-            <file>file:/home/j/project/ardmeter/include/avr/HWTimerCommon.hpp</file>
-            <file>file:/home/j/project/ardmeter/UnknownCommand.cpp</file>
-            <file>file:/home/j/project/ardmeter/Application.cpp</file>
-            <file>file:/home/j/project/ardmeter/include/util/pushval.hpp</file>
-            <file>file:/home/j/project/ardmeter/include/avr/atomic.hpp</file>
-            <file>file:/home/j/project/ardmeter/Console.cpp</file>
-            <file>file:/home/j/project/ardmeter/include/levAlgo.hpp</file>
-            <file>file:/home/j/project/ardmeter/include/Time.hpp</file>
-            <file>file:/home/j/project/ardmeter/InductanceMeter.cpp</file>
-            <file>file:/home/j/project/ardmeter/util.cpp</file>
-            <file>file:/home/j/project/ardmeter/include/avr/avr_types.hpp</file>
-            <file>file:/home/j/project/ardmeter/include/Config.hpp</file>
-            <file>file:/home/j/project/ardmeter/include/types.hpp</file>
-            <file>file:/home/j/project/ardmeter/CommandHandler.cpp</file>
-            <file>file:/home/j/project/ardmeter/include/Application.hpp</file>
-            <file>file:/home/j/project/ardmeter/HWTimerCommon.cpp</file>
-            <file>file:/home/j/project/ardmeter/AnalogComparator.cpp</file>
-            <file>file:/home/j/project/ardmeter/atomic.cpp</file>
-            <file>file:/home/j/project/ardmeter/Makefile</file>
-            <file>file:/home/j/project/ardmeter/main.cpp</file>
-            <file>file:/home/j/project/ardmeter/include/Console.hpp</file>
-            <file>file:/home/j/project/ardmeter/include/LevSerial.hpp</file>
-            <file>file:/home/j/project/ardmeter/include/Interactive.hpp</file>
-            <file>file:/home/j/project/ardmeter/Interactive.cpp</file>
-            <file>file:/home/j/project/ardmeter/include/avr/AnalogComparator.hpp</file>
-            <file>file:/home/j/project/ardmeter/include/avr/atmega328p/HWTimer.hpp</file>
-            <file>file:/home/j/project/ardmeter/include/Measurement.hpp</file>
-            <file>file:/home/j/project/ardmeter/include/avr/pushbits.hpp</file>
-        </group>
+        <group/>
     </open-files>
 </project-private>
