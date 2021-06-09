@@ -1,0 +1,91 @@
+-------------------------
+Arduino.mk Configuration:
+- [AUTODETECTED]       CURRENT_OS = LINUX 
+- [AUTODETECTED]       ARDUINO_DIR = /usr/share/arduino 
+- [COMPUTED]           ARDMK_DIR = /usr/share/arduino (relative to Common.mk)
+- [AUTODETECTED]       ARDUINO_VERSION = 105 
+- [DEFAULT]            ARCHITECTURE =  
+- [DEFAULT]            ARDMK_VENDOR = arduino 
+- [AUTODETECTED]       ARDUINO_PREFERENCES_PATH = /home/j/.arduino/preferences.txt 
+- [AUTODETECTED]       ARDUINO_SKETCHBOOK = /home/j/sketchbook (from arduino preferences file)
+- [BUNDLED]            AVR_TOOLS_DIR = /usr/share/arduino/hardware/tools/avr (in Arduino distribution)
+- [COMPUTED]           ARDUINO_LIB_PATH = /usr/share/arduino/libraries (from ARDUINO_DIR)
+- [COMPUTED]           ARDUINO_VAR_PATH = /usr/share/arduino/hardware/arduino//variants (from ARDUINO_DIR)
+- [COMPUTED]           BOARDS_TXT = /usr/share/arduino/hardware/arduino//boards.txt (from ARDUINO_DIR)
+- [DEFAULT]            USER_LIB_PATH = /home/j/sketchbook/libraries (in user sketchbook)
+- [DEFAULT]            PRE_BUILD_HOOK = pre-build-hook.sh 
+- [USER]               BOARD_TAG = pro328 
+- [COMPUTED]           CORE = arduino (from build.core)
+- [COMPUTED]           VARIANT = standard (from build.variant)
+- [COMPUTED]           OBJDIR = build-pro328 (from BOARD_TAG)
+- [COMPUTED]           ARDUINO_CORE_PATH = /usr/share/arduino/hardware/arduino//cores/arduino (from ARDUINO_DIR, BOARD_TAG and boards.txt)
+-                      No .pde or .ino files found. If you are compiling .c or .cpp files then you need to explicitly include Arduino header files
+- [ASSUMED]            MONITOR_BAUDRATE = 9600 
+- [DEFAULT]            OPTIMIZATION_LEVEL = s 
+- [DEFAULT]            MCU_FLAG_NAME = mmcu 
+- [DEFAULT]            CFLAGS_STD = -std=gnu11 -flto -fno-fat-lto-objects 
+- [DEFAULT]            CXXFLAGS_STD = -std=gnu++11 -fno-threadsafe-statics -flto 
+- [AUTODETECTED]       DEVICE_PATH = /dev/ttyUSB0 
+- [DEFAULT]            FORCE_MONITOR_PORT =  
+- [AUTODETECTED]       Size utility: AVR-aware for enhanced output
+- [COMPUTED]           BOOTLOADER_PARENT = /usr/share/arduino/hardware/arduino//bootloaders (from ARDUINO_DIR)
+- [COMPUTED]           ARDMK_VERSION = 1.5 
+- [COMPUTED]           CC_VERSION = 5.4.0 (avr-gcc)
+-------------------------
+mkdir -p build-pro328
+/usr/share/arduino/hardware/tools/avr/bin/avr-g++ -MMD -c -mmcu=atmega328p -DF_CPU=8000000L -DARDUINO=105  -D__PROG_TYPES_COMPAT__ -I/usr/share/arduino/hardware/arduino//cores/arduino -I/usr/share/arduino/hardware/arduino//variants/standard    -Wall -ffunction-sections -fdata-sections -Os -fpermissive -fno-exceptions -std=gnu++11 -fno-threadsafe-statics -flto main.cpp -o build-pro328/main.cpp.o
+/usr/share/arduino/hardware/tools/avr/bin/avr-gcc -MMD -c -mmcu=atmega328p -DF_CPU=8000000L -DARDUINO=105  -D__PROG_TYPES_COMPAT__ -I/usr/share/arduino/hardware/arduino//cores/arduino -I/usr/share/arduino/hardware/arduino//variants/standard    -Wall -ffunction-sections -fdata-sections -Os -std=gnu11 -flto -fno-fat-lto-objects /usr/share/arduino/hardware/arduino//cores/arduino/wiring.c -o build-pro328/core/wiring.c.o
+/usr/share/arduino/hardware/tools/avr/bin/avr-gcc -MMD -c -mmcu=atmega328p -DF_CPU=8000000L -DARDUINO=105  -D__PROG_TYPES_COMPAT__ -I/usr/share/arduino/hardware/arduino//cores/arduino -I/usr/share/arduino/hardware/arduino//variants/standard    -Wall -ffunction-sections -fdata-sections -Os -std=gnu11 -flto -fno-fat-lto-objects /usr/share/arduino/hardware/arduino//cores/arduino/WInterrupts.c -o build-pro328/core/WInterrupts.c.o
+/usr/share/arduino/hardware/tools/avr/bin/avr-gcc -MMD -c -mmcu=atmega328p -DF_CPU=8000000L -DARDUINO=105  -D__PROG_TYPES_COMPAT__ -I/usr/share/arduino/hardware/arduino//cores/arduino -I/usr/share/arduino/hardware/arduino//variants/standard    -Wall -ffunction-sections -fdata-sections -Os -std=gnu11 -flto -fno-fat-lto-objects /usr/share/arduino/hardware/arduino//cores/arduino/wiring_digital.c -o build-pro328/core/wiring_digital.c.o
+/usr/share/arduino/hardware/tools/avr/bin/avr-gcc -MMD -c -mmcu=atmega328p -DF_CPU=8000000L -DARDUINO=105  -D__PROG_TYPES_COMPAT__ -I/usr/share/arduino/hardware/arduino//cores/arduino -I/usr/share/arduino/hardware/arduino//variants/standard    -Wall -ffunction-sections -fdata-sections -Os -std=gnu11 -flto -fno-fat-lto-objects /usr/share/arduino/hardware/arduino//cores/arduino/wiring_pulse.c -o build-pro328/core/wiring_pulse.c.o
+/usr/share/arduino/hardware/tools/avr/bin/avr-gcc -MMD -c -mmcu=atmega328p -DF_CPU=8000000L -DARDUINO=105  -D__PROG_TYPES_COMPAT__ -I/usr/share/arduino/hardware/arduino//cores/arduino -I/usr/share/arduino/hardware/arduino//variants/standard    -Wall -ffunction-sections -fdata-sections -Os -std=gnu11 -flto -fno-fat-lto-objects /usr/share/arduino/hardware/arduino//cores/arduino/wiring_analog.c -o build-pro328/core/wiring_analog.c.o
+/usr/share/arduino/hardware/tools/avr/bin/avr-gcc -MMD -c -mmcu=atmega328p -DF_CPU=8000000L -DARDUINO=105  -D__PROG_TYPES_COMPAT__ -I/usr/share/arduino/hardware/arduino//cores/arduino -I/usr/share/arduino/hardware/arduino//variants/standard    -Wall -ffunction-sections -fdata-sections -Os -std=gnu11 -flto -fno-fat-lto-objects /usr/share/arduino/hardware/arduino//cores/arduino/wiring_shift.c -o build-pro328/core/wiring_shift.c.o
+/usr/share/arduino/hardware/tools/avr/bin/avr-gcc -MMD -c -mmcu=atmega328p -DF_CPU=8000000L -DARDUINO=105  -D__PROG_TYPES_COMPAT__ -I/usr/share/arduino/hardware/arduino//cores/arduino -I/usr/share/arduino/hardware/arduino//variants/standard    -Wall -ffunction-sections -fdata-sections -Os -std=gnu11 -flto -fno-fat-lto-objects /usr/share/arduino/hardware/arduino//cores/arduino/avr-libc/realloc.c -o build-pro328/core/avr-libc/realloc.c.o
+/usr/share/arduino/hardware/tools/avr/bin/avr-gcc -MMD -c -mmcu=atmega328p -DF_CPU=8000000L -DARDUINO=105  -D__PROG_TYPES_COMPAT__ -I/usr/share/arduino/hardware/arduino//cores/arduino -I/usr/share/arduino/hardware/arduino//variants/standard    -Wall -ffunction-sections -fdata-sections -Os -std=gnu11 -flto -fno-fat-lto-objects /usr/share/arduino/hardware/arduino//cores/arduino/avr-libc/malloc.c -o build-pro328/core/avr-libc/malloc.c.o
+/usr/share/arduino/hardware/tools/avr/bin/avr-g++ -MMD -c -mmcu=atmega328p -DF_CPU=8000000L -DARDUINO=105  -D__PROG_TYPES_COMPAT__ -I/usr/share/arduino/hardware/arduino//cores/arduino -I/usr/share/arduino/hardware/arduino//variants/standard    -Wall -ffunction-sections -fdata-sections -Os -fpermissive -fno-exceptions -std=gnu++11 -fno-threadsafe-statics -flto /usr/share/arduino/hardware/arduino//cores/arduino/IPAddress.cpp -o build-pro328/core/IPAddress.cpp.o
+/usr/share/arduino/hardware/tools/avr/bin/avr-g++ -MMD -c -mmcu=atmega328p -DF_CPU=8000000L -DARDUINO=105  -D__PROG_TYPES_COMPAT__ -I/usr/share/arduino/hardware/arduino//cores/arduino -I/usr/share/arduino/hardware/arduino//variants/standard    -Wall -ffunction-sections -fdata-sections -Os -fpermissive -fno-exceptions -std=gnu++11 -fno-threadsafe-statics -flto /usr/share/arduino/hardware/arduino//cores/arduino/Tone.cpp -o build-pro328/core/Tone.cpp.o
+/usr/share/arduino/hardware/tools/avr/bin/avr-g++ -MMD -c -mmcu=atmega328p -DF_CPU=8000000L -DARDUINO=105  -D__PROG_TYPES_COMPAT__ -I/usr/share/arduino/hardware/arduino//cores/arduino -I/usr/share/arduino/hardware/arduino//variants/standard    -Wall -ffunction-sections -fdata-sections -Os -fpermissive -fno-exceptions -std=gnu++11 -fno-threadsafe-statics -flto /usr/share/arduino/hardware/arduino//cores/arduino/WString.cpp -o build-pro328/core/WString.cpp.o
+/usr/share/arduino/hardware/tools/avr/bin/avr-g++ -MMD -c -mmcu=atmega328p -DF_CPU=8000000L -DARDUINO=105  -D__PROG_TYPES_COMPAT__ -I/usr/share/arduino/hardware/arduino//cores/arduino -I/usr/share/arduino/hardware/arduino//variants/standard    -Wall -ffunction-sections -fdata-sections -Os -fpermissive -fno-exceptions -std=gnu++11 -fno-threadsafe-statics -flto /usr/share/arduino/hardware/arduino//cores/arduino/WMath.cpp -o build-pro328/core/WMath.cpp.o
+/usr/share/arduino/hardware/tools/avr/bin/avr-g++ -MMD -c -mmcu=atmega328p -DF_CPU=8000000L -DARDUINO=105  -D__PROG_TYPES_COMPAT__ -I/usr/share/arduino/hardware/arduino//cores/arduino -I/usr/share/arduino/hardware/arduino//variants/standard    -Wall -ffunction-sections -fdata-sections -Os -fpermissive -fno-exceptions -std=gnu++11 -fno-threadsafe-statics -flto /usr/share/arduino/hardware/arduino//cores/arduino/Print.cpp -o build-pro328/core/Print.cpp.o
+/usr/share/arduino/hardware/tools/avr/bin/avr-g++ -MMD -c -mmcu=atmega328p -DF_CPU=8000000L -DARDUINO=105  -D__PROG_TYPES_COMPAT__ -I/usr/share/arduino/hardware/arduino//cores/arduino -I/usr/share/arduino/hardware/arduino//variants/standard    -Wall -ffunction-sections -fdata-sections -Os -fpermissive -fno-exceptions -std=gnu++11 -fno-threadsafe-statics -flto /usr/share/arduino/hardware/arduino//cores/arduino/HID.cpp -o build-pro328/core/HID.cpp.o
+/usr/share/arduino/hardware/tools/avr/bin/avr-g++ -MMD -c -mmcu=atmega328p -DF_CPU=8000000L -DARDUINO=105  -D__PROG_TYPES_COMPAT__ -I/usr/share/arduino/hardware/arduino//cores/arduino -I/usr/share/arduino/hardware/arduino//variants/standard    -Wall -ffunction-sections -fdata-sections -Os -fpermissive -fno-exceptions -std=gnu++11 -fno-threadsafe-statics -flto /usr/share/arduino/hardware/arduino//cores/arduino/Stream.cpp -o build-pro328/core/Stream.cpp.o
+/usr/share/arduino/hardware/tools/avr/bin/avr-g++ -MMD -c -mmcu=atmega328p -DF_CPU=8000000L -DARDUINO=105  -D__PROG_TYPES_COMPAT__ -I/usr/share/arduino/hardware/arduino//cores/arduino -I/usr/share/arduino/hardware/arduino//variants/standard    -Wall -ffunction-sections -fdata-sections -Os -fpermissive -fno-exceptions -std=gnu++11 -fno-threadsafe-statics -flto /usr/share/arduino/hardware/arduino//cores/arduino/USBCore.cpp -o build-pro328/core/USBCore.cpp.o
+/usr/share/arduino/hardware/tools/avr/bin/avr-g++ -MMD -c -mmcu=atmega328p -DF_CPU=8000000L -DARDUINO=105  -D__PROG_TYPES_COMPAT__ -I/usr/share/arduino/hardware/arduino//cores/arduino -I/usr/share/arduino/hardware/arduino//variants/standard    -Wall -ffunction-sections -fdata-sections -Os -fpermissive -fno-exceptions -std=gnu++11 -fno-threadsafe-statics -flto /usr/share/arduino/hardware/arduino//cores/arduino/new.cpp -o build-pro328/core/new.cpp.o
+/usr/share/arduino/hardware/tools/avr/bin/avr-g++ -MMD -c -mmcu=atmega328p -DF_CPU=8000000L -DARDUINO=105  -D__PROG_TYPES_COMPAT__ -I/usr/share/arduino/hardware/arduino//cores/arduino -I/usr/share/arduino/hardware/arduino//variants/standard    -Wall -ffunction-sections -fdata-sections -Os -fpermissive -fno-exceptions -std=gnu++11 -fno-threadsafe-statics -flto /usr/share/arduino/hardware/arduino//cores/arduino/main.cpp -o build-pro328/core/main.cpp.o
+/usr/share/arduino/hardware/tools/avr/bin/avr-g++ -MMD -c -mmcu=atmega328p -DF_CPU=8000000L -DARDUINO=105  -D__PROG_TYPES_COMPAT__ -I/usr/share/arduino/hardware/arduino//cores/arduino -I/usr/share/arduino/hardware/arduino//variants/standard    -Wall -ffunction-sections -fdata-sections -Os -fpermissive -fno-exceptions -std=gnu++11 -fno-threadsafe-statics -flto /usr/share/arduino/hardware/arduino//cores/arduino/HardwareSerial.cpp -o build-pro328/core/HardwareSerial.cpp.o
+/usr/share/arduino/hardware/arduino//cores/arduino/HardwareSerial.cpp: In function ‘void store_char(unsigned char, ring_buffer*)’:
+/usr/share/arduino/hardware/arduino//cores/arduino/HardwareSerial.cpp:100:9: warning: comparison between signed and unsigned integer expressions [-Wsign-compare]
+   if (i != buffer->tail) {
+         ^
+/usr/share/arduino/hardware/arduino//cores/arduino/HardwareSerial.cpp: In function ‘void __vector_18()’:
+/usr/share/arduino/hardware/arduino//cores/arduino/HardwareSerial.cpp:129:21: warning: unused variable ‘c’ [-Wunused-variable]
+       unsigned char c = UDR0;
+                     ^
+/usr/share/arduino/hardware/arduino//cores/arduino/HardwareSerial.cpp: In member function ‘void HardwareSerial::begin(long unsigned int, byte)’:
+/usr/share/arduino/hardware/arduino//cores/arduino/HardwareSerial.cpp:370:11: warning: unused variable ‘current_config’ [-Wunused-variable]
+   uint8_t current_config;
+           ^
+/usr/share/arduino/hardware/arduino//cores/arduino/HardwareSerial.cpp: In member function ‘virtual size_t HardwareSerial::write(uint8_t)’:
+/usr/share/arduino/hardware/arduino//cores/arduino/HardwareSerial.cpp:469:12: warning: comparison between signed and unsigned integer expressions [-Wsign-compare]
+   while (i == _tx_buffer->tail)
+            ^
+/usr/share/arduino/hardware/tools/avr/bin/avr-g++ -MMD -c -mmcu=atmega328p -DF_CPU=8000000L -DARDUINO=105  -D__PROG_TYPES_COMPAT__ -I/usr/share/arduino/hardware/arduino//cores/arduino -I/usr/share/arduino/hardware/arduino//variants/standard    -Wall -ffunction-sections -fdata-sections -Os -fpermissive -fno-exceptions -std=gnu++11 -fno-threadsafe-statics -flto /usr/share/arduino/hardware/arduino//cores/arduino/CDC.cpp -o build-pro328/core/CDC.cpp.o
+/usr/share/arduino/hardware/tools/avr/bin/avr-gcc-ar rcs build-pro328/libcore.a  build-pro328/core/wiring.c.o  build-pro328/core/WInterrupts.c.o  build-pro328/core/wiring_digital.c.o  build-pro328/core/wiring_pulse.c.o  build-pro328/core/wiring_analog.c.o  build-pro328/core/wiring_shift.c.o  build-pro328/core/avr-libc/realloc.c.o  build-pro328/core/avr-libc/malloc.c.o  build-pro328/core/IPAddress.cpp.o  build-pro328/core/Tone.cpp.o  build-pro328/core/WString.cpp.o  build-pro328/core/WMath.cpp.o  build-pro328/core/Print.cpp.o  build-pro328/core/HID.cpp.o  build-pro328/core/Stream.cpp.o  build-pro328/core/USBCore.cpp.o  build-pro328/core/new.cpp.o  build-pro328/core/main.cpp.o  build-pro328/core/HardwareSerial.cpp.o  build-pro328/core/CDC.cpp.o       
+/usr/share/arduino/hardware/tools/avr/bin/avr-gcc -mmcu=atmega328p -Wl,--gc-sections -Os -flto -fuse-linker-plugin -o build-pro328/ardmeter.elf build-pro328/main.cpp.o build-pro328/libcore.a   -lc -lm 
+/usr/share/arduino/hardware/tools/avr/bin/avr-objcopy -j .eeprom --set-section-flags=.eeprom='alloc,load' \
+	--no-change-warnings --change-section-lma .eeprom=0 -O ihex build-pro328/ardmeter.elf build-pro328/ardmeter.eep
+/usr/share/arduino/hardware/tools/avr/bin/avr-objcopy -O ihex -R .eeprom build-pro328/ardmeter.elf build-pro328/ardmeter.hex
+
+/usr/share/arduino/hardware/tools/avr/bin/avr-size --mcu=atmega328p -C --format=avr build-pro328/ardmeter.elf
+AVR Memory Usage
+----------------
+Device: atmega328p
+
+Program:    1494 bytes (4.6% Full)
+(.text + .data + .bootloader)
+
+Data:        217 bytes (10.6% Full)
+(.data + .bss + .noinit)
+
+
+/usr/share/arduino/hardware/tools/avr/bin/avr-g++ -fpermissive -fno-exceptions -std=gnu++11 -fno-threadsafe-statics -flto -mmcu=atmega328p -DF_CPU=8000000L -DARDUINO=105  -D__PROG_TYPES_COMPAT__ -I/usr/share/arduino/hardware/arduino//cores/arduino -I/usr/share/arduino/hardware/arduino//variants/standard    -Wall -ffunction-sections -fdata-sections -Os  -c -o main.o main.cpp
