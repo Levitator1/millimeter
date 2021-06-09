@@ -1,4 +1,4 @@
-#include <Arduino.h>
+
 #include "include/avr/pushbits.hpp"
 #include "include/avr/AnalogComparator.hpp" 
 

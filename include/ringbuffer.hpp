@@ -131,7 +131,7 @@ namespace impl{
 
         ringbuffer_impl( BufferT &&buf ):                    
             m_size(0),
-            m_buffer(util::move(buf)), //One extra so that there is a position to represent "full"
+            m_buffer(cpp::move(buf)), //One extra so that there is a position to represent "full"
             m_head(*this, array()),
             m_tail(*this, array()){
         }

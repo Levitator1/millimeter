@@ -1,6 +1,5 @@
 #pragma once
 #include <stdint.h>
-#include <Arduino.h>
 #include "avr/HWTimerCommon.hpp"
 
 namespace levitator{

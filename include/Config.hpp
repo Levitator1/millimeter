@@ -1,6 +1,5 @@
 #pragma once
 
-#include <Arduino.h>
 #include "types.hpp"
 #include "util/util.hpp"
 
@@ -40,8 +39,8 @@ struct Config{
                                         //which is usually 10 bits, but sometimes 12
 
     //I/O pins and wiring
-    static constexpr pin_id charge_inductance_pin = 2;
-    static constexpr pin_id inductance_v_sense = A0;
+    //static constexpr pin_id charge_inductance_pin = 2;
+   
     
     /*
     * Instance variables so that configuration can be read and written from EPROM

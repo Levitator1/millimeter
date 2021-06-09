@@ -1,7 +1,9 @@
 #pragma once
 
 #include <util/atomic.h>
+#include "../util/cplusplus.hpp"
 #include "../util/util.hpp"
+#include "../util/meta.hpp"
 #include "../util/ref.hpp"
 
 namespace levitator{
@@ -94,7 +96,7 @@ namespace impl {
 
     public:    
         using dest_type = T;
-        using value_type = typename util::decay<T>::type;        
+        using value_type = typename cpp::decay<T>::type;        
         using guard_type = Guard;
 
         atomic_ref_impl( dest_type &obj ):
@@ -137,8 +139,8 @@ namespace impl {
     };        
     
     template<typename T, class Guard>
-    using atomic_guard_type = typename util::conditional< 
-        util::is_among<typename util::decay<T>::type, char, unsigned char, uint8_t, int8_t>::value, util::null_type, Guard>::type;
+    using atomic_guard_type = typename cpp::conditional< 
+        meta::is_among<typename cpp::decay<T>::type, char, unsigned char, uint8_t, int8_t>::value, util::null_type, Guard>::type;
     
     template<typename T, class Guard>
     using atomic_ref_impl_type = impl::atomic_ref_impl<T, impl::atomic_guard_type<T, Guard>>;

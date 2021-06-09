@@ -1,8 +1,8 @@
 #pragma once
 
 #include <avr/io.h>
-#include <Arduino.h>
 #include <stdint.h>
+#include "../util/cplusplus.hpp"
 #include "../util/util.hpp"
 #include "avr_types.hpp"
 #include "atomic.hpp"
@@ -22,7 +22,7 @@ namespace avr{
     using bit_number = uint8_t;
     
     template<typename T>
-    using regval = typename util::decay<T>::type;
+    using regval = typename cpp::decay<T>::type;
     
     using ioreg8 = decltype(PORTB);
 

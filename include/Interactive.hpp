@@ -5,7 +5,6 @@
 */
 #pragma once
 
-#include <Arduino.h>
 #include "types.hpp"
 #include "CommandHandler.hpp"
 

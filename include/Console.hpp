@@ -1,7 +1,7 @@
 #pragma once
 
-#include <Arduino.h>
 #include "util/util.hpp"
+#include "util/String.hpp"
 #include "LevSerial.hpp"
 
 namespace levitator{
@@ -19,20 +19,20 @@ public:
 
 private:
     Status m_status = empty;
-    String m_buf;    
+    String<> m_buf;    
     
     void parse_chx(); //Parse characters following the escape code
     void parse_left_bracket_code(); //Parse a code of the form: ESC [ ...    
 
 public:    
     Status status() const;
-    const String &buffer() const;
+    const String<> &buffer() const;
     bool parse(char ch);
     bool parse(int ch);
-    String do_cancel();
+    String<> do_cancel();
 };
 
-class Console : public Stream {
+//class Console : public Stream {
 
     bool m_echo;
     HardwareSerial *m_port = nullptr;
