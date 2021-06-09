@@ -10,6 +10,10 @@
 #include "include/CommandHandler.hpp"
 #include "include/commands/UnknownCommand.hpp"
 
+//DEBUG
+#include "include/avr/AnalogComparator.hpp"
+using namespace levitator::avr;
+
 using namespace levitator::consolens;
 using namespace levitator::arduino;
 using namespace levitator::ardmeter;
@@ -38,6 +42,41 @@ void loop(){
     digitalWrite( Config::charge_inductance_pin, LOW );
     pinMode(Config::charge_inductance_pin, INPUT);
     */
+    
+    /*
+     Comparator voltage loopback test
+     
+     */
+    AnalogComparator comp;
+    //DEBUG
+#if false
+    digitalWrite(6, LOW);
+    pinMode(6, INPUT);
+    digitalWrite(7, LOW);
+    pinMode(7, INPUT);        
+    DIDR1 = 3;      //Disable digital IO on the analog comparator pins
+    
+    pinMode(2, OUTPUT);
+    digitalWrite(2, HIGH);
+    delay(100);
+    console.print("Comparator should read low. Actual: ");
+    console.println( ACSR & _BV(ACO) );
+    
+    pinMode(2, OUTPUT);
+    digitalWrite(2, LOW);
+    delay(100);
+    console.print("Comparator should read high. Actual: ");
+    console.println( ACSR & _BV(ACO) );
+    pinMode(2, INPUT);
+    /////////////////////////
+#endif
+    
+#if false
+    while(true){
+        console.println(ACSR & _BV(ACO));
+        delay(100);
+    }
+#endif
     
     app.run();
 }

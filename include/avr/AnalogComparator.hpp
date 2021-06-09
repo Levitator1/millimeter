@@ -26,14 +26,15 @@ class AnalogComparator{
     pushbits_clear<ioreg8> 
         m_power_bits = {PRR, _BV(PRADC)}, 
         m_multiplexer_bits = {ADCSRB, _BV(ACME) },      //Not interested in fancy analog signal routing. Just AIN0 and AIN1.
-        m_comparator_bits_off = {ACSR, _BV(ACD) | _BV(ACBG) }; //We leave the interrupts alone in case someone else is using them
+        m_comparator_bits_off = {ACSR, _BV(ACD)  | _BV(ACIE)    }; //We leave the interrupts alone in case someone else is using them
         //ACD off disabled power-cutoff to the comparator.
         //ACBG disables comparison to an internal reference voltage called the "bandgap voltage"
         //ACO disables mapping the compartor output to a bit in memory, which saves 2 clock cycles somewhere, maybe per state change?
 
     pushbits_set<ioreg8> 
         m_tccr1b_bits_on = {TCCR1B, _BV(ICES1)},    //Trigger on rising edge
-        m_comparator_bits_on = {ACSR, _BV(ACIC) };  //This actually turns on hardware timestamp collection
+        m_comparator_bits_on = {ACSR, _BV(ACIC) | _BV(ACBG) };  //This actually turns on hardware timestamp collection
+                                                                //Also select the bandgap voltage as reference
 
     
     //Timer overflow interrupt-handling
@@ -74,8 +75,15 @@ public:
         //TCCR1B |= 128; //Noise filter
         
         //Nope
+        //TCCR1A = 0;
+        //TCCR1B = 5 | 128;
+        
+        //Advances, but capture triggers every 38 cycles
+        //TCCR1A = 0;
+        //TCCR1B = 9 | 128;
         TCCR1A = 0;
-        TCCR1B = 5;
+        TCCR1B = 1 | 64; //1x clock multiplier, high-edge trigger
+        
         
         /*
         consolens::console.print("TCCR1A: ");
@@ -100,22 +108,23 @@ public:
         //We will do without interrupts because they have state saving/restoring overhead
         //And also, we need to make sure that if a capture occurs, the high bits don't
         //get bumped before we retrieve them to obtain the total time.
-        auto push_overflow_interrupts = util::make_pushval(timer.overflow_interrupt_enable);
+        //auto push_overflow_interrupts = util::make_pushval(timer.overflow_interrupt_enable);
         timer.overflow_interrupt_enable = false;
         
         auto push_capture_interrupts = util::make_pushval(timer.capture_interrupt_enable);
         timer.capture_interrupt_enable = false;
         
         
-        timer.ticks_hi_bits = 0;
-        auto startT = timer.ticks();
+        timer.ticks_hi_bits = 0;        
         uint i = 0;
                 
         timer.capture_flag = false;
         decltype(timer.capture_ticks()) capture;
         do{
             if(timer.capture_flag){
-                capture = timer.capture_ticks();                
+            //if(TIFR1 & _BV(ICF1)){ //DEBUG
+            //if(ACSR & _BV(ACO)){
+                capture = timer.capture_ticks();
                 func(i, capture);
                 ++i;         
                 
@@ -126,14 +135,28 @@ public:
                 consolens::console.println(capture);
                 */
             }
-            
+                        
             //if(timer.overflow_flag){ 
-            if(TIFR1 | TOV1){ ////DEBUG
+            if(TIFR1 & _BV(TOV1)){ ////DEBUG
                 ++timer.ticks_hi_bits;
-                timer.overflow_flag = false;
+                
+                //DEBUG
+                //timer.overflow_flag = false;
+                TIFR1 &= ~_BV(TOV1);
             }
             
         }while( i < n && --max_tries > 0 );
+        
+        consolens::console.print("TCCR1A: ");
+        consolens::console.print(TCCR1A, BIN);
+        consolens::console.print(", TCCR1B: ");
+        consolens::console.print(TCCR1B, BIN);
+        
+        consolens::console.print(", ADCSRB: ");
+        consolens::console.print(ADCSRB, BIN);
+        consolens::console.print("ACSR: ");
+        consolens::console.println(ACSR, BIN);
+                
         return i;
     }    
 };

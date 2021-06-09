@@ -69,7 +69,7 @@ struct TimerRegisters16 : public TimerRegisters{
 class TimerBase{    
 public:
     using time_type = unsigned long;  
-    time_type ticks_hi_bits = 0;
+    volatile time_type ticks_hi_bits = 0;
     
 private:
     TimerRegisters &m_regs;
@@ -89,7 +89,7 @@ protected:
     }
     
 public:          
-    volatile bit_property<ioreg8> overflow_interrupt_enable,
+    bit_property<ioreg8> overflow_interrupt_enable,
         overflow_flag;    
     
     TimerBase(TimerRegisters &m_regs);
@@ -140,8 +140,19 @@ public:
             
     //Clears the capture flag, re-enabling the capture register for the next event
     inline time_type capture_ticks(){
-        auto cap = capture.get();
-        capture_flag = false;
+        auto cap = capture.get(); 
+        
+        //DEBUG        
+        cli();
+        //auto cap = ICR1;
+        //auto cap = TCNT1;
+        sei();
+        
+        //DEBUG
+        capture_flag = true;        //Cleared by reverse logic!
+        //TIFR1 &= ~_BV(ICF1);
+        //ACSR &= ~_BV(ACI);
+        
         return merge_tick_bits<uint16_t>(cap);
     }
     

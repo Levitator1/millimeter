@@ -40,20 +40,27 @@ void InductanceMeter::dump_samples( const ad_sample *samples, const microseconds
 real InductanceMeter::measure(){
     ad_sample maxDiff;        
     AnalogComparator comparator;
-    
-    digitalWrite(2, HIGH);
-    pinMode(2, OUTPUT);
-    delay(500);
-    pinMode(2, INPUT);
-    digitalWrite(2, LOW);
-    
+        
     using time_type = typename HWTimer1::time_type;
     auto &timer = HWTimer1::instance();
     
     constexpr uint n = 50;    
     time_type times[n] = {0}, dt;
     
-    auto ct = comparator.collect_events(timer, 2000, 50, [&times](int i, uint t){
+    //DEBUG
+    digitalWrite(6, LOW);
+    pinMode(6, INPUT);
+    digitalWrite(7, LOW);
+    pinMode(7, INPUT);
+    DIDR1 = 3;      //Disable digital IO on the analog comparator pins
+    
+    digitalWrite(2, HIGH);
+    pinMode(2, OUTPUT);
+    delay(1000);
+    pinMode(2, INPUT);
+    digitalWrite(2, LOW);
+    
+    auto ct = comparator.collect_events(timer, 1000000, 50, [&times](int i, uint t){
         times[i] = t;             
     });
     
@@ -67,15 +74,34 @@ real InductanceMeter::measure(){
         console.print(dT);
         console.print("cyc/");
         console.print(Time::cycles2ms(dT));
-        console.println("ms");
+        console.print("ms, Hz:");
+        console.println(Time::cycles2Hz(dT));
     }
-    
-    /*
-    for(int i=0; i < 200; ++i){
+        
+    //DEBUG - comparator value scan
+#if false
+    while(2000){
         console.print( "Comparator: " );
         console.println( comparator.status );
     }
-    */
+#endif
+    
+#if false
+    //DEBUG - comparator event scan
+    console.print("Waiting for comparator event");
+    
+    for(ulong i=0; i< 1000000; ++i){
+        
+        if(TIFR1 & _BV(ICF1)){
+            auto cap = 
+            TIFR1 |= _BV(ICF1);
+            console.print( "Caught an event. Comparator status: " );
+            console.println( comparator.status );
+        }
+    }
+    console.println("Done.");
+#endif
+    
     return 0;
 }
 
