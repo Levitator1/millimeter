@@ -12,3 +12,4 @@ CommandHandler::CommandHandler(const char *name):
 levitator::const_string CommandHandler::name() const{
     return m_name;
 }
+

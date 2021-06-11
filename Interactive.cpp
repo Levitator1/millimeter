@@ -1,4 +1,3 @@
-#include <Arduino.h>
 #include <string.h>
 #include "include/types.hpp"
 #include "include/util/util.hpp"

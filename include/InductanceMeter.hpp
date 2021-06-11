@@ -35,20 +35,16 @@ public:
     */
       
     inline void unload_device(){
-        //This will momentarily ground out the test device
-        //But maybe this is more robust than exposing the on-chip pull-up resistor
-        //to the transients. Hopefully the input mode is high-Z enough that it won't be bothered.
-        digitalWrite(m_charge_pin, LOW);
-        pinMode(m_charge_pin, INPUT);
-
-        //Wait 100ms for transients to discharge, hopefully safely
-        delay(100);
+        //DEBUG
+        //pinMode(m_charge_pin, INPUT);
+        //digitalWrite(m_charge_pin, LOW);        
     }
 
     //Charge the device with VCC with the shunt/limiting resistor in series
     inline void load_device(){
-        digitalWrite(m_charge_pin, HIGH);    //Pull-up resistor comes on
-        pinMode(m_charge_pin, OUTPUT);      //+VCC out
+        //DEBUG
+        //digitalWrite(m_charge_pin, HIGH);    //Pull-up resistor comes on
+        //pinMode(m_charge_pin, OUTPUT);      //+VCC out
     }
 
 };

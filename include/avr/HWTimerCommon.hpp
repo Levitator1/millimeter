@@ -1,8 +1,9 @@
 #pragma once
-
+#include <stdint.h>
 #include <avr/io.h>
 #include "avr_types.hpp"
 #include "../util/util.hpp"
+#include "../util/meta.hpp"
 #include "device_property.hpp"
 #include "pushbits.hpp"
 
@@ -22,16 +23,39 @@
 namespace levitator{
 namespace avr{
 
-    struct TimerRegisters{
-    ioreg8
-        &tccrXa, //control register a
-        &tccrXb, //control register b
-        //&tccrXc, //control register c     
-        &timskX, //interrupt mask register
-        &tifrX;
+template<
+    regptr<ioreg8> TCCRXA,
+    regptr<ioreg8> TCCRXB,
+    regptr<ioreg8> TIMSKX,
+    regptr<ioreg8> TIFRX,
+    bit_number TOIEX,
+    bit_number TOVX
+> 
+struct TimerRegisters{
+    static constexpr ioreg8
+        &tccrXa = *TCCRXA, //control register a
+        &tccrXb = *TCCRXB, //control register b        
+        &timskX = *TIMSKX, //interrupt mask register
+        &tifrX = *TIFRX;
 
-        bit_number toie_bit, tov_bit;
+    static constexpr bit_number toie_bit = TOIEX, tov_bit = TOVX;
+
+    //We disregard control register C as it is not present in all timers
+    //and it's some obscure thing with two bits pertaining to waveform comparison
+};
     
+//Obsolete dynamic register structs
+/*
+struct TimerRegisters{
+ioreg8
+    &tccrXa, //control register a
+    &tccrXb, //control register b
+    //&tccrXc, //control register c     
+    &timskX, //interrupt mask register
+    &tifrX;
+
+    bit_number toie_bit, tov_bit;
+
     //We disregard control register C as it is not present in all timers
     //and it's some obscure thing with two bits pertaining to waveform comparison
 };
@@ -56,9 +80,9 @@ struct TimerRegisters16 : public TimerRegisters{
     bit_number icie_bit, icf_bit, toie_bit; //Capture interrupt enable bit
 
     TimerRegisters16( TimerRegisters &&regs, ioreg16 &tcntX_arg, const ioreg16 &icr_arg, 
-        ioreg16 ocrXa_arg, ioreg16 ocrXb_arg, bit_number icie, bit_number icf, bit_number toie );
+        ioreg16 ocrXa_arg, ioreg16 ocrXb_arg, bit_number icie, bit_number icf, bit_number toie );        
 };
-
+*/
 //Hardware timer. The Arduino libs do this more abstractly, but here we ensure, at least, that
 //we are addressing the specific hardware timer we want because some have unique abilities.
 
@@ -66,13 +90,16 @@ struct TimerRegisters16 : public TimerRegisters{
 //one 8-bit and another 16-bit.
 
 //TODO: This is written for the 16-bit Timer/Counter 1, so make sure it's compatible with #0, as well
+    
+template<typename Regs>
 class TimerBase{    
 public:
+    using regs_type = Regs;
     using time_type = unsigned long;  
     volatile time_type ticks_hi_bits = 0;
     
 private:
-    TimerRegisters &m_regs;
+    regs_type m_regs;
     
     //Pushes a bunch of stuff onto the stack and mostly clears it, where the Arduino runtime
     //has mucked with it and made it all weird. Notably, it sets the counter multiplier to zero
@@ -89,58 +116,65 @@ protected:
     }
     
 public:          
-    bit_property<ioreg8> overflow_interrupt_enable,
-        overflow_flag;    
+    //bit_property<ioreg8> overflow_interrupt_enable,
+    //        overflow_flag;
     
-    TimerBase(TimerRegisters &m_regs);
+    TimerBase(regs_type &regs):
+        m_regs(regs){}
 
-    inline TimerRegisters &registers(){
+    inline regs_type &registers(){
         return m_regs;
     }                        
 };
 
-class Timer8:public TimerBase{
-protected:
-    inline TimerRegisters8 &registers(){
-        return static_cast<TimerRegisters8 &>( TimerBase::registers() );
-    }
-
+template<typename Regs>
+class Timer8:public TimerBase<Regs>{
+    using base = TimerBase<Regs>;
 public:
+    using time_type = typename base::time_type;
+    using regs_type = typename base::regs_type;
     using value_type = uint8_t;
-    Timer8(TimerRegisters8 &m_regs);
+    Timer8(regs_type &m_regs);
+    
     register_property<ioreg8> counter;
 
     inline time_type ticks() const{
-        return merge_tick_bits(counter);
+        return base::merge_tick_bits(counter);
     }
 
 };
 
-class Timer16:public TimerBase{
-    inline TimerRegisters16 &registers(){
-        return static_cast<TimerRegisters16 &>( TimerBase::registers() );
+template<typename Regs>
+class Timer16:public TimerBase<Regs>{
+    using base_type = TimerBase<Regs>;
+    
+public:
+    using regs_type = typename base_type::regs_type;
+    using time_type = typename base_type::time_type;
+    
+    inline regs_type &registers(){
+        return static_cast<regs_type &>( base_type::registers() );
     }
 
 public:
     using value_type = uint16_t;
-    Timer16(TimerRegisters16 &regs);
+    Timer16(regs_type &regs);
     register_property<ioreg16> 
         counter,
         capture,
         comparison_register_a,
         comparison_register_b;
     
-    bit_property<ioreg8>         
-        capture_interrupt_enable,        
-        capture_flag;
+    bit_property<MEMBER_RETURN(regs_type, capture_interrupt_enable_regs())> capture_interrupt_enable;   
+    bit_property<MEMBER_RETURN(regs_type, capture_flag_regs())> capture_flag;    
     
     inline time_type ticks() const{
-        return merge_tick_bits(counter);
+        return base_type::merge_tick_bits(counter);
     }
             
     //Clears the capture flag, re-enabling the capture register for the next event
     inline time_type capture_ticks(){
-        auto cap = capture.get(); 
+        uint16_t cap = capture.get(); 
         
         //DEBUG        
         cli();
@@ -153,7 +187,7 @@ public:
         //TIFR1 &= ~_BV(ICF1);
         //ACSR &= ~_BV(ACI);
         
-        return merge_tick_bits<uint16_t>(cap);
+        return base_type::merge_tick_bits(cap);
     }
     
     //  inline value_type read() const{

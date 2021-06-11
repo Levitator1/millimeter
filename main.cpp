@@ -2,7 +2,6 @@
 //#include <avr8-stub.h>
 #endif
 
-#include <Arduino.h>
 #include "include/util/util.hpp"
 #include "include/types.hpp"
 #include "include/Console.hpp"
@@ -47,9 +46,9 @@ void loop(){
      Comparator voltage loopback test
      
      */
-    AnalogComparator comp;
     //DEBUG
 #if false
+    AnalogComparator comp;    
     digitalWrite(6, LOW);
     pinMode(6, INPUT);
     digitalWrite(7, LOW);
@@ -79,4 +78,11 @@ void loop(){
 #endif
     
     app.run();
+}
+
+int main(){
+    setup();
+    loop();
+    
+    while(true){} //Nothing left to do but hang the microcontroller, I guess
 }

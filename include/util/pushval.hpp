@@ -1,5 +1,6 @@
 #pragma once
 
+#include "cplusplus.hpp"
 #include "util.hpp"
 
 // Push a value onto the stack and restore it on destruction
@@ -17,7 +18,7 @@ namespace impl{
 template<typename T>
 class pushval{
 public:
-    using traits_type = impl::pushval_traits<  typename util::remove_reference<T>::type >;
+    using traits_type = impl::pushval_traits<  typename cpp::remove_reference<T>::type >;
     using value_type = typename traits_type::value_type;
     using dest_type = typename traits_type::dest_type;
 

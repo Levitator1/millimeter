@@ -4,6 +4,7 @@
 namespace levitator{
 namespace avr{
 
+/*
 //8-bit Timer/Counter 0 on the atmega328p, and maybe other devices
 struct Timer0Registers:public TimerRegisters8{
     Timer0Registers();
@@ -27,7 +28,8 @@ class HWTimer1 : public Timer16{
 public:
     static HWTimer1 &instance();        
 };
-
+*/
+  
 //extern HWTimer0 &hwtimer0;
 //extern HWTimer1 &hwtimer1;
 

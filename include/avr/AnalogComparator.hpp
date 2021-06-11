@@ -19,6 +19,9 @@
 namespace levitator {
 namespace avr {
 
+//DEBUG
+#if false
+    
 class AnalogComparator{
 
     //As long as this object is live, hold ADC power management disabled
@@ -42,8 +45,10 @@ class AnalogComparator{
     //static __attribute__((signal)) void __vector_interrupt_handler();
         
 public:                
-    AnalogComparator();    
-    bit_property<ioreg8> status;            //Whether the comparator is currently triggered. 2 cycles to read?
+    AnalogComparator();
+    
+    //Debug
+    //bit_property<static_bit_property_regs8<&ACSR, ACO>, util::null_type> status;            //Whether the comparator is currently triggered. 2 cycles to read?
         
     //Probably much faster and efficient to timeout based on poll attempts
     //rather than to read a clock and calculate proper time units
@@ -81,6 +86,8 @@ public:
         //Advances, but capture triggers every 38 cycles
         //TCCR1A = 0;
         //TCCR1B = 9 | 128;
+        
+        //DEBUG
         TCCR1A = 0;
         TCCR1B = 1 | 64; //1x clock multiplier, high-edge trigger
         
@@ -145,21 +152,13 @@ public:
                 TIFR1 &= ~_BV(TOV1);
             }
             
-        }while( i < n && --max_tries > 0 );
-        
-        consolens::console.print("TCCR1A: ");
-        consolens::console.print(TCCR1A, BIN);
-        consolens::console.print(", TCCR1B: ");
-        consolens::console.print(TCCR1B, BIN);
-        
-        consolens::console.print(", ADCSRB: ");
-        consolens::console.print(ADCSRB, BIN);
-        consolens::console.print("ACSR: ");
-        consolens::console.println(ACSR, BIN);
+        }while( i < n && --max_tries > 0 );        
                 
         return i;
     }    
 };
+
+#endif
 
 }
 }

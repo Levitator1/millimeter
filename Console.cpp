@@ -1,6 +1,8 @@
 #include <limits.h>
 #include "include/Console.hpp"
+#include "include/types.hpp"
 
+using namespace levitator;
 using namespace levitator::consolens;
 
 Console levitator::consolens::console = {};
@@ -53,7 +55,7 @@ void ControlState::parse_chx(){
 
 String ControlState::do_cancel(){
     auto result = m_buf;
-    m_buf = "";
+    m_buf = {""};
     m_status = empty;
     return result;
 }
@@ -74,47 +76,29 @@ bool ControlState::parse(char ch){
             m_status = empty;                    
     }
     else{
-        m_buf += ch;
+        m_buf = m_buf + ch;
         parse_chx();        
     }
     
     return m_status != empty;
 }
 
-Console::Console( HardwareSerial *serport, bool echo ):
-    m_echo(echo){    
-    port(serport);
-    
-    setTimeout(ULONG_MAX);
-}
-
-void Console::port( HardwareSerial *serport ){
-    m_port = serport;
-    if(m_port){
-         //Initialize serial and wait for port to open:
-         m_port->begin(9600);
-         while (!*m_port) {
-           ; // wait for serial port to connect. Needed for Leonardo only
-         }
-    }
+Console::Console( file_type *in, file_type *out, bool echo ):    
+    m_in(in),
+    m_out(out),
+    m_echo(echo){ 
 }
 
 size_t Console::write(uint8_t ch){
-    if(m_port)
-        return m_port->write(ch);
-    else
-        return 0;
+    return cputc(ch);
 }
 
 int Console::available(){
-    if(m_port)
-        return m_port->available();
-    else
-        return 0;
+    return m_in ? m_in->available() : -1;    
 }
 
 int Console::read(){
-    return m_port->read();
+    return cgetc();
 }
 
 /*
@@ -153,8 +137,8 @@ bool Console::handle_left_bracket_code(const String &buf){
     case 'C': //right arrow                        
         //End of line?
         if(m_linepos < m_linebuf.length()){ //no
-            m_linepos++;
-            print( buf ); //echo back the code so that the cursor will move            
+            m_linepos++;           
+            cputs( buf.c_str() ); //echo back the code so that the cursor will move
         }
         else //yes -- NOP, because we would go off the end
             return true;
@@ -163,7 +147,7 @@ bool Console::handle_left_bracket_code(const String &buf){
     case 'D': //left arrow
         if(m_linepos >= 1){
             --m_linepos;
-            print(buf);
+            cputs(buf.c_str());
         }
         return true;
         break;
@@ -191,8 +175,8 @@ void Console::character_in(int ch ){
             break;
 
         //Failed interpreting a control sequence, so echo it back and reset the control parser
-        case ControlState::cancel:
-            print( m_control.buffer() );
+        case ControlState::cancel:        
+            puts( m_control.buffer().c_str());
             //print( "BLAH2?");
             return;
             break;
@@ -207,19 +191,32 @@ void Console::character_in(int ch ){
         
         //backspace
         case '\b':
-            m_linebuf = m_linebuf.substring(0, m_linebuf.length()-1);
+            m_linebuf = m_linebuf.substr(0, m_linebuf.length()-1);
             
             //backspace is already echoing back, so space over the deleted character
             //and backspace again to push the cursor one net character left
-            print(" \b");            
+#           pragma GCC diagnostic push
+#           pragma GCC diagnostic ignored "-Wnonnull"  
+            m_out && fputs(" \b", m_out);
+#           pragma GCC diagnostic pop
             break;       
             
         default:
             //buf += (char)ch;
-            m_linebuf = m_linebuf.substring(0, m_linepos) + (char)ch + m_linebuf.substring(m_linepos+1);
-            m_linepos+=1;
-            if(m_echo)
-                m_port->print((char)ch);
+            String tmp = cpp::move(m_linebuf);
+            m_linebuf = tmp.substr(0, m_linepos) + (char)ch;
+            ++m_linepos;
+            
+            if(m_linepos < tmp.length())
+                m_linebuf = m_linebuf + tmp.substr(m_linepos);
+            
+            if(m_echo && m_out){
+#               pragma GCC diagnostic push
+#               pragma GCC diagnostic ignored "-Wnonnull" 
+                fputc((char)ch, m_out);
+#               pragma GCC diagnostic pop
+            }
+            
             break;
     }
     
@@ -239,7 +236,7 @@ String Console::read_line(bool *avail){
         auto ch = console.read();
         
         if(is_eol(ch)){
-            avail = false;
+            *avail = false;
             return m_linebuf;
         }
                               
@@ -253,7 +250,7 @@ String Console::read_line(bool *avail){
             }                    
         }
 
-        console.print("\r\n");
+        console.cputs("\r\n");
 
         if(avail)
             *avail = true;
@@ -265,6 +262,7 @@ String Console::read_line(bool *avail){
     return m_linebuf;    
 }
 
+/*
 int Console::peek(){
     if(m_port)
         return m_port->peek();
@@ -282,3 +280,47 @@ void Console::setTimeout(unsigned long to){
     if(m_port)
         m_port->setTimeout(to);
 }
+*/
+
+Console::file_type *Console::stream_in(){
+    return m_in;
+}
+
+Console::file_type *Console::stream_out(){
+    return m_out;
+}
+
+struct va_guard{
+    va_list &list;
+    
+    va_guard(va_list &vl):
+        list(vl){}
+    
+    ~va_guard(){ va_end(list); }
+};
+
+int Console::cprintf(const char *format, ...){
+    if(!m_out)
+        return EOF;
+    
+    va_list args;
+    va_start(args, format);
+    va_guard guard = { args };
+    return vfprintf(m_out, format, args);    
+}
+
+#   pragma GCC diagnostic push
+#   pragma GCC diagnostic ignored "-Wnonnull" 
+int Console::cputs(const char *str){
+    return m_out ? fputs(str, m_out) : EOF;
+}
+
+int Console::cgetc(){
+    return m_in ? fgetc(m_in) : -1;
+}
+
+int Console::cputc(int ch){
+    return m_out ? fputc(ch, m_out) : -1;
+}
+
+#   pragma GCC diagnostic pop   

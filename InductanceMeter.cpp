@@ -16,6 +16,9 @@ using namespace levitator::containers;
 using namespace levitator::avr;
 using namespace levitator::util;
 
+//DEBUG
+#ifdef false
+
 levitator::ardmeter::InductanceMeter::InductanceMeter(levitator::ardmeter::Config const &config, pin_id charge_pin):
     m_config(config),
     m_charge_pin(charge_pin){
@@ -172,3 +175,4 @@ ad_sample InductanceMeter::V2sample( real v ){
 }
 */
 
+#endif

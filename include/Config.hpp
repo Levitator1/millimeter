@@ -1,14 +1,14 @@
 #pragma once
 
-#include <Arduino.h>
 #include "types.hpp"
 #include "util/util.hpp"
+#include "arduino/BoardConfig.hpp"
 
 namespace levitator{
 namespace ardmeter{
 
 //
-// By default, we target the exceedingly economical Arduino Nano Pro, which comes
+// By default, we target the exceedingly economical Arduino Pro Mini, which comes
 // in 3.3V and 5V varieties. It is powered by an atmega328p microcontroller.
 //
 struct Config{
@@ -20,8 +20,8 @@ struct Config{
     //to charge inductors for inductance measurement.
     //Also, the top of the range of the A/D units is automatically 
     //calibrated to vcc by the hardware, so max A/D sample corresponds to vcc.
-    static constexpr double default_vcc = 3.3;
-    static constexpr ulong system_clock = 8000000; //3.3v 328p @ 8MHz (5V version is double speed)
+    static constexpr double default_vcc = arduino::Config::vcc;
+    static constexpr ulong system_clock = arduino::Config::system_clock;
 
     //The voltage across the inductance shunt resistor will be probed by the A/D
     //channel to calculate the current flow through the circuit.
@@ -40,8 +40,8 @@ struct Config{
                                         //which is usually 10 bits, but sometimes 12
 
     //I/O pins and wiring
-    static constexpr pin_id charge_inductance_pin = 2;
-    static constexpr pin_id inductance_v_sense = A0;
+    //static constexpr pin_id charge_inductance_pin = 2;
+   
     
     /*
     * Instance variables so that configuration can be read and written from EPROM
@@ -52,9 +52,8 @@ struct Config{
 
 }
 
-namespace avr{
-    using Config = ardmeter::Config;
-}
+//Export the configuration to other components
+using shared_config = ardmeter::Config;
 
 }
 

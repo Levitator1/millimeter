@@ -18,7 +18,7 @@ class Application:public arduino::Interactive{
 
 public:    
     Config config = {};
-    InductanceMeter inductance_meter = {config, config.charge_inductance_pin};
+    //InductanceMeter inductance_meter = {config, config.charge_inductance_pin};
 
     Application();
     void init();

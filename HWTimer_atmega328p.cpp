@@ -2,6 +2,7 @@
 
 using namespace levitator::avr;
 
+/*
 Timer0Registers::Timer0Registers():
     TimerRegisters8{ {TCCR0A, TCCR0B, TIMSK0, TIFR0, TOIE0, TOV0}, TCNT0 }{    
 }
@@ -18,7 +19,7 @@ HWTimer0::HWTimer0():
 
 HWTimer1::HWTimer1():
     Timer16( timer1_registers ){}
-
+*/
 
 /*
  * 
@@ -27,7 +28,7 @@ HWTimer1::HWTimer1():
  * runtime. So, call these from a main program after all of the other automatic
  * initialization has run.
  * 
- */
+ /
 HWTimer0 &HWTimer0::instance(){
     static HWTimer0 timer;
     return timer;    
@@ -62,3 +63,4 @@ ISR( TIMER1_OVF_vect  ){
     //++hwtimer1.ticks_hi_bits;
 }
 
+*/
