@@ -11,5 +11,5 @@ UnknownCommand::UnknownCommand():
 }
 
 void UnknownCommand::handle(Interactive &, const String &cmd, size_t pos ){
-    console.cprintf("Unrecognized command: %s\n", cmd.substr(0, pos));    
+    console.cprintf("Unrecognized command: %s\n", cmd.substr(0, pos).c_str());    
 }

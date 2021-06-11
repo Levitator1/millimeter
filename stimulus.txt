@@ -1,0 +1,5 @@
+// Wait for 100 ms before sending the next bit
+wait 3000 ms
+
+// Second string
+" WORLD"

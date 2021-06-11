@@ -49,9 +49,11 @@ struct Test2{};
     bit_number UDREX_bit
 >
  */
-struct UART0Regs:public SHardwareUARTRegs< SREG16ADDR(UBRR0),
-        SREG8ADDR(UCSR0A),SREG8ADDR(UCSR0B), SREG8ADDR(UCSR0C), SREG8ADDR(UDR0),
-        U2X0, RXC0, UCSZ00, UCSZ01, RXEN0, TXEN0, UDRE0>{};
+struct UART0Regs:public SHardwareUARTRegs< 
+    meta::types<SREG16ADDR(UBRR0),
+        SREG8ADDR(UCSR0A),SREG8ADDR(UCSR0B), SREG8ADDR(UCSR0C), SREG8ADDR(UDR0)>,
+    meta::values<bit_number,
+        U2X0, RXC0, UCSZ00, UCSZ01, RXEN0, TXEN0, UDRE0>>{};
 
     
 struct UART0 : public HardwareUART<UART0Regs>{

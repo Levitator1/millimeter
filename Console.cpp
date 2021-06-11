@@ -203,8 +203,13 @@ void Console::character_in(int ch ){
             
         default:
             //buf += (char)ch;
-            m_linebuf = m_linebuf.substr(0, m_linepos) + (char)ch + m_linebuf.substr(m_linepos+1);
-            m_linepos+=1;
+            String tmp = cpp::move(m_linebuf);
+            m_linebuf = tmp.substr(0, m_linepos) + (char)ch;
+            ++m_linepos;
+            
+            if(m_linepos < tmp.length())
+                m_linebuf = m_linebuf + tmp.substr(m_linepos);
+            
             if(m_echo && m_out){
 #               pragma GCC diagnostic push
 #               pragma GCC diagnostic ignored "-Wnonnull" 

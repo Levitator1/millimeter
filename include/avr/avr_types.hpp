@@ -53,7 +53,7 @@ namespace avr{
     //which serves as an interface to the register.
     
     template<typename T>
-    constexpr T &regaddr_deref(size_t addr){
+    T &regaddr_deref(size_t addr){
         return *reinterpret_cast<typename cpp::remove_reference<T>::type *>(addr);
     }
     
@@ -89,7 +89,7 @@ namespace avr{
     };
     
     template<typename T, size_t Address>
-    typename sregaddr<T, Address>::value_type &sregaddr<T, Address>::value = regaddr_deref<T>(Address);
+    typename sregaddr<T, Address>::value_type &sregaddr<T, Address>::value = *reinterpret_cast<typename cpp::remove_reference<T>::type *>(Address);
     
     template<size_t Address>
     struct sreg8addr: public sregaddr<ioreg8, Address>{

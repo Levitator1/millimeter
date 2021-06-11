@@ -16,19 +16,15 @@ Application::Application():
 
 //TODO: Put the baud in configuration
 static UART0 uart0(9600);
-static UART0::file_type console_stream = uart0.make_stdio_file();
+static UART0::file_type console_stream = uart0.make_tty_stream();
 
 void Application::init(){
-    console = {&console_stream, &console_stream, true};        
-        
-    //DEBUG
-    while(true){ uart0.write('X'); }
-    
+    console = {&console_stream, &console_stream, true};                        
     
     console.cprintf("\n===========================================\n");
-    console.cprintf("ardmeter v0.01\n" );
-    console.cprintf("An inductance multimeter from a $5 Arduino");
-    console.cprintf(  "===========================================\n\n");            
+    console.cprintf(  "ardmeter v0.01\n" );
+    console.cprintf(  "An inductance multimeter from a $5 Arduino\n");
+    console.cprintf(  "===========================================\n\n");                
     
     //Analog reference is set to VCC which is probably 3.3V, or alternately 5V
     

@@ -50,12 +50,7 @@ struct is_among : public cpp::ic<bool, impl::is_among_impl<T, Types...>::value>{
 
 //An arbitrary list of types, though it takes some effort to enumerate
 template<typename... Args>
-struct types;
-
-template<typename T, typename... Args>
-struct types<T, Args...>{
-    using first_type = T;
-    using remaining_types = types<Args...>;
+struct types{
     static constexpr int size = sizeof...(Args);
 };
 
@@ -74,16 +69,58 @@ namespace impl{
     template<typename Head, typename... Types>
     struct type_i_impl<0, Head, Types...>{
         using result = Head;
-    };            
+    };
+    
+    template<int Index, class List>
+    struct type_i_impl2;
+    
+    template<int Index, class... Types>
+    struct type_i_impl2<Index, types<Types...> >{
+        using result = typename impl::type_i_impl<Index, Types...>::result;
+    };    
 }
 
 //Retrieve the type from types<...> at the specified index
+template<typename TypeList, int Index>
+using type_i = typename impl::type_i_impl2<Index, TypeList>::result;
+    
+
+/*
 template<typename TypeList, int Index>
 struct type_i;
 
 template<int Index, typename...Items>
 struct type_i<types<Items...>, Index>{
-    using type = typename impl::type_i_impl<sizeof...(Items), Items...>::result;
+    using type = typename impl::type_i_impl<Index, Items...>::result;
+};
+*/
+
+//A type which represents a collection of constants
+template<typename T, T... V>
+struct values{
+    using value_type = T;
+};
+
+namespace impl{
+    
+    template<typename T, int Remain, T Head, T... Values>
+    struct value_i_impl{
+        static constexpr T result = value_i_impl<T, Remain-1, Values...>::result;
+    };
+    
+    template<typename T, T Head, T... Values>
+    struct value_i_impl<T, 0, Head, Values...>{
+        static constexpr T result = Head;
+    };    
+}
+
+//Retrieve the value from values<T, T...> at the specified index
+template<typename ValueList, int Index>
+struct value_i;
+
+template<typename T, int Index, T... Values>
+struct value_i<values<T, Values...>, Index>{
+    static constexpr T value = impl::value_i_impl<T, Index, Values...>::result;
 };
 
 template<typename F>

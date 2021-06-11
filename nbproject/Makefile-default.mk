@@ -88,11 +88,31 @@ LDLIBSOPTIONS=
 # fixDeps replaces a bunch of sed/cat/printf statements that slow down the build
 FIXDEPS=fixDeps
 
+# The following macros may be used in the pre and post step lines
+_/_=/
+ShExtension=.sh
+Device=ATmega328P
+ProjectDir=/home/j/project/millimeter
+ProjectName=millimeter
+ConfName=default
+ImagePath=dist/default/${IMAGE_TYPE}/millimeter.${IMAGE_TYPE}.${OUTPUT_SUFFIX}
+ImageDir=dist/default/${IMAGE_TYPE}
+ImageName=millimeter.${IMAGE_TYPE}.${OUTPUT_SUFFIX}
+ifeq ($(TYPE_IMAGE), DEBUG_RUN)
+IsDebug="true"
+else
+IsDebug="false"
+endif
+
 .build-conf:  ${BUILD_SUBPROJECTS}
 ifneq ($(INFORMATION_MESSAGE), )
 	@echo $(INFORMATION_MESSAGE)
 endif
 	${MAKE}  -f nbproject/Makefile-default.mk dist/${CND_CONF}/${IMAGE_TYPE}/millimeter.${IMAGE_TYPE}.${OUTPUT_SUFFIX}
+	@echo "--------------------------------------"
+	@echo "User defined post-build step: [avr-size -C --totals --mcu=`echo "${Device}" | tr '[:upper:]' '[:lower:]'` dist/default/production/millimeter.production.elf]"
+	@avr-size -C --totals --mcu=`echo "${Device}" | tr '[:upper:]' '[:lower:]'` dist/default/production/millimeter.production.elf
+	@echo "--------------------------------------"
 
 MP_PROCESSOR_OPTION=ATmega328P
 # ------------------------------------------------------------------------------------

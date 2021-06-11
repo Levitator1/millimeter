@@ -79,14 +79,28 @@ public:
         String(empty_string, 0, true, adopt_tag{}){            
     }
     
-    String(const_pointer_type p):
-        m_state{false, algo::arraylen(p)},      
-        m_buf(cp(p, m_state.length)){        
+    void init(const_pointer_type p, size_t len){
+        m_state.length = len;
+        if(m_state.length == 0){
+            m_buf = empty_string;
+            m_state.immutable_data = true;
+        }
+        else{
+            m_state.immutable_data = false;
+            m_buf = cp(p, m_state.length);
+        }
     }
     
-    String(const_pointer_type p, size_t len):
-        m_state{false, len},      
-        m_buf(cp(p, len)){
+    void init(const_pointer_type p){
+        init(p, algo::arraylen(p));
+    }
+    
+    String(const_pointer_type p){
+        init(p);
+    }
+    
+    String(const_pointer_type p, size_t len){
+        init(p, len);
     }
     
     String(const String &rhs):

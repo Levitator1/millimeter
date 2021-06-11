@@ -6,6 +6,7 @@
 #include "avr_types.hpp"
 //#include "Config.hpp"
 #include "file.hpp"
+#include "../util/meta.hpp"
 
 namespace levitator{
 namespace avr{
@@ -30,6 +31,7 @@ struct UART_FILE:public FILE_EX{
     }
 };
 
+/*
 template<
     class Ubrrx,
     class Ucsrxa,
@@ -58,9 +60,54 @@ struct SHardwareUARTRegs{
         ucszx1_bit = UCSZX1_bit,
         rxenx_bit = RXENX_bit,
         txenx_bit = TXENX_bit,
-        udrex_bit = UDREX_bit;             
+        udrex_bit = UDREX_bit;
+};
+*/
+
+//template<class RegList, class BitList>
+//struct SHardwareUARTRegs;
+
+//template< class... Regs, template<typename...> class RegList, bit_number... Bits, template<typename, bit_number...> class BitList>
+//struct SHardwareUARTRegs< RegList<Regs...>, BitList<bit_number, Bits...>>{
+    
+template<class RegList, class BitList>
+struct SHardwareUARTRegs{
+    using regs = RegList;
+    using bits = BitList;
+    
+    template<int I>
+    using regtype = meta::type_i<regs, I>;
+    
+    static meta::type_i<regs, 0> ubrrx;
+    static meta::type_i<regs, 1> ucsrxa;
+    static meta::type_i<regs, 2> ucsrxb;
+    static meta::type_i<regs, 3> ucsrxc;
+    static meta::type_i<regs, 4> udrx;    
+
+    static constexpr bit_number 
+        u2xx_bit = meta::value_i<bits, 0>::value,
+        rxcx_bit = meta::value_i<bits, 1>::value,
+        ucszx0_bit = meta::value_i<bits, 2>::value,
+        ucszx1_bit = meta::value_i<bits, 3>::value,
+        rxenx_bit = meta::value_i<bits, 4>::value,
+        txenx_bit = meta::value_i<bits, 5>::value,
+        udrex_bit = meta::value_i<bits, 6>::value;
 };
 
+template<class Regs, class Bits>
+meta::type_i<Regs, 0> SHardwareUARTRegs<Regs, Bits>::ubrrx = {};
+
+template<class Regs, class Bits>
+meta::type_i<Regs, 1> SHardwareUARTRegs<Regs, Bits>::ucsrxa = {};
+
+template<class Regs, class Bits>
+meta::type_i<Regs, 2> SHardwareUARTRegs<Regs, Bits>::ucsrxb = {};
+
+template<class Regs, class Bits>
+meta::type_i<Regs, 3> SHardwareUARTRegs<Regs, Bits>::ucsrxc = {};
+
+template<class Regs, class Bits>
+meta::type_i<Regs, 4> SHardwareUARTRegs<Regs, Bits>::udrx = {};
 
 
 //The system clock must be known to calculate the clock divisors to arrive
@@ -72,7 +119,7 @@ public:
     using file_type = UART_FILE<Regs>;
     
 private:
-    const regs_type m_regs;
+    regs_type m_regs;
 
 protected:
     static inline file_type *upcast_file(FILE *f){
@@ -90,20 +137,38 @@ protected:
         return f->uart.read();
     }
     
+    //Same as stdio_write, but it converts lf to cr/lf
+    static int tty_write(char u8Data, FILE *stream){
+        auto f = upcast_file(stream);
+        int result;
+        if(u8Data == '\n')
+            if((result=f->uart.write('\r')) != 0)
+                return result;
+        return f->uart.write(u8Data);
+    }
+    
+    static int tty_read(FILE *stream){
+        return stdio_read(stream);
+    }
+    
 public:
     HardwareUART(uint baud, const regs_type &regs = {} ):
         m_regs(regs){
         
-        regs.ubrrx.get() = (uint16_t)((system_clock / (baud * 16UL))) - 1;
+        regs.ubrrx = (uint16_t)((system_clock / (baud * 16UL))) - 1;
+        
+        //DEBUG
+        //auto blah = &regs.ubrrx.get();
+        //auto blah2 = regs.ubrrx.address;
         
         //Disable baud doubling
-        regs.ucsrxa.get() &= ~_BV(regs.u2xx_bit);
+        regs.ucsrxa &= ~_BV(regs.u2xx_bit);
         
         // Set frame format to 8 data bits, no parity, 1 stop bit
-        regs.ucsrxc.get() |= _BV(regs.ucszx1_bit) | _BV(regs.ucszx0_bit);
+        regs.ucsrxc |= _BV(regs.ucszx1_bit) | _BV(regs.ucszx0_bit);
                        
         //enable transmission and reception
-        regs.ucsrxb.get() |= _BV(regs.rxenx_bit) | _BV(regs.txenx_bit);
+        regs.ucsrxb |= _BV(regs.rxenx_bit) | _BV(regs.txenx_bit);
     }
     
     //Pointer to this can be assigned directly to both global stdin and stdout without conflict
@@ -112,12 +177,18 @@ public:
         fdev_setup_stream(&result, &stdio_write, &stdio_read, _FDEV_SETUP_RW);
         return result;
     }
+    
+    file_type make_tty_stream(){
+        file_type result{*this};
+        fdev_setup_stream(&result, &tty_write, &tty_read, _FDEV_SETUP_RW);
+        return result;
+    }
         
     inline int read(){
         uint8_t u8Data;
         // Wait for byte to be received
         while(!available()){};
-        u8Data=m_regs.udrx.get();
+        u8Data=m_regs.udrx;
         
         // Return received data
         return u8Data;
@@ -125,15 +196,15 @@ public:
     
     inline int write(char ch){
         //wait while previous byte is completed
-        while(!(m_regs.ucsrxa.get() & _BV(m_regs.udrex_bit))){};
+        while(!(m_regs.ucsrxa & _BV(m_regs.udrex_bit))){};
         
         // Transmit data
-        m_regs.udrx.get() = ch;
+        m_regs.udrx = ch;
         return 0;
     }
     
     inline int available() const{
-        return (m_regs.ucsrxa.get() & _BV(m_regs.rxcx_bit)) ? 1 : 0;
+        return (m_regs.ucsrxa & _BV(m_regs.rxcx_bit)) ? 1 : 0;
     }    
 };
 

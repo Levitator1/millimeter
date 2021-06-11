@@ -1,0 +1,10 @@
+testbench for "atmega328p" is
+   begin
+      process is
+         begin
+            UDR0 <= 65
+            UCSR0A.UDRE0 <= 1
+            wait;
+         end process;
+   end testbench;
+
