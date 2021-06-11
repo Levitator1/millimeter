@@ -1,14 +1,16 @@
 #pragma once
 #include <stdint.h>
-#include "avr/HWTimerCommon.hpp"
+#include "avr/avr_types.hpp"
+#include "util/String.hpp"
 
 namespace levitator{
 
-using time_type = avr::TimerBase::time_type;
+using time_type = uint32_t;
     
 //shorthand
 using uint = unsigned int;
 using ulong = unsigned long;
+using String = util::String<>;
     
 using const_string = const char *;
 using real = double;

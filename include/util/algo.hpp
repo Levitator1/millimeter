@@ -5,14 +5,41 @@
 namespace levitator {
 namespace algo {
 
+//Returns a zero-like value of T. For characters and numbers, this is plain old zero,
+// aka, the null carachter or C-string terminator.
+//For pointers, it is nullptr
+//For everything else it is T{0}, if that is defined
+    
+template<typename T>
+struct nullval{
+    using type = T;
+    static inline constexpr T value(){
+        return T{0};
+    }
+};
+
+template<typename T>
+struct nullval<T *>{
+    using type = T;
+    static inline constexpr T *value(){
+        return nullptr;
+    }
+};
+    
+/*
+template<typename T>
+constexpr T nullval(){
+    return T{0};
+}
+
+template<typename T>
+constexpr T *nullval<T *>(){
+    return nullptr;
+}
+*/
+    
 //Sort of like strlen, but for any type
-namespace impl{
-    
-    template<typename T>
-    struct arraylen_traits{
-        static constexpr T term = T{0};
-    };
-    
+namespace impl{        
     template<typename T, T Term>
     size_t arraylen_impl(const T *array){
         auto p = array;
@@ -20,25 +47,10 @@ namespace impl{
             ++p;
         }
         return p - array;
-    }    
-    
-    template<>
-    struct arraylen_traits<unsigned char>{
-        static constexpr unsigned char term = '\0';
-    };
-    
-    template<>
-    struct arraylen_traits<signed char>{
-        static constexpr signed char term = '\0';
-    };
-    
-    template<typename P>
-    struct arraylen_traits<P *>{
-        static constexpr P *term = nullptr;
-    };    
+    }            
 }
 
-template<typename T, T Term = impl::arraylen_traits<T>::term>
+template<typename T, T Term = nullval<T>::value()>
 size_t arraylen(const T *array){
     return impl::arraylen_impl<T, Term>(array);
 }

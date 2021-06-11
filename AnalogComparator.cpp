@@ -3,10 +3,10 @@
 #include "include/avr/AnalogComparator.hpp" 
 
 using namespace levitator::avr;
-//void (*AnalogComparator::chain_handler)() = nullptr;
 
+//DEBUG
+/*
 AnalogComparator::AnalogComparator():
-    status(ACSR, ACO){    
+    status({}){    
 }
-
-//void AnalogComparator::__vector_interrupt_handler(){
+*/

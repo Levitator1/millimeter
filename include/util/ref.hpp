@@ -2,7 +2,6 @@
 
 namespace levitator{
 
-
 //Reference wrapper
 template<typename T>
 class ref{

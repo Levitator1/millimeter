@@ -23,7 +23,7 @@ public:
     using iterator = typename BufT::iterator;
 
     sliding_average(buffer_type &&buf):
-        m_buf( util::move(buf) ),
+        m_buf( cpp::move(buf) ),
         m_sum(0){
     }
 
@@ -77,7 +77,7 @@ private:
 
 public:
     settle(buffer_type &&buf, const sample_function &f):
-        m_avg(util::move(buf)),
+        m_avg(cpp::move(buf)),
         m_sample_f(f){
     }
 
@@ -85,7 +85,7 @@ public:
         T maxdiff=0, diff;
 
         for( auto it = m_avg.begin(); it != m_avg.end(); ++it){
-            diff = util::abs( m_avg.average_except(it) - *it  );
+            diff = cpp::abs( m_avg.average_except(it) - *it  );
             if(diff > maxdiff)
                 maxdiff = diff;
         }
@@ -121,7 +121,7 @@ public:
 
 template<typename BufT, typename SampleF>
 settle<BufT, SampleF> make_settle( BufT &&buf, const SampleF &f){
-    return { util::move(buf), f };
+    return { cpp::move(buf), f };
 }
 
 }

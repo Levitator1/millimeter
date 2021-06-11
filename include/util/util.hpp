@@ -35,5 +35,21 @@ extern unsigned long time_diff( unsigned long lhs, unsigned long rhs );
 //Simplest/emptiest/most-NOP type possible
 struct null_type{};
 
+//Generalization over integral_constant so that you have a type whose instances
+//always map to the same statically allocated or constant value
+template<typename T, T Value>
+struct constant{
+    using value_type = T;
+    static constexpr value_type value = Value;
+    
+    inline value_type get() const{
+        return value;
+    }
+    
+    inline operator value_type() const{
+        return get();
+    }    
+};
+
 }
 }

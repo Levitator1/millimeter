@@ -1,5 +1,8 @@
+#include <stdio.h>
+#include "include/Console.hpp"
 #include "include/commands/UnknownCommand.hpp"
 
+using namespace levitator::consolens;
 using namespace levitator::arduino;
 using namespace levitator::ardmeter;
 
@@ -8,6 +11,5 @@ UnknownCommand::UnknownCommand():
 }
 
 void UnknownCommand::handle(Interactive &, const String &cmd, size_t pos ){
-    Serial.print("Unrecognized command: ");
-    Serial.println(cmd.substring(0, pos));
+    console.cprintf("Unrecognized command: %s\n", cmd.substr(0, pos));    
 }

@@ -35,6 +35,16 @@ public:
         return *get();
     }
     
+    inline operator pointer_type() const{
+        return get();
+    }
+    
+    inline pointer_type release() noexcept{
+        auto p = m_ptr;
+        m_ptr = nullptr;
+        return p;
+    }
+    
 };
 
 template<typename T>

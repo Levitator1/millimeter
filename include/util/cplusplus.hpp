@@ -6,8 +6,29 @@
  * is otherwise unavailable at least under avr-specific gcc
  *
  */
-
 #include <stddef.h>
+#include <stdlib.h>
+#undef abs
+#undef max
+#undef min
+
+//Global operators new and delete
+
+inline void *operator new( size_t sz ){
+    return ::malloc(sz);
+}
+
+inline void *operator new[](size_t sz){
+    return operator new(sz);
+}
+
+inline void operator delete(void *p){
+    ::free(p);
+}
+
+inline void operator delete(void *p, size_t){
+    return operator delete(p);
+}
 
 namespace levitator{
 namespace cpp{
@@ -28,15 +49,26 @@ T abs(T x){
     constexpr T minus_one = --T(0);
     return x < 0 ? x * minus_one : x;
 }
-    
+
+
 template<typename T>
 struct remove_reference{
     using type = T;
 };
 
 template<typename T>
-struct remove_reference<T &>{
-    using type = T;
+struct remove_reference<volatile T &>{
+    using type = volatile T;
+};
+
+template<typename T>
+struct remove_reference<const T &>{
+    using type = const T;
+};
+
+template<typename T>
+struct remove_reference<const volatile T &>{
+    using type = const volatile T;
 };
 
 //
@@ -165,5 +197,17 @@ struct is_same<T, T>:public true_type{};
 template<typename... Args>
 using void_t = void;
 
+// Don't have declval in AVR gcc. However, this hack should accomplish the same thing
+// and might even be compliant C++
+template<typename T>
+T *declptr(){
+    return nullptr;
+}
+
+
 }
 }
+
+//shorthand way to obtain the return type of a member of a class, where the member can be any function call
+#define MEMBER_RETURN(Class, Member) decltype( levitator::cpp::declptr<Class>()->Member )
+
