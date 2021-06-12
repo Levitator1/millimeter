@@ -1,4 +1,5 @@
 #pragma once
+#include <avr/pgmspace.h>
 #include <stddef.h>
 #include "cplusplus.hpp"
 
@@ -52,62 +53,58 @@ struct constant{
     }    
 };
 
+//Give this thing dynamic storage (initialized and stored per instance)
 struct dynamic_storage_tag{};
-struct static_storage_tag{};
 
-template<typename DestType, typename ValueType,  typename StorageType = dynamic_storage_tag>
+//Give this this static storage (initialized once on startup to init_value, and stored globally)
+template<typename T, T init_value>
+struct static_const_storage_tag{};
+
+template<typename T, typename StorageType = dynamic_storage_tag>
 struct storage;
 
-template<typename DestType, typename ValueType>
-struct storage<DestType, ValueType, dynamic_storage_tag>{
-    using dest_type = DestType;
-    using value_type = ValueType;
+template<typename T>
+struct storage<T, dynamic_storage_tag>{
+    using value_type = T;
+    //using value_type = typename cpp::decay<T>::type;
     
-    dest_type value;
+    value_type value;
     
-    inline storage(const value_type &v):
+    //Maybe generate an error for initialized, for now 
+    storage() = delete;
+    
+    inline storage(value_type v):
         value(v){}
     
-    inline storage(value_type &&v):
-        value(cpp::move(v)){}
-    
-    inline dest_type &get(){
+    inline value_type &get(){
         return value;
     }
     
-    inline const dest_type &get() const{
+    inline const value_type &get() const{
         return value;
     }
     
-    inline operator dest_type &(){
+    inline operator value_type &(){
         return get();
     }
     
-    inline operator const dest_type &(){
+    inline operator const value_type &(){
         return get();
     }   
 };
 
-template<typename DestType, typename ValueType>
-struct storage<DestType, ValueType, static_storage_tag>{
-    using dest_type = DestType;
-    using value_type = ValueType;
+template<typename T, typename InitType, InitType InitVal>
+struct storage<T, static_const_storage_tag<InitType, InitVal>>{
     
-    static dest_type value;                
-    
-    inline dest_type &get(){
+    using value_type = T;
+    using init_type = InitType;
+    static constexpr init_type value PROGMEM = InitVal;               
+            
+    static inline constexpr const value_type &get(){
         return value;
-    }
+    }        
     
-    inline const dest_type &get() const{
-        return value;
-    }
-    
-    inline operator dest_type &(){
-        return get();
-    }
-    
-    inline operator const dest_type &(){
+    inline constexpr operator const value_type &() const{
         return get();
     }   
 };

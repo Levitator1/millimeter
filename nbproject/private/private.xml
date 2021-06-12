@@ -28,6 +28,7 @@
             <file>file:/home/j/project/millimeter/include/util/algo.hpp</file>
             <file>file:/home/j/project/millimeter/src/avr/AnalogComparator.cpp</file>
             <file>file:/home/j/project/millimeter/src/Interactive.cpp</file>
+            <file>file:/home/j/project/millimeter/include/util/util.hpp</file>
             <file>file:/home/j/project/millimeter/src/command_handlers/MeasureInductance.cpp</file>
         </group>
     </open-files>

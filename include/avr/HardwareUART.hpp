@@ -47,13 +47,13 @@ struct SHardwareUARTRegs{
     static meta::type_i<regs, 4> udrx;    
 
     static constexpr bit_number 
-        u2xx_bit = meta::value_i<bits, 0>::value,
-        rxcx_bit = meta::value_i<bits, 1>::value,
-        ucszx0_bit = meta::value_i<bits, 2>::value,
-        ucszx1_bit = meta::value_i<bits, 3>::value,
-        rxenx_bit = meta::value_i<bits, 4>::value,
-        txenx_bit = meta::value_i<bits, 5>::value,
-        udrex_bit = meta::value_i<bits, 6>::value;
+        u2xx_bit PROGMEM = meta::value_i<bits, 0>::value,
+        rxcx_bit PROGMEM = meta::value_i<bits, 1>::value,
+        ucszx0_bit PROGMEM = meta::value_i<bits, 2>::value,
+        ucszx1_bit PROGMEM = meta::value_i<bits, 3>::value,
+        rxenx_bit PROGMEM = meta::value_i<bits, 4>::value,
+        txenx_bit PROGMEM = meta::value_i<bits, 5>::value,
+        udrex_bit PROGMEM = meta::value_i<bits, 6>::value;
 };
 
 template<class Regs, class Bits>
@@ -124,8 +124,8 @@ public:
         volatile int blarg;
         //auto blah = regs.ubrrx.debug_pointer();
         //assert(blah == &UBRR0);
-        auto blah2 = regs.ubrrx.reg;
-        auto addr = regs.ubrrx.address;
+        //auto blah2 = regs.ubrrx.reg;
+        //auto addr = regs.ubrrx.address;
         //auto blah = &regs.ubrrx.get();
         //auto blah2 = regs.ubrrx.address;
         
