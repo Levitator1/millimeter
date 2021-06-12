@@ -33,7 +33,6 @@ namespace impl{
     struct is_among_impl<T>{
         static constexpr bool value = false;
     };
-
 }
 
 //A mostly empty type that serves as a reference to another type
@@ -99,6 +98,7 @@ struct type_i<types<Items...>, Index>{
 template<typename T, T... V>
 struct values{
     using value_type = T;
+    static constexpr size_t size = sizeof...(V);
 };
 
 namespace impl{
@@ -167,7 +167,6 @@ namespace impl{
     struct integer_sequence_impl<T, End, End, types<Args...>>{
         using type = types<Args...>;
     };
-    
 }
 
 template<typename T, T Begin, T End>

@@ -36,6 +36,10 @@ namespace avr{
     using reg8ptr = regptr<ioreg8>;
     using reg16ptr = regptr<ioreg16>;
     
+    //Statically-stored bit number
+    template<bit_number BitNo>
+    using sbitno = util::storage<bit_number, util::static_const_storage_tag<bit_number, BitNo>>;
+    
     //Time 4 hax
     //So, the AVR headers define each and every one of the registers as the dereference
     //of the cast of a constant integer address to a pointer to volatile.

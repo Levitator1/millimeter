@@ -33,44 +33,32 @@ struct UART_FILE:public FILE_EX{
 };
     
 template<class RegList, class BitList>
-struct SHardwareUARTRegs{
-    using regs = RegList;
-    using bits = BitList;
+struct HardwareUARTRegs{
+private:
+    meta::assert_size_field<RegList, 5> check_reg_count;
+    meta::assert_size_field<BitList, 7> check_bit_count;
+        
+public:    
+    template<int I>
+    using regtype = meta::type_i<RegList, I>;
     
     template<int I>
-    using regtype = meta::type_i<regs, I>;
+    using bittype = meta::type_i<BitList, I>;
     
-    static meta::type_i<regs, 0> ubrrx;
-    static meta::type_i<regs, 1> ucsrxa;
-    static meta::type_i<regs, 2> ucsrxb;
-    static meta::type_i<regs, 3> ucsrxc;
-    static meta::type_i<regs, 4> udrx;    
-
-    static constexpr bit_number 
-        u2xx_bit PROGMEM = meta::value_i<bits, 0>::value,
-        rxcx_bit PROGMEM = meta::value_i<bits, 1>::value,
-        ucszx0_bit PROGMEM = meta::value_i<bits, 2>::value,
-        ucszx1_bit PROGMEM = meta::value_i<bits, 3>::value,
-        rxenx_bit PROGMEM = meta::value_i<bits, 4>::value,
-        txenx_bit PROGMEM = meta::value_i<bits, 5>::value,
-        udrex_bit PROGMEM = meta::value_i<bits, 6>::value;
+    regtype<0> ubrrx;
+    regtype<1> ucsrxa;
+    regtype<2> ucsrxb;
+    regtype<3> ucsrxc;
+    regtype<4> udrx;
+    
+    bittype<0> u2xx_bit;
+    bittype<1> rxcx_bit;
+    bittype<2> ucszx0_bit;
+    bittype<3> ucszx1_bit;
+    bittype<4> rxenx_bit;
+    bittype<5> txenx_bit;
+    bittype<6> udrex_bit;       
 };
-
-template<class Regs, class Bits>
-meta::type_i<Regs, 0> SHardwareUARTRegs<Regs, Bits>::ubrrx = {};
-
-template<class Regs, class Bits>
-meta::type_i<Regs, 1> SHardwareUARTRegs<Regs, Bits>::ucsrxa = {};
-
-template<class Regs, class Bits>
-meta::type_i<Regs, 2> SHardwareUARTRegs<Regs, Bits>::ucsrxb = {};
-
-template<class Regs, class Bits>
-meta::type_i<Regs, 3> SHardwareUARTRegs<Regs, Bits>::ucsrxc = {};
-
-template<class Regs, class Bits>
-meta::type_i<Regs, 4> SHardwareUARTRegs<Regs, Bits>::udrx = {};
-
 
 //The system clock must be known to calculate the clock divisors to arrive
 //at the actual baud rate
@@ -117,7 +105,7 @@ public:
     HardwareUART(uint baud, const regs_type &regs = {} ):
         m_regs(regs){
         
-        regs.ubrrx = (uint16_t)((system_clock / (baud * 16UL))) - 1;
+        m_regs.ubrrx = (uint16_t)((system_clock / (baud * 16UL))) - 1;
                         
         //DEBUG
         
@@ -130,13 +118,13 @@ public:
         //auto blah2 = regs.ubrrx.address;
         
         //Disable baud doubling
-        regs.ucsrxa &= ~_BV(regs.u2xx_bit);
+        m_regs.ucsrxa &= ~_BV(regs.u2xx_bit);
         
         // Set frame format to 8 data bits, no parity, 1 stop bit
-        regs.ucsrxc |= _BV(regs.ucszx1_bit) | _BV(regs.ucszx0_bit);
+        m_regs.ucsrxc |= _BV(regs.ucszx1_bit) | _BV(regs.ucszx0_bit);
                        
         //enable transmission and reception
-        regs.ucsrxb |= _BV(regs.rxenx_bit) | _BV(regs.txenx_bit);
+        m_regs.ucsrxb |= _BV(regs.rxenx_bit) | _BV(regs.txenx_bit);
     }
     
     //Pointer to this can be assigned directly to both global stdin and stdout without conflict
