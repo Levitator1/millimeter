@@ -2,6 +2,33 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group/>
+        <group>
+            <file>file:/home/j/project/millimeter/include/avr/atomic.hpp</file>
+            <file>file:/home/j/project/millimeter/include/avr/atmega328p/HWTimer.hpp</file>
+            <file>file:/home/j/project/millimeter/src/util/atomic.cpp</file>
+            <file>file:/home/j/project/millimeter/include/avr/HardwareUART.hpp</file>
+            <file>file:/home/j/project/millimeter/include/util/smart_ptr.hpp</file>
+            <file>file:/home/j/project/millimeter/include/Console.hpp</file>
+            <file>file:/home/j/project/millimeter/include/util/meta.hpp</file>
+            <file>file:/home/j/project/millimeter/include/util/String.hpp</file>
+            <file>file:/home/j/project/millimeter/include/avr/atmega328p/DeviceUARTs.hpp</file>
+            <file>file:/home/j/project/millimeter/include/test.SCL</file>
+            <file>file:/home/j/project/millimeter/src/InductanceMeter.cpp</file>
+            <file>file:/home/j/project/millimeter/src/Application.cpp</file>
+            <file>file:/home/j/project/millimeter/src/util/cplusplus.cpp</file>
+            <file>file:/home/j/project/millimeter/include/avr/avr_types.hpp</file>
+            <file>file:/home/j/project/millimeter/src/avr/atmega328o/HWTimer_atmega328p.cpp</file>
+            <file>file:/home/j/project/millimeter/src/util/util.cpp</file>
+            <file>file:/home/j/project/millimeter/stimulus.txt</file>
+            <file>file:/home/j/project/millimeter/src/main.cpp</file>
+            <file>file:/home/j/project/millimeter/src/Console.cpp</file>
+            <file>file:/home/j/project/millimeter/src/command_handlers/CommandHandler.cpp</file>
+            <file>file:/home/j/project/millimeter/include/ringbuffer.hpp</file>
+            <file>file:/home/j/project/millimeter/src/command_handlers/UnknownCommand.cpp</file>
+            <file>file:/home/j/project/millimeter/include/util/algo.hpp</file>
+            <file>file:/home/j/project/millimeter/src/avr/AnalogComparator.cpp</file>
+            <file>file:/home/j/project/millimeter/src/Interactive.cpp</file>
+            <file>file:/home/j/project/millimeter/src/command_handlers/MeasureInductance.cpp</file>
+        </group>
     </open-files>
 </project-private>

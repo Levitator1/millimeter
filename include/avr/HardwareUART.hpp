@@ -3,6 +3,7 @@
 //#include "avr/io.h"
 #include <avr/io.h>
 #include <stdio.h>
+#include <assert.h>
 #include "avr_types.hpp"
 //#include "Config.hpp"
 #include "file.hpp"
@@ -30,45 +31,6 @@ struct UART_FILE:public FILE_EX{
         return uart.available();
     }
 };
-
-/*
-template<
-    class Ubrrx,
-    class Ucsrxa,
-    class Ucsrxb,
-    class Ucsrxc,
-    class Udrx,
-    bit_number U2XX_bit,
-    bit_number RXCX_bit,
-    bit_number UCSZX0_bit,
-    bit_number UCSZX1_bit,
-    bit_number RXENX_bit,
-    bit_number TXENX_bit,
-    bit_number UDREX_bit
->
-struct SHardwareUARTRegs{    
-    static Ubrrx ubrrx;
-    static Ucsrxa ucsrxa;
-    static Ucsrxb ucsrxb;
-    static Ucsrxc ucsrxc;
-    static Udrx udrx;    
-
-    static constexpr bit_number 
-        u2xx_bit = U2XX_bit,
-        rxcx_bit = RXCX_bit,
-        ucszx0_bit = UCSZX0_bit,
-        ucszx1_bit = UCSZX1_bit,
-        rxenx_bit = RXENX_bit,
-        txenx_bit = TXENX_bit,
-        udrex_bit = UDREX_bit;
-};
-*/
-
-//template<class RegList, class BitList>
-//struct SHardwareUARTRegs;
-
-//template< class... Regs, template<typename...> class RegList, bit_number... Bits, template<typename, bit_number...> class BitList>
-//struct SHardwareUARTRegs< RegList<Regs...>, BitList<bit_number, Bits...>>{
     
 template<class RegList, class BitList>
 struct SHardwareUARTRegs{
@@ -156,8 +118,14 @@ public:
         m_regs(regs){
         
         regs.ubrrx = (uint16_t)((system_clock / (baud * 16UL))) - 1;
-        
+                        
         //DEBUG
+        
+        volatile int blarg;
+        //auto blah = regs.ubrrx.debug_pointer();
+        //assert(blah == &UBRR0);
+        auto blah2 = regs.ubrrx.reg;
+        auto addr = regs.ubrrx.address;
         //auto blah = &regs.ubrrx.get();
         //auto blah2 = regs.ubrrx.address;
         
@@ -188,7 +156,7 @@ public:
         uint8_t u8Data;
         // Wait for byte to be received
         while(!available()){};
-        u8Data=m_regs.udrx;
+        u8Data=m_regs.udrx.get();
         
         // Return received data
         return u8Data;

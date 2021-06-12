@@ -57,17 +57,17 @@ OBJECTDIR=build/${CND_CONF}/${IMAGE_TYPE}
 DISTDIR=dist/${CND_CONF}/${IMAGE_TYPE}
 
 # Source Files Quoted if spaced
-SOURCEFILES_QUOTED_IF_SPACED=AnalogComparator.cpp Application.cpp CommandHandler.cpp Console.cpp HWTimerCommon.cpp HWTimer_atmega328p.cpp InductanceMeter.cpp Interactive.cpp LevSerial.cpp MeasureInductance.cpp UnknownCommand.cpp atomic.cpp main.cpp util.cpp cplusplus.cpp
+SOURCEFILES_QUOTED_IF_SPACED=src/avr/atmega328o/HWTimer_atmega328p.cpp src/util/atomic.cpp src/command_handlers/UnknownCommand.cpp src/command_handlers/MeasureInductance.cpp src/command_handlers/CommandHandler.cpp src/util/util.cpp src/util/cplusplus.cpp src/Application.cpp src/Console.cpp src/InductanceMeter.cpp src/Interactive.cpp src/main.cpp
 
 # Object Files Quoted if spaced
-OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/AnalogComparator.o ${OBJECTDIR}/Application.o ${OBJECTDIR}/CommandHandler.o ${OBJECTDIR}/Console.o ${OBJECTDIR}/HWTimerCommon.o ${OBJECTDIR}/HWTimer_atmega328p.o ${OBJECTDIR}/InductanceMeter.o ${OBJECTDIR}/Interactive.o ${OBJECTDIR}/LevSerial.o ${OBJECTDIR}/MeasureInductance.o ${OBJECTDIR}/UnknownCommand.o ${OBJECTDIR}/atomic.o ${OBJECTDIR}/main.o ${OBJECTDIR}/util.o ${OBJECTDIR}/cplusplus.o
-POSSIBLE_DEPFILES=${OBJECTDIR}/AnalogComparator.o.d ${OBJECTDIR}/Application.o.d ${OBJECTDIR}/CommandHandler.o.d ${OBJECTDIR}/Console.o.d ${OBJECTDIR}/HWTimerCommon.o.d ${OBJECTDIR}/HWTimer_atmega328p.o.d ${OBJECTDIR}/InductanceMeter.o.d ${OBJECTDIR}/Interactive.o.d ${OBJECTDIR}/LevSerial.o.d ${OBJECTDIR}/MeasureInductance.o.d ${OBJECTDIR}/UnknownCommand.o.d ${OBJECTDIR}/atomic.o.d ${OBJECTDIR}/main.o.d ${OBJECTDIR}/util.o.d ${OBJECTDIR}/cplusplus.o.d
+OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/src/avr/atmega328o/HWTimer_atmega328p.o ${OBJECTDIR}/src/util/atomic.o ${OBJECTDIR}/src/command_handlers/UnknownCommand.o ${OBJECTDIR}/src/command_handlers/MeasureInductance.o ${OBJECTDIR}/src/command_handlers/CommandHandler.o ${OBJECTDIR}/src/util/util.o ${OBJECTDIR}/src/util/cplusplus.o ${OBJECTDIR}/src/Application.o ${OBJECTDIR}/src/Console.o ${OBJECTDIR}/src/InductanceMeter.o ${OBJECTDIR}/src/Interactive.o ${OBJECTDIR}/src/main.o
+POSSIBLE_DEPFILES=${OBJECTDIR}/src/avr/atmega328o/HWTimer_atmega328p.o.d ${OBJECTDIR}/src/util/atomic.o.d ${OBJECTDIR}/src/command_handlers/UnknownCommand.o.d ${OBJECTDIR}/src/command_handlers/MeasureInductance.o.d ${OBJECTDIR}/src/command_handlers/CommandHandler.o.d ${OBJECTDIR}/src/util/util.o.d ${OBJECTDIR}/src/util/cplusplus.o.d ${OBJECTDIR}/src/Application.o.d ${OBJECTDIR}/src/Console.o.d ${OBJECTDIR}/src/InductanceMeter.o.d ${OBJECTDIR}/src/Interactive.o.d ${OBJECTDIR}/src/main.o.d
 
 # Object Files
-OBJECTFILES=${OBJECTDIR}/AnalogComparator.o ${OBJECTDIR}/Application.o ${OBJECTDIR}/CommandHandler.o ${OBJECTDIR}/Console.o ${OBJECTDIR}/HWTimerCommon.o ${OBJECTDIR}/HWTimer_atmega328p.o ${OBJECTDIR}/InductanceMeter.o ${OBJECTDIR}/Interactive.o ${OBJECTDIR}/LevSerial.o ${OBJECTDIR}/MeasureInductance.o ${OBJECTDIR}/UnknownCommand.o ${OBJECTDIR}/atomic.o ${OBJECTDIR}/main.o ${OBJECTDIR}/util.o ${OBJECTDIR}/cplusplus.o
+OBJECTFILES=${OBJECTDIR}/src/avr/atmega328o/HWTimer_atmega328p.o ${OBJECTDIR}/src/util/atomic.o ${OBJECTDIR}/src/command_handlers/UnknownCommand.o ${OBJECTDIR}/src/command_handlers/MeasureInductance.o ${OBJECTDIR}/src/command_handlers/CommandHandler.o ${OBJECTDIR}/src/util/util.o ${OBJECTDIR}/src/util/cplusplus.o ${OBJECTDIR}/src/Application.o ${OBJECTDIR}/src/Console.o ${OBJECTDIR}/src/InductanceMeter.o ${OBJECTDIR}/src/Interactive.o ${OBJECTDIR}/src/main.o
 
 # Source Files
-SOURCEFILES=AnalogComparator.cpp Application.cpp CommandHandler.cpp Console.cpp HWTimerCommon.cpp HWTimer_atmega328p.cpp InductanceMeter.cpp Interactive.cpp LevSerial.cpp MeasureInductance.cpp UnknownCommand.cpp atomic.cpp main.cpp util.cpp cplusplus.cpp
+SOURCEFILES=src/avr/atmega328o/HWTimer_atmega328p.cpp src/util/atomic.cpp src/command_handlers/UnknownCommand.cpp src/command_handlers/MeasureInductance.cpp src/command_handlers/CommandHandler.cpp src/util/util.cpp src/util/cplusplus.cpp src/Application.cpp src/Console.cpp src/InductanceMeter.cpp src/Interactive.cpp src/main.cpp
 
 # Pack Options 
 PACK_COMPILER_OPTIONS=-I "${DFP_DIR}/include"
@@ -136,186 +136,150 @@ endif
 # ------------------------------------------------------------------------------------
 # Rules for buildStep: compileCPP
 ifeq ($(TYPE_IMAGE), DEBUG_RUN)
-${OBJECTDIR}/AnalogComparator.o: AnalogComparator.cpp  .generated_files/flags/default/2f3555d234b10955c5d0a7191b9f713b0e119e1e .generated_files/flags/default/8fff49d0cb05b727cea9f8f21beb379e9251bb92
-	@${MKDIR} "${OBJECTDIR}" 
-	@${RM} ${OBJECTDIR}/AnalogComparator.o.d 
-	@${RM} ${OBJECTDIR}/AnalogComparator.o 
-	 ${MP_CPPC} $(MP_EXTRA_CC_PRE) -mmcu=atmega328p ${PACK_COMPILER_OPTIONS} ${PACK_COMMON_OPTIONS} -g -DDEBUG -D__MPLAB_DEBUGGER_SIMULATOR=1 -gdwarf-2  -x c++ -c -D__$(MP_PROCESSOR_OPTION)__  -funsigned-char -funsigned-bitfields -O1 -ffunction-sections -fdata-sections -fshort-enums -Wall -MD -MP -MF "${OBJECTDIR}/AnalogComparator.o.d" -MT "${OBJECTDIR}/AnalogComparator.o.d" -MT ${OBJECTDIR}/AnalogComparator.o  -o ${OBJECTDIR}/AnalogComparator.o AnalogComparator.cpp  -DXPRJ_default=$(CND_CONF)  $(COMPARISON_BUILD)  -std=c++17 -DARDUINO_PRO_MINI3_3V
+${OBJECTDIR}/src/avr/atmega328o/HWTimer_atmega328p.o: src/avr/atmega328o/HWTimer_atmega328p.cpp  .generated_files/flags/default/7302a73988376529c369e091290742688df82c1f .generated_files/flags/default/8fff49d0cb05b727cea9f8f21beb379e9251bb92
+	@${MKDIR} "${OBJECTDIR}/src/avr/atmega328o" 
+	@${RM} ${OBJECTDIR}/src/avr/atmega328o/HWTimer_atmega328p.o.d 
+	@${RM} ${OBJECTDIR}/src/avr/atmega328o/HWTimer_atmega328p.o 
+	 ${MP_CPPC} $(MP_EXTRA_CC_PRE) -mmcu=atmega328p ${PACK_COMPILER_OPTIONS} ${PACK_COMMON_OPTIONS} -g -DDEBUG -D__MPLAB_DEBUGGER_SIMULATOR=1 -gdwarf-2  -x c++ -c -D__$(MP_PROCESSOR_OPTION)__  -funsigned-char -funsigned-bitfields -O1 -ffunction-sections -fdata-sections -fshort-enums -I "include" -Wall -MD -MP -MF "${OBJECTDIR}/src/avr/atmega328o/HWTimer_atmega328p.o.d" -MT "${OBJECTDIR}/src/avr/atmega328o/HWTimer_atmega328p.o.d" -MT ${OBJECTDIR}/src/avr/atmega328o/HWTimer_atmega328p.o  -o ${OBJECTDIR}/src/avr/atmega328o/HWTimer_atmega328p.o src/avr/atmega328o/HWTimer_atmega328p.cpp  -DXPRJ_default=$(CND_CONF)  $(COMPARISON_BUILD)  -std=c++17 -DARDUINO_PRO_MINI3_3V
 	
-${OBJECTDIR}/Application.o: Application.cpp  .generated_files/flags/default/44c3fac0b8937222a2f1585472017b7103844df5 .generated_files/flags/default/8fff49d0cb05b727cea9f8f21beb379e9251bb92
-	@${MKDIR} "${OBJECTDIR}" 
-	@${RM} ${OBJECTDIR}/Application.o.d 
-	@${RM} ${OBJECTDIR}/Application.o 
-	 ${MP_CPPC} $(MP_EXTRA_CC_PRE) -mmcu=atmega328p ${PACK_COMPILER_OPTIONS} ${PACK_COMMON_OPTIONS} -g -DDEBUG -D__MPLAB_DEBUGGER_SIMULATOR=1 -gdwarf-2  -x c++ -c -D__$(MP_PROCESSOR_OPTION)__  -funsigned-char -funsigned-bitfields -O1 -ffunction-sections -fdata-sections -fshort-enums -Wall -MD -MP -MF "${OBJECTDIR}/Application.o.d" -MT "${OBJECTDIR}/Application.o.d" -MT ${OBJECTDIR}/Application.o  -o ${OBJECTDIR}/Application.o Application.cpp  -DXPRJ_default=$(CND_CONF)  $(COMPARISON_BUILD)  -std=c++17 -DARDUINO_PRO_MINI3_3V
+${OBJECTDIR}/src/util/atomic.o: src/util/atomic.cpp  .generated_files/flags/default/b77f5a10e186ddde252f5b7331f91ae146fcfe8 .generated_files/flags/default/8fff49d0cb05b727cea9f8f21beb379e9251bb92
+	@${MKDIR} "${OBJECTDIR}/src/util" 
+	@${RM} ${OBJECTDIR}/src/util/atomic.o.d 
+	@${RM} ${OBJECTDIR}/src/util/atomic.o 
+	 ${MP_CPPC} $(MP_EXTRA_CC_PRE) -mmcu=atmega328p ${PACK_COMPILER_OPTIONS} ${PACK_COMMON_OPTIONS} -g -DDEBUG -D__MPLAB_DEBUGGER_SIMULATOR=1 -gdwarf-2  -x c++ -c -D__$(MP_PROCESSOR_OPTION)__  -funsigned-char -funsigned-bitfields -O1 -ffunction-sections -fdata-sections -fshort-enums -I "include" -Wall -MD -MP -MF "${OBJECTDIR}/src/util/atomic.o.d" -MT "${OBJECTDIR}/src/util/atomic.o.d" -MT ${OBJECTDIR}/src/util/atomic.o  -o ${OBJECTDIR}/src/util/atomic.o src/util/atomic.cpp  -DXPRJ_default=$(CND_CONF)  $(COMPARISON_BUILD)  -std=c++17 -DARDUINO_PRO_MINI3_3V
 	
-${OBJECTDIR}/CommandHandler.o: CommandHandler.cpp  .generated_files/flags/default/e8c05ec093b037b7276963827681743c9af934f1 .generated_files/flags/default/8fff49d0cb05b727cea9f8f21beb379e9251bb92
-	@${MKDIR} "${OBJECTDIR}" 
-	@${RM} ${OBJECTDIR}/CommandHandler.o.d 
-	@${RM} ${OBJECTDIR}/CommandHandler.o 
-	 ${MP_CPPC} $(MP_EXTRA_CC_PRE) -mmcu=atmega328p ${PACK_COMPILER_OPTIONS} ${PACK_COMMON_OPTIONS} -g -DDEBUG -D__MPLAB_DEBUGGER_SIMULATOR=1 -gdwarf-2  -x c++ -c -D__$(MP_PROCESSOR_OPTION)__  -funsigned-char -funsigned-bitfields -O1 -ffunction-sections -fdata-sections -fshort-enums -Wall -MD -MP -MF "${OBJECTDIR}/CommandHandler.o.d" -MT "${OBJECTDIR}/CommandHandler.o.d" -MT ${OBJECTDIR}/CommandHandler.o  -o ${OBJECTDIR}/CommandHandler.o CommandHandler.cpp  -DXPRJ_default=$(CND_CONF)  $(COMPARISON_BUILD)  -std=c++17 -DARDUINO_PRO_MINI3_3V
+${OBJECTDIR}/src/command_handlers/UnknownCommand.o: src/command_handlers/UnknownCommand.cpp  .generated_files/flags/default/846ec50b6483fafa5791259ee8bfa2fb1b93cb6e .generated_files/flags/default/8fff49d0cb05b727cea9f8f21beb379e9251bb92
+	@${MKDIR} "${OBJECTDIR}/src/command_handlers" 
+	@${RM} ${OBJECTDIR}/src/command_handlers/UnknownCommand.o.d 
+	@${RM} ${OBJECTDIR}/src/command_handlers/UnknownCommand.o 
+	 ${MP_CPPC} $(MP_EXTRA_CC_PRE) -mmcu=atmega328p ${PACK_COMPILER_OPTIONS} ${PACK_COMMON_OPTIONS} -g -DDEBUG -D__MPLAB_DEBUGGER_SIMULATOR=1 -gdwarf-2  -x c++ -c -D__$(MP_PROCESSOR_OPTION)__  -funsigned-char -funsigned-bitfields -O1 -ffunction-sections -fdata-sections -fshort-enums -I "include" -Wall -MD -MP -MF "${OBJECTDIR}/src/command_handlers/UnknownCommand.o.d" -MT "${OBJECTDIR}/src/command_handlers/UnknownCommand.o.d" -MT ${OBJECTDIR}/src/command_handlers/UnknownCommand.o  -o ${OBJECTDIR}/src/command_handlers/UnknownCommand.o src/command_handlers/UnknownCommand.cpp  -DXPRJ_default=$(CND_CONF)  $(COMPARISON_BUILD)  -std=c++17 -DARDUINO_PRO_MINI3_3V
 	
-${OBJECTDIR}/Console.o: Console.cpp  .generated_files/flags/default/ceee5960b97471e57fa872bda65d02ace4977c88 .generated_files/flags/default/8fff49d0cb05b727cea9f8f21beb379e9251bb92
-	@${MKDIR} "${OBJECTDIR}" 
-	@${RM} ${OBJECTDIR}/Console.o.d 
-	@${RM} ${OBJECTDIR}/Console.o 
-	 ${MP_CPPC} $(MP_EXTRA_CC_PRE) -mmcu=atmega328p ${PACK_COMPILER_OPTIONS} ${PACK_COMMON_OPTIONS} -g -DDEBUG -D__MPLAB_DEBUGGER_SIMULATOR=1 -gdwarf-2  -x c++ -c -D__$(MP_PROCESSOR_OPTION)__  -funsigned-char -funsigned-bitfields -O1 -ffunction-sections -fdata-sections -fshort-enums -Wall -MD -MP -MF "${OBJECTDIR}/Console.o.d" -MT "${OBJECTDIR}/Console.o.d" -MT ${OBJECTDIR}/Console.o  -o ${OBJECTDIR}/Console.o Console.cpp  -DXPRJ_default=$(CND_CONF)  $(COMPARISON_BUILD)  -std=c++17 -DARDUINO_PRO_MINI3_3V
+${OBJECTDIR}/src/command_handlers/MeasureInductance.o: src/command_handlers/MeasureInductance.cpp  .generated_files/flags/default/22930047d6db582ea0f177cdd44b314250633f96 .generated_files/flags/default/8fff49d0cb05b727cea9f8f21beb379e9251bb92
+	@${MKDIR} "${OBJECTDIR}/src/command_handlers" 
+	@${RM} ${OBJECTDIR}/src/command_handlers/MeasureInductance.o.d 
+	@${RM} ${OBJECTDIR}/src/command_handlers/MeasureInductance.o 
+	 ${MP_CPPC} $(MP_EXTRA_CC_PRE) -mmcu=atmega328p ${PACK_COMPILER_OPTIONS} ${PACK_COMMON_OPTIONS} -g -DDEBUG -D__MPLAB_DEBUGGER_SIMULATOR=1 -gdwarf-2  -x c++ -c -D__$(MP_PROCESSOR_OPTION)__  -funsigned-char -funsigned-bitfields -O1 -ffunction-sections -fdata-sections -fshort-enums -I "include" -Wall -MD -MP -MF "${OBJECTDIR}/src/command_handlers/MeasureInductance.o.d" -MT "${OBJECTDIR}/src/command_handlers/MeasureInductance.o.d" -MT ${OBJECTDIR}/src/command_handlers/MeasureInductance.o  -o ${OBJECTDIR}/src/command_handlers/MeasureInductance.o src/command_handlers/MeasureInductance.cpp  -DXPRJ_default=$(CND_CONF)  $(COMPARISON_BUILD)  -std=c++17 -DARDUINO_PRO_MINI3_3V
 	
-${OBJECTDIR}/HWTimerCommon.o: HWTimerCommon.cpp  .generated_files/flags/default/dad142b1da0928198863061c517269d6eb7cc2b5 .generated_files/flags/default/8fff49d0cb05b727cea9f8f21beb379e9251bb92
-	@${MKDIR} "${OBJECTDIR}" 
-	@${RM} ${OBJECTDIR}/HWTimerCommon.o.d 
-	@${RM} ${OBJECTDIR}/HWTimerCommon.o 
-	 ${MP_CPPC} $(MP_EXTRA_CC_PRE) -mmcu=atmega328p ${PACK_COMPILER_OPTIONS} ${PACK_COMMON_OPTIONS} -g -DDEBUG -D__MPLAB_DEBUGGER_SIMULATOR=1 -gdwarf-2  -x c++ -c -D__$(MP_PROCESSOR_OPTION)__  -funsigned-char -funsigned-bitfields -O1 -ffunction-sections -fdata-sections -fshort-enums -Wall -MD -MP -MF "${OBJECTDIR}/HWTimerCommon.o.d" -MT "${OBJECTDIR}/HWTimerCommon.o.d" -MT ${OBJECTDIR}/HWTimerCommon.o  -o ${OBJECTDIR}/HWTimerCommon.o HWTimerCommon.cpp  -DXPRJ_default=$(CND_CONF)  $(COMPARISON_BUILD)  -std=c++17 -DARDUINO_PRO_MINI3_3V
+${OBJECTDIR}/src/command_handlers/CommandHandler.o: src/command_handlers/CommandHandler.cpp  .generated_files/flags/default/78df65aeeeb0d5fa8d498dc70d9f41a657c56c45 .generated_files/flags/default/8fff49d0cb05b727cea9f8f21beb379e9251bb92
+	@${MKDIR} "${OBJECTDIR}/src/command_handlers" 
+	@${RM} ${OBJECTDIR}/src/command_handlers/CommandHandler.o.d 
+	@${RM} ${OBJECTDIR}/src/command_handlers/CommandHandler.o 
+	 ${MP_CPPC} $(MP_EXTRA_CC_PRE) -mmcu=atmega328p ${PACK_COMPILER_OPTIONS} ${PACK_COMMON_OPTIONS} -g -DDEBUG -D__MPLAB_DEBUGGER_SIMULATOR=1 -gdwarf-2  -x c++ -c -D__$(MP_PROCESSOR_OPTION)__  -funsigned-char -funsigned-bitfields -O1 -ffunction-sections -fdata-sections -fshort-enums -I "include" -Wall -MD -MP -MF "${OBJECTDIR}/src/command_handlers/CommandHandler.o.d" -MT "${OBJECTDIR}/src/command_handlers/CommandHandler.o.d" -MT ${OBJECTDIR}/src/command_handlers/CommandHandler.o  -o ${OBJECTDIR}/src/command_handlers/CommandHandler.o src/command_handlers/CommandHandler.cpp  -DXPRJ_default=$(CND_CONF)  $(COMPARISON_BUILD)  -std=c++17 -DARDUINO_PRO_MINI3_3V
 	
-${OBJECTDIR}/HWTimer_atmega328p.o: HWTimer_atmega328p.cpp  .generated_files/flags/default/94f4a77e4385dc928bbd9abea39c1c2305d941c6 .generated_files/flags/default/8fff49d0cb05b727cea9f8f21beb379e9251bb92
-	@${MKDIR} "${OBJECTDIR}" 
-	@${RM} ${OBJECTDIR}/HWTimer_atmega328p.o.d 
-	@${RM} ${OBJECTDIR}/HWTimer_atmega328p.o 
-	 ${MP_CPPC} $(MP_EXTRA_CC_PRE) -mmcu=atmega328p ${PACK_COMPILER_OPTIONS} ${PACK_COMMON_OPTIONS} -g -DDEBUG -D__MPLAB_DEBUGGER_SIMULATOR=1 -gdwarf-2  -x c++ -c -D__$(MP_PROCESSOR_OPTION)__  -funsigned-char -funsigned-bitfields -O1 -ffunction-sections -fdata-sections -fshort-enums -Wall -MD -MP -MF "${OBJECTDIR}/HWTimer_atmega328p.o.d" -MT "${OBJECTDIR}/HWTimer_atmega328p.o.d" -MT ${OBJECTDIR}/HWTimer_atmega328p.o  -o ${OBJECTDIR}/HWTimer_atmega328p.o HWTimer_atmega328p.cpp  -DXPRJ_default=$(CND_CONF)  $(COMPARISON_BUILD)  -std=c++17 -DARDUINO_PRO_MINI3_3V
+${OBJECTDIR}/src/util/util.o: src/util/util.cpp  .generated_files/flags/default/425127d23efe50d9b02125cd2956d3b89b463645 .generated_files/flags/default/8fff49d0cb05b727cea9f8f21beb379e9251bb92
+	@${MKDIR} "${OBJECTDIR}/src/util" 
+	@${RM} ${OBJECTDIR}/src/util/util.o.d 
+	@${RM} ${OBJECTDIR}/src/util/util.o 
+	 ${MP_CPPC} $(MP_EXTRA_CC_PRE) -mmcu=atmega328p ${PACK_COMPILER_OPTIONS} ${PACK_COMMON_OPTIONS} -g -DDEBUG -D__MPLAB_DEBUGGER_SIMULATOR=1 -gdwarf-2  -x c++ -c -D__$(MP_PROCESSOR_OPTION)__  -funsigned-char -funsigned-bitfields -O1 -ffunction-sections -fdata-sections -fshort-enums -I "include" -Wall -MD -MP -MF "${OBJECTDIR}/src/util/util.o.d" -MT "${OBJECTDIR}/src/util/util.o.d" -MT ${OBJECTDIR}/src/util/util.o  -o ${OBJECTDIR}/src/util/util.o src/util/util.cpp  -DXPRJ_default=$(CND_CONF)  $(COMPARISON_BUILD)  -std=c++17 -DARDUINO_PRO_MINI3_3V
 	
-${OBJECTDIR}/InductanceMeter.o: InductanceMeter.cpp  .generated_files/flags/default/a6eb649236db2b4721a2316ae5dbfbf9e4046709 .generated_files/flags/default/8fff49d0cb05b727cea9f8f21beb379e9251bb92
-	@${MKDIR} "${OBJECTDIR}" 
-	@${RM} ${OBJECTDIR}/InductanceMeter.o.d 
-	@${RM} ${OBJECTDIR}/InductanceMeter.o 
-	 ${MP_CPPC} $(MP_EXTRA_CC_PRE) -mmcu=atmega328p ${PACK_COMPILER_OPTIONS} ${PACK_COMMON_OPTIONS} -g -DDEBUG -D__MPLAB_DEBUGGER_SIMULATOR=1 -gdwarf-2  -x c++ -c -D__$(MP_PROCESSOR_OPTION)__  -funsigned-char -funsigned-bitfields -O1 -ffunction-sections -fdata-sections -fshort-enums -Wall -MD -MP -MF "${OBJECTDIR}/InductanceMeter.o.d" -MT "${OBJECTDIR}/InductanceMeter.o.d" -MT ${OBJECTDIR}/InductanceMeter.o  -o ${OBJECTDIR}/InductanceMeter.o InductanceMeter.cpp  -DXPRJ_default=$(CND_CONF)  $(COMPARISON_BUILD)  -std=c++17 -DARDUINO_PRO_MINI3_3V
+${OBJECTDIR}/src/util/cplusplus.o: src/util/cplusplus.cpp  .generated_files/flags/default/31061d3b55cc6ef2353bd0c7c058dbebf10a66e1 .generated_files/flags/default/8fff49d0cb05b727cea9f8f21beb379e9251bb92
+	@${MKDIR} "${OBJECTDIR}/src/util" 
+	@${RM} ${OBJECTDIR}/src/util/cplusplus.o.d 
+	@${RM} ${OBJECTDIR}/src/util/cplusplus.o 
+	 ${MP_CPPC} $(MP_EXTRA_CC_PRE) -mmcu=atmega328p ${PACK_COMPILER_OPTIONS} ${PACK_COMMON_OPTIONS} -g -DDEBUG -D__MPLAB_DEBUGGER_SIMULATOR=1 -gdwarf-2  -x c++ -c -D__$(MP_PROCESSOR_OPTION)__  -funsigned-char -funsigned-bitfields -O1 -ffunction-sections -fdata-sections -fshort-enums -I "include" -Wall -MD -MP -MF "${OBJECTDIR}/src/util/cplusplus.o.d" -MT "${OBJECTDIR}/src/util/cplusplus.o.d" -MT ${OBJECTDIR}/src/util/cplusplus.o  -o ${OBJECTDIR}/src/util/cplusplus.o src/util/cplusplus.cpp  -DXPRJ_default=$(CND_CONF)  $(COMPARISON_BUILD)  -std=c++17 -DARDUINO_PRO_MINI3_3V
 	
-${OBJECTDIR}/Interactive.o: Interactive.cpp  .generated_files/flags/default/e3b1b118f34762f885375fe0976528720c5e37ef .generated_files/flags/default/8fff49d0cb05b727cea9f8f21beb379e9251bb92
-	@${MKDIR} "${OBJECTDIR}" 
-	@${RM} ${OBJECTDIR}/Interactive.o.d 
-	@${RM} ${OBJECTDIR}/Interactive.o 
-	 ${MP_CPPC} $(MP_EXTRA_CC_PRE) -mmcu=atmega328p ${PACK_COMPILER_OPTIONS} ${PACK_COMMON_OPTIONS} -g -DDEBUG -D__MPLAB_DEBUGGER_SIMULATOR=1 -gdwarf-2  -x c++ -c -D__$(MP_PROCESSOR_OPTION)__  -funsigned-char -funsigned-bitfields -O1 -ffunction-sections -fdata-sections -fshort-enums -Wall -MD -MP -MF "${OBJECTDIR}/Interactive.o.d" -MT "${OBJECTDIR}/Interactive.o.d" -MT ${OBJECTDIR}/Interactive.o  -o ${OBJECTDIR}/Interactive.o Interactive.cpp  -DXPRJ_default=$(CND_CONF)  $(COMPARISON_BUILD)  -std=c++17 -DARDUINO_PRO_MINI3_3V
+${OBJECTDIR}/src/Application.o: src/Application.cpp  .generated_files/flags/default/8e8422ac5d51570876cc8eb447be176e5100d7bb .generated_files/flags/default/8fff49d0cb05b727cea9f8f21beb379e9251bb92
+	@${MKDIR} "${OBJECTDIR}/src" 
+	@${RM} ${OBJECTDIR}/src/Application.o.d 
+	@${RM} ${OBJECTDIR}/src/Application.o 
+	 ${MP_CPPC} $(MP_EXTRA_CC_PRE) -mmcu=atmega328p ${PACK_COMPILER_OPTIONS} ${PACK_COMMON_OPTIONS} -g -DDEBUG -D__MPLAB_DEBUGGER_SIMULATOR=1 -gdwarf-2  -x c++ -c -D__$(MP_PROCESSOR_OPTION)__  -funsigned-char -funsigned-bitfields -O1 -ffunction-sections -fdata-sections -fshort-enums -I "include" -Wall -MD -MP -MF "${OBJECTDIR}/src/Application.o.d" -MT "${OBJECTDIR}/src/Application.o.d" -MT ${OBJECTDIR}/src/Application.o  -o ${OBJECTDIR}/src/Application.o src/Application.cpp  -DXPRJ_default=$(CND_CONF)  $(COMPARISON_BUILD)  -std=c++17 -DARDUINO_PRO_MINI3_3V
 	
-${OBJECTDIR}/LevSerial.o: LevSerial.cpp  .generated_files/flags/default/38e1a26b501af8ffa63105ab3877ce7f13d5beab .generated_files/flags/default/8fff49d0cb05b727cea9f8f21beb379e9251bb92
-	@${MKDIR} "${OBJECTDIR}" 
-	@${RM} ${OBJECTDIR}/LevSerial.o.d 
-	@${RM} ${OBJECTDIR}/LevSerial.o 
-	 ${MP_CPPC} $(MP_EXTRA_CC_PRE) -mmcu=atmega328p ${PACK_COMPILER_OPTIONS} ${PACK_COMMON_OPTIONS} -g -DDEBUG -D__MPLAB_DEBUGGER_SIMULATOR=1 -gdwarf-2  -x c++ -c -D__$(MP_PROCESSOR_OPTION)__  -funsigned-char -funsigned-bitfields -O1 -ffunction-sections -fdata-sections -fshort-enums -Wall -MD -MP -MF "${OBJECTDIR}/LevSerial.o.d" -MT "${OBJECTDIR}/LevSerial.o.d" -MT ${OBJECTDIR}/LevSerial.o  -o ${OBJECTDIR}/LevSerial.o LevSerial.cpp  -DXPRJ_default=$(CND_CONF)  $(COMPARISON_BUILD)  -std=c++17 -DARDUINO_PRO_MINI3_3V
+${OBJECTDIR}/src/Console.o: src/Console.cpp  .generated_files/flags/default/82839bc36c50c50696a7dd90c9c9d67ef7616628 .generated_files/flags/default/8fff49d0cb05b727cea9f8f21beb379e9251bb92
+	@${MKDIR} "${OBJECTDIR}/src" 
+	@${RM} ${OBJECTDIR}/src/Console.o.d 
+	@${RM} ${OBJECTDIR}/src/Console.o 
+	 ${MP_CPPC} $(MP_EXTRA_CC_PRE) -mmcu=atmega328p ${PACK_COMPILER_OPTIONS} ${PACK_COMMON_OPTIONS} -g -DDEBUG -D__MPLAB_DEBUGGER_SIMULATOR=1 -gdwarf-2  -x c++ -c -D__$(MP_PROCESSOR_OPTION)__  -funsigned-char -funsigned-bitfields -O1 -ffunction-sections -fdata-sections -fshort-enums -I "include" -Wall -MD -MP -MF "${OBJECTDIR}/src/Console.o.d" -MT "${OBJECTDIR}/src/Console.o.d" -MT ${OBJECTDIR}/src/Console.o  -o ${OBJECTDIR}/src/Console.o src/Console.cpp  -DXPRJ_default=$(CND_CONF)  $(COMPARISON_BUILD)  -std=c++17 -DARDUINO_PRO_MINI3_3V
 	
-${OBJECTDIR}/MeasureInductance.o: MeasureInductance.cpp  .generated_files/flags/default/53fbb9e2e993e09ca9e604b8b3da0841eef29c96 .generated_files/flags/default/8fff49d0cb05b727cea9f8f21beb379e9251bb92
-	@${MKDIR} "${OBJECTDIR}" 
-	@${RM} ${OBJECTDIR}/MeasureInductance.o.d 
-	@${RM} ${OBJECTDIR}/MeasureInductance.o 
-	 ${MP_CPPC} $(MP_EXTRA_CC_PRE) -mmcu=atmega328p ${PACK_COMPILER_OPTIONS} ${PACK_COMMON_OPTIONS} -g -DDEBUG -D__MPLAB_DEBUGGER_SIMULATOR=1 -gdwarf-2  -x c++ -c -D__$(MP_PROCESSOR_OPTION)__  -funsigned-char -funsigned-bitfields -O1 -ffunction-sections -fdata-sections -fshort-enums -Wall -MD -MP -MF "${OBJECTDIR}/MeasureInductance.o.d" -MT "${OBJECTDIR}/MeasureInductance.o.d" -MT ${OBJECTDIR}/MeasureInductance.o  -o ${OBJECTDIR}/MeasureInductance.o MeasureInductance.cpp  -DXPRJ_default=$(CND_CONF)  $(COMPARISON_BUILD)  -std=c++17 -DARDUINO_PRO_MINI3_3V
+${OBJECTDIR}/src/InductanceMeter.o: src/InductanceMeter.cpp  .generated_files/flags/default/4b72d0ad0ffd3903ca4b549eef093f810ac28ee8 .generated_files/flags/default/8fff49d0cb05b727cea9f8f21beb379e9251bb92
+	@${MKDIR} "${OBJECTDIR}/src" 
+	@${RM} ${OBJECTDIR}/src/InductanceMeter.o.d 
+	@${RM} ${OBJECTDIR}/src/InductanceMeter.o 
+	 ${MP_CPPC} $(MP_EXTRA_CC_PRE) -mmcu=atmega328p ${PACK_COMPILER_OPTIONS} ${PACK_COMMON_OPTIONS} -g -DDEBUG -D__MPLAB_DEBUGGER_SIMULATOR=1 -gdwarf-2  -x c++ -c -D__$(MP_PROCESSOR_OPTION)__  -funsigned-char -funsigned-bitfields -O1 -ffunction-sections -fdata-sections -fshort-enums -I "include" -Wall -MD -MP -MF "${OBJECTDIR}/src/InductanceMeter.o.d" -MT "${OBJECTDIR}/src/InductanceMeter.o.d" -MT ${OBJECTDIR}/src/InductanceMeter.o  -o ${OBJECTDIR}/src/InductanceMeter.o src/InductanceMeter.cpp  -DXPRJ_default=$(CND_CONF)  $(COMPARISON_BUILD)  -std=c++17 -DARDUINO_PRO_MINI3_3V
 	
-${OBJECTDIR}/UnknownCommand.o: UnknownCommand.cpp  .generated_files/flags/default/7a9807cd239ae6682e7220706dc7de9cdc59262a .generated_files/flags/default/8fff49d0cb05b727cea9f8f21beb379e9251bb92
-	@${MKDIR} "${OBJECTDIR}" 
-	@${RM} ${OBJECTDIR}/UnknownCommand.o.d 
-	@${RM} ${OBJECTDIR}/UnknownCommand.o 
-	 ${MP_CPPC} $(MP_EXTRA_CC_PRE) -mmcu=atmega328p ${PACK_COMPILER_OPTIONS} ${PACK_COMMON_OPTIONS} -g -DDEBUG -D__MPLAB_DEBUGGER_SIMULATOR=1 -gdwarf-2  -x c++ -c -D__$(MP_PROCESSOR_OPTION)__  -funsigned-char -funsigned-bitfields -O1 -ffunction-sections -fdata-sections -fshort-enums -Wall -MD -MP -MF "${OBJECTDIR}/UnknownCommand.o.d" -MT "${OBJECTDIR}/UnknownCommand.o.d" -MT ${OBJECTDIR}/UnknownCommand.o  -o ${OBJECTDIR}/UnknownCommand.o UnknownCommand.cpp  -DXPRJ_default=$(CND_CONF)  $(COMPARISON_BUILD)  -std=c++17 -DARDUINO_PRO_MINI3_3V
+${OBJECTDIR}/src/Interactive.o: src/Interactive.cpp  .generated_files/flags/default/53e48143e1c72876887e4f0e62cadbaff4c87648 .generated_files/flags/default/8fff49d0cb05b727cea9f8f21beb379e9251bb92
+	@${MKDIR} "${OBJECTDIR}/src" 
+	@${RM} ${OBJECTDIR}/src/Interactive.o.d 
+	@${RM} ${OBJECTDIR}/src/Interactive.o 
+	 ${MP_CPPC} $(MP_EXTRA_CC_PRE) -mmcu=atmega328p ${PACK_COMPILER_OPTIONS} ${PACK_COMMON_OPTIONS} -g -DDEBUG -D__MPLAB_DEBUGGER_SIMULATOR=1 -gdwarf-2  -x c++ -c -D__$(MP_PROCESSOR_OPTION)__  -funsigned-char -funsigned-bitfields -O1 -ffunction-sections -fdata-sections -fshort-enums -I "include" -Wall -MD -MP -MF "${OBJECTDIR}/src/Interactive.o.d" -MT "${OBJECTDIR}/src/Interactive.o.d" -MT ${OBJECTDIR}/src/Interactive.o  -o ${OBJECTDIR}/src/Interactive.o src/Interactive.cpp  -DXPRJ_default=$(CND_CONF)  $(COMPARISON_BUILD)  -std=c++17 -DARDUINO_PRO_MINI3_3V
 	
-${OBJECTDIR}/atomic.o: atomic.cpp  .generated_files/flags/default/71b8d6a01b000a9a20308d36e6e1b2a85aeadf22 .generated_files/flags/default/8fff49d0cb05b727cea9f8f21beb379e9251bb92
-	@${MKDIR} "${OBJECTDIR}" 
-	@${RM} ${OBJECTDIR}/atomic.o.d 
-	@${RM} ${OBJECTDIR}/atomic.o 
-	 ${MP_CPPC} $(MP_EXTRA_CC_PRE) -mmcu=atmega328p ${PACK_COMPILER_OPTIONS} ${PACK_COMMON_OPTIONS} -g -DDEBUG -D__MPLAB_DEBUGGER_SIMULATOR=1 -gdwarf-2  -x c++ -c -D__$(MP_PROCESSOR_OPTION)__  -funsigned-char -funsigned-bitfields -O1 -ffunction-sections -fdata-sections -fshort-enums -Wall -MD -MP -MF "${OBJECTDIR}/atomic.o.d" -MT "${OBJECTDIR}/atomic.o.d" -MT ${OBJECTDIR}/atomic.o  -o ${OBJECTDIR}/atomic.o atomic.cpp  -DXPRJ_default=$(CND_CONF)  $(COMPARISON_BUILD)  -std=c++17 -DARDUINO_PRO_MINI3_3V
-	
-${OBJECTDIR}/main.o: main.cpp  .generated_files/flags/default/308c8597e2210ee7e10013093f4134c6bb3ca791 .generated_files/flags/default/8fff49d0cb05b727cea9f8f21beb379e9251bb92
-	@${MKDIR} "${OBJECTDIR}" 
-	@${RM} ${OBJECTDIR}/main.o.d 
-	@${RM} ${OBJECTDIR}/main.o 
-	 ${MP_CPPC} $(MP_EXTRA_CC_PRE) -mmcu=atmega328p ${PACK_COMPILER_OPTIONS} ${PACK_COMMON_OPTIONS} -g -DDEBUG -D__MPLAB_DEBUGGER_SIMULATOR=1 -gdwarf-2  -x c++ -c -D__$(MP_PROCESSOR_OPTION)__  -funsigned-char -funsigned-bitfields -O1 -ffunction-sections -fdata-sections -fshort-enums -Wall -MD -MP -MF "${OBJECTDIR}/main.o.d" -MT "${OBJECTDIR}/main.o.d" -MT ${OBJECTDIR}/main.o  -o ${OBJECTDIR}/main.o main.cpp  -DXPRJ_default=$(CND_CONF)  $(COMPARISON_BUILD)  -std=c++17 -DARDUINO_PRO_MINI3_3V
-	
-${OBJECTDIR}/util.o: util.cpp  .generated_files/flags/default/d38e26249c981a8b560e6adcd765f232ae9ee7f6 .generated_files/flags/default/8fff49d0cb05b727cea9f8f21beb379e9251bb92
-	@${MKDIR} "${OBJECTDIR}" 
-	@${RM} ${OBJECTDIR}/util.o.d 
-	@${RM} ${OBJECTDIR}/util.o 
-	 ${MP_CPPC} $(MP_EXTRA_CC_PRE) -mmcu=atmega328p ${PACK_COMPILER_OPTIONS} ${PACK_COMMON_OPTIONS} -g -DDEBUG -D__MPLAB_DEBUGGER_SIMULATOR=1 -gdwarf-2  -x c++ -c -D__$(MP_PROCESSOR_OPTION)__  -funsigned-char -funsigned-bitfields -O1 -ffunction-sections -fdata-sections -fshort-enums -Wall -MD -MP -MF "${OBJECTDIR}/util.o.d" -MT "${OBJECTDIR}/util.o.d" -MT ${OBJECTDIR}/util.o  -o ${OBJECTDIR}/util.o util.cpp  -DXPRJ_default=$(CND_CONF)  $(COMPARISON_BUILD)  -std=c++17 -DARDUINO_PRO_MINI3_3V
-	
-${OBJECTDIR}/cplusplus.o: cplusplus.cpp  .generated_files/flags/default/7eb95d27667e333923c19853d60a581282fd0c08 .generated_files/flags/default/8fff49d0cb05b727cea9f8f21beb379e9251bb92
-	@${MKDIR} "${OBJECTDIR}" 
-	@${RM} ${OBJECTDIR}/cplusplus.o.d 
-	@${RM} ${OBJECTDIR}/cplusplus.o 
-	 ${MP_CPPC} $(MP_EXTRA_CC_PRE) -mmcu=atmega328p ${PACK_COMPILER_OPTIONS} ${PACK_COMMON_OPTIONS} -g -DDEBUG -D__MPLAB_DEBUGGER_SIMULATOR=1 -gdwarf-2  -x c++ -c -D__$(MP_PROCESSOR_OPTION)__  -funsigned-char -funsigned-bitfields -O1 -ffunction-sections -fdata-sections -fshort-enums -Wall -MD -MP -MF "${OBJECTDIR}/cplusplus.o.d" -MT "${OBJECTDIR}/cplusplus.o.d" -MT ${OBJECTDIR}/cplusplus.o  -o ${OBJECTDIR}/cplusplus.o cplusplus.cpp  -DXPRJ_default=$(CND_CONF)  $(COMPARISON_BUILD)  -std=c++17 -DARDUINO_PRO_MINI3_3V
+${OBJECTDIR}/src/main.o: src/main.cpp  .generated_files/flags/default/fd056573b02d0a99c7bbdc253c6748183c603a7e .generated_files/flags/default/8fff49d0cb05b727cea9f8f21beb379e9251bb92
+	@${MKDIR} "${OBJECTDIR}/src" 
+	@${RM} ${OBJECTDIR}/src/main.o.d 
+	@${RM} ${OBJECTDIR}/src/main.o 
+	 ${MP_CPPC} $(MP_EXTRA_CC_PRE) -mmcu=atmega328p ${PACK_COMPILER_OPTIONS} ${PACK_COMMON_OPTIONS} -g -DDEBUG -D__MPLAB_DEBUGGER_SIMULATOR=1 -gdwarf-2  -x c++ -c -D__$(MP_PROCESSOR_OPTION)__  -funsigned-char -funsigned-bitfields -O1 -ffunction-sections -fdata-sections -fshort-enums -I "include" -Wall -MD -MP -MF "${OBJECTDIR}/src/main.o.d" -MT "${OBJECTDIR}/src/main.o.d" -MT ${OBJECTDIR}/src/main.o  -o ${OBJECTDIR}/src/main.o src/main.cpp  -DXPRJ_default=$(CND_CONF)  $(COMPARISON_BUILD)  -std=c++17 -DARDUINO_PRO_MINI3_3V
 	
 else
-${OBJECTDIR}/AnalogComparator.o: AnalogComparator.cpp  .generated_files/flags/default/13f49aa02279ff4b7d01b0fb2f536b3759f508bd .generated_files/flags/default/8fff49d0cb05b727cea9f8f21beb379e9251bb92
-	@${MKDIR} "${OBJECTDIR}" 
-	@${RM} ${OBJECTDIR}/AnalogComparator.o.d 
-	@${RM} ${OBJECTDIR}/AnalogComparator.o 
-	 ${MP_CPPC} $(MP_EXTRA_CC_PRE) -mmcu=atmega328p ${PACK_COMPILER_OPTIONS} ${PACK_COMMON_OPTIONS}  -x c++ -c -D__$(MP_PROCESSOR_OPTION)__  -funsigned-char -funsigned-bitfields -O1 -ffunction-sections -fdata-sections -fshort-enums -Wall -MD -MP -MF "${OBJECTDIR}/AnalogComparator.o.d" -MT "${OBJECTDIR}/AnalogComparator.o.d" -MT ${OBJECTDIR}/AnalogComparator.o  -o ${OBJECTDIR}/AnalogComparator.o AnalogComparator.cpp  -DXPRJ_default=$(CND_CONF)  $(COMPARISON_BUILD)  -std=c++17 -DARDUINO_PRO_MINI3_3V
+${OBJECTDIR}/src/avr/atmega328o/HWTimer_atmega328p.o: src/avr/atmega328o/HWTimer_atmega328p.cpp  .generated_files/flags/default/fa3806026169edad2f7972b1fd1b161c88588f9f .generated_files/flags/default/8fff49d0cb05b727cea9f8f21beb379e9251bb92
+	@${MKDIR} "${OBJECTDIR}/src/avr/atmega328o" 
+	@${RM} ${OBJECTDIR}/src/avr/atmega328o/HWTimer_atmega328p.o.d 
+	@${RM} ${OBJECTDIR}/src/avr/atmega328o/HWTimer_atmega328p.o 
+	 ${MP_CPPC} $(MP_EXTRA_CC_PRE) -mmcu=atmega328p ${PACK_COMPILER_OPTIONS} ${PACK_COMMON_OPTIONS}  -x c++ -c -D__$(MP_PROCESSOR_OPTION)__  -funsigned-char -funsigned-bitfields -O1 -ffunction-sections -fdata-sections -fshort-enums -I "include" -Wall -MD -MP -MF "${OBJECTDIR}/src/avr/atmega328o/HWTimer_atmega328p.o.d" -MT "${OBJECTDIR}/src/avr/atmega328o/HWTimer_atmega328p.o.d" -MT ${OBJECTDIR}/src/avr/atmega328o/HWTimer_atmega328p.o  -o ${OBJECTDIR}/src/avr/atmega328o/HWTimer_atmega328p.o src/avr/atmega328o/HWTimer_atmega328p.cpp  -DXPRJ_default=$(CND_CONF)  $(COMPARISON_BUILD)  -std=c++17 -DARDUINO_PRO_MINI3_3V
 	
-${OBJECTDIR}/Application.o: Application.cpp  .generated_files/flags/default/e67c44e52a210187579d9a0f7bdd25c12ad73103 .generated_files/flags/default/8fff49d0cb05b727cea9f8f21beb379e9251bb92
-	@${MKDIR} "${OBJECTDIR}" 
-	@${RM} ${OBJECTDIR}/Application.o.d 
-	@${RM} ${OBJECTDIR}/Application.o 
-	 ${MP_CPPC} $(MP_EXTRA_CC_PRE) -mmcu=atmega328p ${PACK_COMPILER_OPTIONS} ${PACK_COMMON_OPTIONS}  -x c++ -c -D__$(MP_PROCESSOR_OPTION)__  -funsigned-char -funsigned-bitfields -O1 -ffunction-sections -fdata-sections -fshort-enums -Wall -MD -MP -MF "${OBJECTDIR}/Application.o.d" -MT "${OBJECTDIR}/Application.o.d" -MT ${OBJECTDIR}/Application.o  -o ${OBJECTDIR}/Application.o Application.cpp  -DXPRJ_default=$(CND_CONF)  $(COMPARISON_BUILD)  -std=c++17 -DARDUINO_PRO_MINI3_3V
+${OBJECTDIR}/src/util/atomic.o: src/util/atomic.cpp  .generated_files/flags/default/f9e33a431b779e19d995bf8ff63cbba2c5fbc04b .generated_files/flags/default/8fff49d0cb05b727cea9f8f21beb379e9251bb92
+	@${MKDIR} "${OBJECTDIR}/src/util" 
+	@${RM} ${OBJECTDIR}/src/util/atomic.o.d 
+	@${RM} ${OBJECTDIR}/src/util/atomic.o 
+	 ${MP_CPPC} $(MP_EXTRA_CC_PRE) -mmcu=atmega328p ${PACK_COMPILER_OPTIONS} ${PACK_COMMON_OPTIONS}  -x c++ -c -D__$(MP_PROCESSOR_OPTION)__  -funsigned-char -funsigned-bitfields -O1 -ffunction-sections -fdata-sections -fshort-enums -I "include" -Wall -MD -MP -MF "${OBJECTDIR}/src/util/atomic.o.d" -MT "${OBJECTDIR}/src/util/atomic.o.d" -MT ${OBJECTDIR}/src/util/atomic.o  -o ${OBJECTDIR}/src/util/atomic.o src/util/atomic.cpp  -DXPRJ_default=$(CND_CONF)  $(COMPARISON_BUILD)  -std=c++17 -DARDUINO_PRO_MINI3_3V
 	
-${OBJECTDIR}/CommandHandler.o: CommandHandler.cpp  .generated_files/flags/default/65978b9b2822a97a99db5dfbbe7330a44fdc2826 .generated_files/flags/default/8fff49d0cb05b727cea9f8f21beb379e9251bb92
-	@${MKDIR} "${OBJECTDIR}" 
-	@${RM} ${OBJECTDIR}/CommandHandler.o.d 
-	@${RM} ${OBJECTDIR}/CommandHandler.o 
-	 ${MP_CPPC} $(MP_EXTRA_CC_PRE) -mmcu=atmega328p ${PACK_COMPILER_OPTIONS} ${PACK_COMMON_OPTIONS}  -x c++ -c -D__$(MP_PROCESSOR_OPTION)__  -funsigned-char -funsigned-bitfields -O1 -ffunction-sections -fdata-sections -fshort-enums -Wall -MD -MP -MF "${OBJECTDIR}/CommandHandler.o.d" -MT "${OBJECTDIR}/CommandHandler.o.d" -MT ${OBJECTDIR}/CommandHandler.o  -o ${OBJECTDIR}/CommandHandler.o CommandHandler.cpp  -DXPRJ_default=$(CND_CONF)  $(COMPARISON_BUILD)  -std=c++17 -DARDUINO_PRO_MINI3_3V
+${OBJECTDIR}/src/command_handlers/UnknownCommand.o: src/command_handlers/UnknownCommand.cpp  .generated_files/flags/default/d1b8f48a08d71e9a5e3b0b5ca7fff5284a50ebfc .generated_files/flags/default/8fff49d0cb05b727cea9f8f21beb379e9251bb92
+	@${MKDIR} "${OBJECTDIR}/src/command_handlers" 
+	@${RM} ${OBJECTDIR}/src/command_handlers/UnknownCommand.o.d 
+	@${RM} ${OBJECTDIR}/src/command_handlers/UnknownCommand.o 
+	 ${MP_CPPC} $(MP_EXTRA_CC_PRE) -mmcu=atmega328p ${PACK_COMPILER_OPTIONS} ${PACK_COMMON_OPTIONS}  -x c++ -c -D__$(MP_PROCESSOR_OPTION)__  -funsigned-char -funsigned-bitfields -O1 -ffunction-sections -fdata-sections -fshort-enums -I "include" -Wall -MD -MP -MF "${OBJECTDIR}/src/command_handlers/UnknownCommand.o.d" -MT "${OBJECTDIR}/src/command_handlers/UnknownCommand.o.d" -MT ${OBJECTDIR}/src/command_handlers/UnknownCommand.o  -o ${OBJECTDIR}/src/command_handlers/UnknownCommand.o src/command_handlers/UnknownCommand.cpp  -DXPRJ_default=$(CND_CONF)  $(COMPARISON_BUILD)  -std=c++17 -DARDUINO_PRO_MINI3_3V
 	
-${OBJECTDIR}/Console.o: Console.cpp  .generated_files/flags/default/89b713f4988104325eedd1d4bcf5a16781a9909b .generated_files/flags/default/8fff49d0cb05b727cea9f8f21beb379e9251bb92
-	@${MKDIR} "${OBJECTDIR}" 
-	@${RM} ${OBJECTDIR}/Console.o.d 
-	@${RM} ${OBJECTDIR}/Console.o 
-	 ${MP_CPPC} $(MP_EXTRA_CC_PRE) -mmcu=atmega328p ${PACK_COMPILER_OPTIONS} ${PACK_COMMON_OPTIONS}  -x c++ -c -D__$(MP_PROCESSOR_OPTION)__  -funsigned-char -funsigned-bitfields -O1 -ffunction-sections -fdata-sections -fshort-enums -Wall -MD -MP -MF "${OBJECTDIR}/Console.o.d" -MT "${OBJECTDIR}/Console.o.d" -MT ${OBJECTDIR}/Console.o  -o ${OBJECTDIR}/Console.o Console.cpp  -DXPRJ_default=$(CND_CONF)  $(COMPARISON_BUILD)  -std=c++17 -DARDUINO_PRO_MINI3_3V
+${OBJECTDIR}/src/command_handlers/MeasureInductance.o: src/command_handlers/MeasureInductance.cpp  .generated_files/flags/default/ab60e82f82da037ec33f00e2751f52ebf78b87f3 .generated_files/flags/default/8fff49d0cb05b727cea9f8f21beb379e9251bb92
+	@${MKDIR} "${OBJECTDIR}/src/command_handlers" 
+	@${RM} ${OBJECTDIR}/src/command_handlers/MeasureInductance.o.d 
+	@${RM} ${OBJECTDIR}/src/command_handlers/MeasureInductance.o 
+	 ${MP_CPPC} $(MP_EXTRA_CC_PRE) -mmcu=atmega328p ${PACK_COMPILER_OPTIONS} ${PACK_COMMON_OPTIONS}  -x c++ -c -D__$(MP_PROCESSOR_OPTION)__  -funsigned-char -funsigned-bitfields -O1 -ffunction-sections -fdata-sections -fshort-enums -I "include" -Wall -MD -MP -MF "${OBJECTDIR}/src/command_handlers/MeasureInductance.o.d" -MT "${OBJECTDIR}/src/command_handlers/MeasureInductance.o.d" -MT ${OBJECTDIR}/src/command_handlers/MeasureInductance.o  -o ${OBJECTDIR}/src/command_handlers/MeasureInductance.o src/command_handlers/MeasureInductance.cpp  -DXPRJ_default=$(CND_CONF)  $(COMPARISON_BUILD)  -std=c++17 -DARDUINO_PRO_MINI3_3V
 	
-${OBJECTDIR}/HWTimerCommon.o: HWTimerCommon.cpp  .generated_files/flags/default/49970fc24f8c0c2b540b758ece2956f171943f4a .generated_files/flags/default/8fff49d0cb05b727cea9f8f21beb379e9251bb92
-	@${MKDIR} "${OBJECTDIR}" 
-	@${RM} ${OBJECTDIR}/HWTimerCommon.o.d 
-	@${RM} ${OBJECTDIR}/HWTimerCommon.o 
-	 ${MP_CPPC} $(MP_EXTRA_CC_PRE) -mmcu=atmega328p ${PACK_COMPILER_OPTIONS} ${PACK_COMMON_OPTIONS}  -x c++ -c -D__$(MP_PROCESSOR_OPTION)__  -funsigned-char -funsigned-bitfields -O1 -ffunction-sections -fdata-sections -fshort-enums -Wall -MD -MP -MF "${OBJECTDIR}/HWTimerCommon.o.d" -MT "${OBJECTDIR}/HWTimerCommon.o.d" -MT ${OBJECTDIR}/HWTimerCommon.o  -o ${OBJECTDIR}/HWTimerCommon.o HWTimerCommon.cpp  -DXPRJ_default=$(CND_CONF)  $(COMPARISON_BUILD)  -std=c++17 -DARDUINO_PRO_MINI3_3V
+${OBJECTDIR}/src/command_handlers/CommandHandler.o: src/command_handlers/CommandHandler.cpp  .generated_files/flags/default/9f870106d9c2797f09f87e41786c5e7c1bfcb6f4 .generated_files/flags/default/8fff49d0cb05b727cea9f8f21beb379e9251bb92
+	@${MKDIR} "${OBJECTDIR}/src/command_handlers" 
+	@${RM} ${OBJECTDIR}/src/command_handlers/CommandHandler.o.d 
+	@${RM} ${OBJECTDIR}/src/command_handlers/CommandHandler.o 
+	 ${MP_CPPC} $(MP_EXTRA_CC_PRE) -mmcu=atmega328p ${PACK_COMPILER_OPTIONS} ${PACK_COMMON_OPTIONS}  -x c++ -c -D__$(MP_PROCESSOR_OPTION)__  -funsigned-char -funsigned-bitfields -O1 -ffunction-sections -fdata-sections -fshort-enums -I "include" -Wall -MD -MP -MF "${OBJECTDIR}/src/command_handlers/CommandHandler.o.d" -MT "${OBJECTDIR}/src/command_handlers/CommandHandler.o.d" -MT ${OBJECTDIR}/src/command_handlers/CommandHandler.o  -o ${OBJECTDIR}/src/command_handlers/CommandHandler.o src/command_handlers/CommandHandler.cpp  -DXPRJ_default=$(CND_CONF)  $(COMPARISON_BUILD)  -std=c++17 -DARDUINO_PRO_MINI3_3V
 	
-${OBJECTDIR}/HWTimer_atmega328p.o: HWTimer_atmega328p.cpp  .generated_files/flags/default/6bb9d6e153a4739753f51160ff76360a6d68553a .generated_files/flags/default/8fff49d0cb05b727cea9f8f21beb379e9251bb92
-	@${MKDIR} "${OBJECTDIR}" 
-	@${RM} ${OBJECTDIR}/HWTimer_atmega328p.o.d 
-	@${RM} ${OBJECTDIR}/HWTimer_atmega328p.o 
-	 ${MP_CPPC} $(MP_EXTRA_CC_PRE) -mmcu=atmega328p ${PACK_COMPILER_OPTIONS} ${PACK_COMMON_OPTIONS}  -x c++ -c -D__$(MP_PROCESSOR_OPTION)__  -funsigned-char -funsigned-bitfields -O1 -ffunction-sections -fdata-sections -fshort-enums -Wall -MD -MP -MF "${OBJECTDIR}/HWTimer_atmega328p.o.d" -MT "${OBJECTDIR}/HWTimer_atmega328p.o.d" -MT ${OBJECTDIR}/HWTimer_atmega328p.o  -o ${OBJECTDIR}/HWTimer_atmega328p.o HWTimer_atmega328p.cpp  -DXPRJ_default=$(CND_CONF)  $(COMPARISON_BUILD)  -std=c++17 -DARDUINO_PRO_MINI3_3V
+${OBJECTDIR}/src/util/util.o: src/util/util.cpp  .generated_files/flags/default/cf0a9a8c7904085c67a0c1a3f0c7d4e36afe107c .generated_files/flags/default/8fff49d0cb05b727cea9f8f21beb379e9251bb92
+	@${MKDIR} "${OBJECTDIR}/src/util" 
+	@${RM} ${OBJECTDIR}/src/util/util.o.d 
+	@${RM} ${OBJECTDIR}/src/util/util.o 
+	 ${MP_CPPC} $(MP_EXTRA_CC_PRE) -mmcu=atmega328p ${PACK_COMPILER_OPTIONS} ${PACK_COMMON_OPTIONS}  -x c++ -c -D__$(MP_PROCESSOR_OPTION)__  -funsigned-char -funsigned-bitfields -O1 -ffunction-sections -fdata-sections -fshort-enums -I "include" -Wall -MD -MP -MF "${OBJECTDIR}/src/util/util.o.d" -MT "${OBJECTDIR}/src/util/util.o.d" -MT ${OBJECTDIR}/src/util/util.o  -o ${OBJECTDIR}/src/util/util.o src/util/util.cpp  -DXPRJ_default=$(CND_CONF)  $(COMPARISON_BUILD)  -std=c++17 -DARDUINO_PRO_MINI3_3V
 	
-${OBJECTDIR}/InductanceMeter.o: InductanceMeter.cpp  .generated_files/flags/default/79c276592cd6ec9e19b2c624d5aba7b1e330a34c .generated_files/flags/default/8fff49d0cb05b727cea9f8f21beb379e9251bb92
-	@${MKDIR} "${OBJECTDIR}" 
-	@${RM} ${OBJECTDIR}/InductanceMeter.o.d 
-	@${RM} ${OBJECTDIR}/InductanceMeter.o 
-	 ${MP_CPPC} $(MP_EXTRA_CC_PRE) -mmcu=atmega328p ${PACK_COMPILER_OPTIONS} ${PACK_COMMON_OPTIONS}  -x c++ -c -D__$(MP_PROCESSOR_OPTION)__  -funsigned-char -funsigned-bitfields -O1 -ffunction-sections -fdata-sections -fshort-enums -Wall -MD -MP -MF "${OBJECTDIR}/InductanceMeter.o.d" -MT "${OBJECTDIR}/InductanceMeter.o.d" -MT ${OBJECTDIR}/InductanceMeter.o  -o ${OBJECTDIR}/InductanceMeter.o InductanceMeter.cpp  -DXPRJ_default=$(CND_CONF)  $(COMPARISON_BUILD)  -std=c++17 -DARDUINO_PRO_MINI3_3V
+${OBJECTDIR}/src/util/cplusplus.o: src/util/cplusplus.cpp  .generated_files/flags/default/28d94fdd9747fe0bbba22e3309ae2eef1709ebd9 .generated_files/flags/default/8fff49d0cb05b727cea9f8f21beb379e9251bb92
+	@${MKDIR} "${OBJECTDIR}/src/util" 
+	@${RM} ${OBJECTDIR}/src/util/cplusplus.o.d 
+	@${RM} ${OBJECTDIR}/src/util/cplusplus.o 
+	 ${MP_CPPC} $(MP_EXTRA_CC_PRE) -mmcu=atmega328p ${PACK_COMPILER_OPTIONS} ${PACK_COMMON_OPTIONS}  -x c++ -c -D__$(MP_PROCESSOR_OPTION)__  -funsigned-char -funsigned-bitfields -O1 -ffunction-sections -fdata-sections -fshort-enums -I "include" -Wall -MD -MP -MF "${OBJECTDIR}/src/util/cplusplus.o.d" -MT "${OBJECTDIR}/src/util/cplusplus.o.d" -MT ${OBJECTDIR}/src/util/cplusplus.o  -o ${OBJECTDIR}/src/util/cplusplus.o src/util/cplusplus.cpp  -DXPRJ_default=$(CND_CONF)  $(COMPARISON_BUILD)  -std=c++17 -DARDUINO_PRO_MINI3_3V
 	
-${OBJECTDIR}/Interactive.o: Interactive.cpp  .generated_files/flags/default/2539156dbdf29569c9e2f64bbf69c341d347d72a .generated_files/flags/default/8fff49d0cb05b727cea9f8f21beb379e9251bb92
-	@${MKDIR} "${OBJECTDIR}" 
-	@${RM} ${OBJECTDIR}/Interactive.o.d 
-	@${RM} ${OBJECTDIR}/Interactive.o 
-	 ${MP_CPPC} $(MP_EXTRA_CC_PRE) -mmcu=atmega328p ${PACK_COMPILER_OPTIONS} ${PACK_COMMON_OPTIONS}  -x c++ -c -D__$(MP_PROCESSOR_OPTION)__  -funsigned-char -funsigned-bitfields -O1 -ffunction-sections -fdata-sections -fshort-enums -Wall -MD -MP -MF "${OBJECTDIR}/Interactive.o.d" -MT "${OBJECTDIR}/Interactive.o.d" -MT ${OBJECTDIR}/Interactive.o  -o ${OBJECTDIR}/Interactive.o Interactive.cpp  -DXPRJ_default=$(CND_CONF)  $(COMPARISON_BUILD)  -std=c++17 -DARDUINO_PRO_MINI3_3V
+${OBJECTDIR}/src/Application.o: src/Application.cpp  .generated_files/flags/default/fa7c0453c87c14bedbc1a74c03209bb9d2f14652 .generated_files/flags/default/8fff49d0cb05b727cea9f8f21beb379e9251bb92
+	@${MKDIR} "${OBJECTDIR}/src" 
+	@${RM} ${OBJECTDIR}/src/Application.o.d 
+	@${RM} ${OBJECTDIR}/src/Application.o 
+	 ${MP_CPPC} $(MP_EXTRA_CC_PRE) -mmcu=atmega328p ${PACK_COMPILER_OPTIONS} ${PACK_COMMON_OPTIONS}  -x c++ -c -D__$(MP_PROCESSOR_OPTION)__  -funsigned-char -funsigned-bitfields -O1 -ffunction-sections -fdata-sections -fshort-enums -I "include" -Wall -MD -MP -MF "${OBJECTDIR}/src/Application.o.d" -MT "${OBJECTDIR}/src/Application.o.d" -MT ${OBJECTDIR}/src/Application.o  -o ${OBJECTDIR}/src/Application.o src/Application.cpp  -DXPRJ_default=$(CND_CONF)  $(COMPARISON_BUILD)  -std=c++17 -DARDUINO_PRO_MINI3_3V
 	
-${OBJECTDIR}/LevSerial.o: LevSerial.cpp  .generated_files/flags/default/1af2417389c9e9eaffcac943c6c311ee798d41f3 .generated_files/flags/default/8fff49d0cb05b727cea9f8f21beb379e9251bb92
-	@${MKDIR} "${OBJECTDIR}" 
-	@${RM} ${OBJECTDIR}/LevSerial.o.d 
-	@${RM} ${OBJECTDIR}/LevSerial.o 
-	 ${MP_CPPC} $(MP_EXTRA_CC_PRE) -mmcu=atmega328p ${PACK_COMPILER_OPTIONS} ${PACK_COMMON_OPTIONS}  -x c++ -c -D__$(MP_PROCESSOR_OPTION)__  -funsigned-char -funsigned-bitfields -O1 -ffunction-sections -fdata-sections -fshort-enums -Wall -MD -MP -MF "${OBJECTDIR}/LevSerial.o.d" -MT "${OBJECTDIR}/LevSerial.o.d" -MT ${OBJECTDIR}/LevSerial.o  -o ${OBJECTDIR}/LevSerial.o LevSerial.cpp  -DXPRJ_default=$(CND_CONF)  $(COMPARISON_BUILD)  -std=c++17 -DARDUINO_PRO_MINI3_3V
+${OBJECTDIR}/src/Console.o: src/Console.cpp  .generated_files/flags/default/db297819d0bd57ac0d87791043b1ba4f6db6204e .generated_files/flags/default/8fff49d0cb05b727cea9f8f21beb379e9251bb92
+	@${MKDIR} "${OBJECTDIR}/src" 
+	@${RM} ${OBJECTDIR}/src/Console.o.d 
+	@${RM} ${OBJECTDIR}/src/Console.o 
+	 ${MP_CPPC} $(MP_EXTRA_CC_PRE) -mmcu=atmega328p ${PACK_COMPILER_OPTIONS} ${PACK_COMMON_OPTIONS}  -x c++ -c -D__$(MP_PROCESSOR_OPTION)__  -funsigned-char -funsigned-bitfields -O1 -ffunction-sections -fdata-sections -fshort-enums -I "include" -Wall -MD -MP -MF "${OBJECTDIR}/src/Console.o.d" -MT "${OBJECTDIR}/src/Console.o.d" -MT ${OBJECTDIR}/src/Console.o  -o ${OBJECTDIR}/src/Console.o src/Console.cpp  -DXPRJ_default=$(CND_CONF)  $(COMPARISON_BUILD)  -std=c++17 -DARDUINO_PRO_MINI3_3V
 	
-${OBJECTDIR}/MeasureInductance.o: MeasureInductance.cpp  .generated_files/flags/default/6bc8ba6c2bd3a3548919df632d2a58bd3925662d .generated_files/flags/default/8fff49d0cb05b727cea9f8f21beb379e9251bb92
-	@${MKDIR} "${OBJECTDIR}" 
-	@${RM} ${OBJECTDIR}/MeasureInductance.o.d 
-	@${RM} ${OBJECTDIR}/MeasureInductance.o 
-	 ${MP_CPPC} $(MP_EXTRA_CC_PRE) -mmcu=atmega328p ${PACK_COMPILER_OPTIONS} ${PACK_COMMON_OPTIONS}  -x c++ -c -D__$(MP_PROCESSOR_OPTION)__  -funsigned-char -funsigned-bitfields -O1 -ffunction-sections -fdata-sections -fshort-enums -Wall -MD -MP -MF "${OBJECTDIR}/MeasureInductance.o.d" -MT "${OBJECTDIR}/MeasureInductance.o.d" -MT ${OBJECTDIR}/MeasureInductance.o  -o ${OBJECTDIR}/MeasureInductance.o MeasureInductance.cpp  -DXPRJ_default=$(CND_CONF)  $(COMPARISON_BUILD)  -std=c++17 -DARDUINO_PRO_MINI3_3V
+${OBJECTDIR}/src/InductanceMeter.o: src/InductanceMeter.cpp  .generated_files/flags/default/3aa335aeb44faaa694a36ef239da5563ff1629d2 .generated_files/flags/default/8fff49d0cb05b727cea9f8f21beb379e9251bb92
+	@${MKDIR} "${OBJECTDIR}/src" 
+	@${RM} ${OBJECTDIR}/src/InductanceMeter.o.d 
+	@${RM} ${OBJECTDIR}/src/InductanceMeter.o 
+	 ${MP_CPPC} $(MP_EXTRA_CC_PRE) -mmcu=atmega328p ${PACK_COMPILER_OPTIONS} ${PACK_COMMON_OPTIONS}  -x c++ -c -D__$(MP_PROCESSOR_OPTION)__  -funsigned-char -funsigned-bitfields -O1 -ffunction-sections -fdata-sections -fshort-enums -I "include" -Wall -MD -MP -MF "${OBJECTDIR}/src/InductanceMeter.o.d" -MT "${OBJECTDIR}/src/InductanceMeter.o.d" -MT ${OBJECTDIR}/src/InductanceMeter.o  -o ${OBJECTDIR}/src/InductanceMeter.o src/InductanceMeter.cpp  -DXPRJ_default=$(CND_CONF)  $(COMPARISON_BUILD)  -std=c++17 -DARDUINO_PRO_MINI3_3V
 	
-${OBJECTDIR}/UnknownCommand.o: UnknownCommand.cpp  .generated_files/flags/default/1de9f10ac1fc982483308e54829d4d6e713243b0 .generated_files/flags/default/8fff49d0cb05b727cea9f8f21beb379e9251bb92
-	@${MKDIR} "${OBJECTDIR}" 
-	@${RM} ${OBJECTDIR}/UnknownCommand.o.d 
-	@${RM} ${OBJECTDIR}/UnknownCommand.o 
-	 ${MP_CPPC} $(MP_EXTRA_CC_PRE) -mmcu=atmega328p ${PACK_COMPILER_OPTIONS} ${PACK_COMMON_OPTIONS}  -x c++ -c -D__$(MP_PROCESSOR_OPTION)__  -funsigned-char -funsigned-bitfields -O1 -ffunction-sections -fdata-sections -fshort-enums -Wall -MD -MP -MF "${OBJECTDIR}/UnknownCommand.o.d" -MT "${OBJECTDIR}/UnknownCommand.o.d" -MT ${OBJECTDIR}/UnknownCommand.o  -o ${OBJECTDIR}/UnknownCommand.o UnknownCommand.cpp  -DXPRJ_default=$(CND_CONF)  $(COMPARISON_BUILD)  -std=c++17 -DARDUINO_PRO_MINI3_3V
+${OBJECTDIR}/src/Interactive.o: src/Interactive.cpp  .generated_files/flags/default/805d15b0ba39df6cc23fd8241a2c9681531fe9dd .generated_files/flags/default/8fff49d0cb05b727cea9f8f21beb379e9251bb92
+	@${MKDIR} "${OBJECTDIR}/src" 
+	@${RM} ${OBJECTDIR}/src/Interactive.o.d 
+	@${RM} ${OBJECTDIR}/src/Interactive.o 
+	 ${MP_CPPC} $(MP_EXTRA_CC_PRE) -mmcu=atmega328p ${PACK_COMPILER_OPTIONS} ${PACK_COMMON_OPTIONS}  -x c++ -c -D__$(MP_PROCESSOR_OPTION)__  -funsigned-char -funsigned-bitfields -O1 -ffunction-sections -fdata-sections -fshort-enums -I "include" -Wall -MD -MP -MF "${OBJECTDIR}/src/Interactive.o.d" -MT "${OBJECTDIR}/src/Interactive.o.d" -MT ${OBJECTDIR}/src/Interactive.o  -o ${OBJECTDIR}/src/Interactive.o src/Interactive.cpp  -DXPRJ_default=$(CND_CONF)  $(COMPARISON_BUILD)  -std=c++17 -DARDUINO_PRO_MINI3_3V
 	
-${OBJECTDIR}/atomic.o: atomic.cpp  .generated_files/flags/default/ca5008f87023e70d8096e00c04471b69901e4fd4 .generated_files/flags/default/8fff49d0cb05b727cea9f8f21beb379e9251bb92
-	@${MKDIR} "${OBJECTDIR}" 
-	@${RM} ${OBJECTDIR}/atomic.o.d 
-	@${RM} ${OBJECTDIR}/atomic.o 
-	 ${MP_CPPC} $(MP_EXTRA_CC_PRE) -mmcu=atmega328p ${PACK_COMPILER_OPTIONS} ${PACK_COMMON_OPTIONS}  -x c++ -c -D__$(MP_PROCESSOR_OPTION)__  -funsigned-char -funsigned-bitfields -O1 -ffunction-sections -fdata-sections -fshort-enums -Wall -MD -MP -MF "${OBJECTDIR}/atomic.o.d" -MT "${OBJECTDIR}/atomic.o.d" -MT ${OBJECTDIR}/atomic.o  -o ${OBJECTDIR}/atomic.o atomic.cpp  -DXPRJ_default=$(CND_CONF)  $(COMPARISON_BUILD)  -std=c++17 -DARDUINO_PRO_MINI3_3V
-	
-${OBJECTDIR}/main.o: main.cpp  .generated_files/flags/default/e98527b96b54a3f6e049efa3af240e9f4933cd58 .generated_files/flags/default/8fff49d0cb05b727cea9f8f21beb379e9251bb92
-	@${MKDIR} "${OBJECTDIR}" 
-	@${RM} ${OBJECTDIR}/main.o.d 
-	@${RM} ${OBJECTDIR}/main.o 
-	 ${MP_CPPC} $(MP_EXTRA_CC_PRE) -mmcu=atmega328p ${PACK_COMPILER_OPTIONS} ${PACK_COMMON_OPTIONS}  -x c++ -c -D__$(MP_PROCESSOR_OPTION)__  -funsigned-char -funsigned-bitfields -O1 -ffunction-sections -fdata-sections -fshort-enums -Wall -MD -MP -MF "${OBJECTDIR}/main.o.d" -MT "${OBJECTDIR}/main.o.d" -MT ${OBJECTDIR}/main.o  -o ${OBJECTDIR}/main.o main.cpp  -DXPRJ_default=$(CND_CONF)  $(COMPARISON_BUILD)  -std=c++17 -DARDUINO_PRO_MINI3_3V
-	
-${OBJECTDIR}/util.o: util.cpp  .generated_files/flags/default/56b08b56782baa636b63bd77a0b9e32f9c3ccc1a .generated_files/flags/default/8fff49d0cb05b727cea9f8f21beb379e9251bb92
-	@${MKDIR} "${OBJECTDIR}" 
-	@${RM} ${OBJECTDIR}/util.o.d 
-	@${RM} ${OBJECTDIR}/util.o 
-	 ${MP_CPPC} $(MP_EXTRA_CC_PRE) -mmcu=atmega328p ${PACK_COMPILER_OPTIONS} ${PACK_COMMON_OPTIONS}  -x c++ -c -D__$(MP_PROCESSOR_OPTION)__  -funsigned-char -funsigned-bitfields -O1 -ffunction-sections -fdata-sections -fshort-enums -Wall -MD -MP -MF "${OBJECTDIR}/util.o.d" -MT "${OBJECTDIR}/util.o.d" -MT ${OBJECTDIR}/util.o  -o ${OBJECTDIR}/util.o util.cpp  -DXPRJ_default=$(CND_CONF)  $(COMPARISON_BUILD)  -std=c++17 -DARDUINO_PRO_MINI3_3V
-	
-${OBJECTDIR}/cplusplus.o: cplusplus.cpp  .generated_files/flags/default/51403698bf755aefa928a251ed3be913861d0dbb .generated_files/flags/default/8fff49d0cb05b727cea9f8f21beb379e9251bb92
-	@${MKDIR} "${OBJECTDIR}" 
-	@${RM} ${OBJECTDIR}/cplusplus.o.d 
-	@${RM} ${OBJECTDIR}/cplusplus.o 
-	 ${MP_CPPC} $(MP_EXTRA_CC_PRE) -mmcu=atmega328p ${PACK_COMPILER_OPTIONS} ${PACK_COMMON_OPTIONS}  -x c++ -c -D__$(MP_PROCESSOR_OPTION)__  -funsigned-char -funsigned-bitfields -O1 -ffunction-sections -fdata-sections -fshort-enums -Wall -MD -MP -MF "${OBJECTDIR}/cplusplus.o.d" -MT "${OBJECTDIR}/cplusplus.o.d" -MT ${OBJECTDIR}/cplusplus.o  -o ${OBJECTDIR}/cplusplus.o cplusplus.cpp  -DXPRJ_default=$(CND_CONF)  $(COMPARISON_BUILD)  -std=c++17 -DARDUINO_PRO_MINI3_3V
+${OBJECTDIR}/src/main.o: src/main.cpp  .generated_files/flags/default/fc3a2b86aae20185de3ff4b5b76f0766e02ef5b1 .generated_files/flags/default/8fff49d0cb05b727cea9f8f21beb379e9251bb92
+	@${MKDIR} "${OBJECTDIR}/src" 
+	@${RM} ${OBJECTDIR}/src/main.o.d 
+	@${RM} ${OBJECTDIR}/src/main.o 
+	 ${MP_CPPC} $(MP_EXTRA_CC_PRE) -mmcu=atmega328p ${PACK_COMPILER_OPTIONS} ${PACK_COMMON_OPTIONS}  -x c++ -c -D__$(MP_PROCESSOR_OPTION)__  -funsigned-char -funsigned-bitfields -O1 -ffunction-sections -fdata-sections -fshort-enums -I "include" -Wall -MD -MP -MF "${OBJECTDIR}/src/main.o.d" -MT "${OBJECTDIR}/src/main.o.d" -MT ${OBJECTDIR}/src/main.o  -o ${OBJECTDIR}/src/main.o src/main.cpp  -DXPRJ_default=$(CND_CONF)  $(COMPARISON_BUILD)  -std=c++17 -DARDUINO_PRO_MINI3_3V
 	
 endif
 

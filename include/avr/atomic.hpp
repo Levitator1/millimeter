@@ -15,13 +15,14 @@ inline void memory_fence(){
 }
 
 //Assumes it's being used in a non-ISR context and interrupts should always
-//come on on exit
+//come on on exit. This is good for code that is not intended to ever run in an ISR.
 struct atomic_guard{
     atomic_guard();
     ~atomic_guard();
 };
 
 //Same as atomic_guard, but restores the interrupt status on exit
+//This is for code which could be called from either inside or outside an ISR
 class atomic_guard_restore{
     bool m_was_on;
 public:
@@ -36,6 +37,8 @@ struct atomic_guard_tag{
 struct atomic_guard_restore_tag{
     using type = atomic_guard_restore;
 };
+
+struct address_tag{};
 
 namespace impl {
     
@@ -92,48 +95,84 @@ namespace impl {
     
     template<typename T, class Guard>
     class atomic_ref_impl{
-        T &m_obj;
-
+    
     public:    
         using dest_type = T;
+        using dest_pointer = typename cpp::remove_reference<T>::type *;
         using value_type = typename cpp::decay<T>::type;        
         using guard_type = Guard;
+        
+        //When constructing a reference from an integer address, the compiler seems
+        //to quietly record a reference to the 0 address somtimes, but not in all cases.
+        //Probably a compiler bug? Anyway, we'll use a pointer instead of a reference.
+        //T &m_obj;
+        dest_pointer m_obj;
 
+    public:
+        
+        auto debug_pointer(){
+            return m_obj;
+        }
+        
+        /*
         atomic_ref_impl( dest_type &obj ):
+            m_obj(&obj){}       
+        
+        atomic_ref_impl( size_t address, address_tag ):
+            m_obj( reinterpret_cast< dest_pointer >(address) ){}
+         */
+        
+        atomic_ref_impl() = delete;
+        
+        atomic_ref_impl( dest_pointer obj ):
             m_obj(obj){}
-
+                        
         inline const value_type get() const{
             guard_type guard;
-            return m_obj;
+            return *m_obj;
         }
         
         inline value_type get(){
             guard_type guard;
-            return m_obj;
+            return *m_obj;
         }
 
         inline void set(const value_type &v){
             guard_type guard;
-            m_obj = v;
+            *m_obj = v;
         }
 
+        /*
         inline operator value_type() const{
             return get();
         }
+        */
 
+        inline value_type operator&(const value_type &rhs) const{
+            return get() & rhs;
+        }
+        
+        inline value_type operator|(const value_type &rhs) const{
+            return get() | rhs;
+        }
+        
+        inline value_type operator~() const{
+            return ~get();
+        }
+        
         inline atomic_ref_impl &operator=( const value_type &v){
             set(v);
         }
         
         inline atomic_ref_impl &operator|=( const value_type &v ){
             guard_type guard;
-            m_obj |= v;
+            *m_obj |= v;
             return *this;
         }
         
         inline atomic_ref_impl &operator&=( const value_type &v ){
             guard_type guard;
-            m_obj &= v;
+            *m_obj &= v;
             return *this;
         }        
     };        
@@ -163,6 +202,8 @@ class atomic_ref:public impl::atomic_ref_impl_type<T, Guard>{
 public:
     using impl_type::impl_type;
     using value_type = typename impl_type::value_type;
+    
+    atomic_ref() = delete;
     
     atomic_ref &operator=( const value_type &v ){
         this->set(v);

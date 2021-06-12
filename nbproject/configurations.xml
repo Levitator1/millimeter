@@ -62,21 +62,24 @@
     <logicalFolder name="SourceFiles"
                    displayName="Source Files"
                    projectFiles="true">
-      <itemPath>AnalogComparator.cpp</itemPath>
-      <itemPath>Application.cpp</itemPath>
-      <itemPath>CommandHandler.cpp</itemPath>
-      <itemPath>Console.cpp</itemPath>
-      <itemPath>HWTimerCommon.cpp</itemPath>
-      <itemPath>HWTimer_atmega328p.cpp</itemPath>
-      <itemPath>InductanceMeter.cpp</itemPath>
-      <itemPath>Interactive.cpp</itemPath>
-      <itemPath>LevSerial.cpp</itemPath>
-      <itemPath>MeasureInductance.cpp</itemPath>
-      <itemPath>UnknownCommand.cpp</itemPath>
-      <itemPath>atomic.cpp</itemPath>
-      <itemPath>main.cpp</itemPath>
-      <itemPath>util.cpp</itemPath>
-      <itemPath>cplusplus.cpp</itemPath>
+      <logicalFolder name="f2" displayName="avr" projectFiles="true">
+        <itemPath>src/avr/atmega328o/HWTimer_atmega328p.cpp</itemPath>
+        <itemPath>src/util/atomic.cpp</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f3" displayName="command_handlers" projectFiles="true">
+        <itemPath>src/command_handlers/UnknownCommand.cpp</itemPath>
+        <itemPath>src/command_handlers/MeasureInductance.cpp</itemPath>
+        <itemPath>src/command_handlers/CommandHandler.cpp</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f1" displayName="util" projectFiles="true">
+        <itemPath>src/util/util.cpp</itemPath>
+        <itemPath>src/util/cplusplus.cpp</itemPath>
+      </logicalFolder>
+      <itemPath>src/Application.cpp</itemPath>
+      <itemPath>src/Console.cpp</itemPath>
+      <itemPath>src/InductanceMeter.cpp</itemPath>
+      <itemPath>src/Interactive.cpp</itemPath>
+      <itemPath>src/main.cpp</itemPath>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"
@@ -87,6 +90,7 @@
   </logicalFolder>
   <sourceRootList>
     <Elem>include</Elem>
+    <Elem>src/avr</Elem>
   </sourceRootList>
   <projectmakefile>Makefile</projectmakefile>
   <confs>
@@ -151,7 +155,7 @@
         <property key="call-prologues" value="false"/>
         <property key="default-bitfield-type" value="true"/>
         <property key="default-char-type" value="true"/>
-        <property key="extra-include-directories" value=""/>
+        <property key="extra-include-directories" value="include"/>
         <property key="garbage-collect-data" value="true"/>
         <property key="garbage-collect-functions" value="true"/>
         <property key="inhibit-all" value="false"/>
@@ -1228,7 +1232,7 @@
         <property key="call-prologues" value="false"/>
         <property key="default-bitfield-type" value="true"/>
         <property key="default-char-type" value="true"/>
-        <property key="extra-include-directories" value=""/>
+        <property key="extra-include-directories" value="include"/>
         <property key="garbage-collect-data" value="false"/>
         <property key="garbage-collect-functions" value="false"/>
         <property key="inhibit-all" value="false"/>

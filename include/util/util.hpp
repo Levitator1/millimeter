@@ -1,5 +1,6 @@
 #pragma once
 #include <stddef.h>
+#include "cplusplus.hpp"
 
 #define stringize(s) #s
 
@@ -49,6 +50,66 @@ struct constant{
     inline operator value_type() const{
         return get();
     }    
+};
+
+struct dynamic_storage_tag{};
+struct static_storage_tag{};
+
+template<typename DestType, typename ValueType,  typename StorageType = dynamic_storage_tag>
+struct storage;
+
+template<typename DestType, typename ValueType>
+struct storage<DestType, ValueType, dynamic_storage_tag>{
+    using dest_type = DestType;
+    using value_type = ValueType;
+    
+    dest_type value;
+    
+    inline storage(const value_type &v):
+        value(v){}
+    
+    inline storage(value_type &&v):
+        value(cpp::move(v)){}
+    
+    inline dest_type &get(){
+        return value;
+    }
+    
+    inline const dest_type &get() const{
+        return value;
+    }
+    
+    inline operator dest_type &(){
+        return get();
+    }
+    
+    inline operator const dest_type &(){
+        return get();
+    }   
+};
+
+template<typename DestType, typename ValueType>
+struct storage<DestType, ValueType, static_storage_tag>{
+    using dest_type = DestType;
+    using value_type = ValueType;
+    
+    static dest_type value;                
+    
+    inline dest_type &get(){
+        return value;
+    }
+    
+    inline const dest_type &get() const{
+        return value;
+    }
+    
+    inline operator dest_type &(){
+        return get();
+    }
+    
+    inline operator const dest_type &(){
+        return get();
+    }   
 };
 
 }
