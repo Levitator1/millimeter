@@ -83,6 +83,38 @@ namespace impl{
 template<typename TypeList, int Index>
 using type_i = typename impl::type_i_impl2<Index, TypeList>::result;
     
+template<typename TypeList1, typename TypeList2>
+struct append_type_lists;
+
+template< typename... Types1, template<typename...> class List1, typename... Types2, template<typename...> class List2 >
+struct append_type_lists< List1<Types1...>, List2<Types2...> >{
+    using type = List1<Types1..., Types2...>;
+};
+
+namespace impl{
+    
+    template<typename T, int N, typename... Types>
+    struct fill_type_list_impl{
+        using type = typename fill_type_list_impl<T, N-1, Types..., T>::type;
+    };
+    
+    template<typename T, typename... Types>
+    struct fill_type_list_impl<T, 0, Types...>{
+        using type = types< Types... >;
+    };
+}
+
+//Fill types<> with N instances of type T, good for populating parameter lists
+template<typename T, int N>
+struct fill_type_list{
+    using type = typename impl::fill_type_list_impl<T, N>::type;
+};
+
+template<typename T, int N, class TypeList>
+struct type_list_append_T_x_N{
+    using type = typename append_type_lists< TypeList, typename fill_type_list<T, N>::type >::type;
+};
+
 
 /*
 template<typename TypeList, int Index>

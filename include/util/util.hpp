@@ -98,7 +98,7 @@ struct storage<T, static_const_storage_tag<InitType, InitVal>>{
     
     using value_type = T;
     using init_type = InitType;
-    static constexpr init_type value PROGMEM = InitVal;               
+    static constexpr init_type value = InitVal;               
             
     static inline constexpr const value_type &get(){
         return value;

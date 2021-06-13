@@ -60,6 +60,15 @@ public:
     bittype<6> udrex_bit;       
 };
 
+template<typename Guard = atomic_guard>
+struct DHardwareUARTRegs: HardwareUARTRegs< 
+    meta::types< dreg16addr<Guard>, dreg8addr<Guard>, dreg8addr<Guard>, dreg8addr<Guard>, dreg8addr<Guard> >,
+    typename meta::fill_type_list<bit_number, 7>::type
+>{
+    
+};
+
+
 //The system clock must be known to calculate the clock divisors to arrive
 //at the actual baud rate
 template<typename Regs, ulong system_clock>

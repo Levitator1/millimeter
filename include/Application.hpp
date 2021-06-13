@@ -4,6 +4,7 @@
 #include "CommandHandler.hpp"
 #include "commands/UnknownCommand.hpp"
 #include "commands/MeasureInductance.hpp"
+#include "commands/RebootCommand.hpp"
 #include "Interactive.hpp"
 
 namespace levitator{
@@ -13,8 +14,9 @@ class Application:public arduino::Interactive{
 
     UnknownCommand unknown_handler;
     MeasureInductance measure_inductance_handler;
+    RebootCommand reboot_handler;
 
-    arduino::CommandHandler *m_handlers[2] = { &measure_inductance_handler, nullptr };
+    arduino::CommandHandler *m_handlers[3] = { &measure_inductance_handler, &reboot_handler, nullptr };
 
 public:    
     Config config = {};

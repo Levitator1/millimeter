@@ -4,17 +4,25 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/home/j/project/millimeter/include/avr/atomic.hpp</file>
+            <file>file:/home/j/project/millimeter/include/commands/MeasureInductance.hpp</file>
             <file>file:/home/j/project/millimeter/include/avr/atmega328p/HWTimer.hpp</file>
+            <file>file:/home/j/project/millimeter/include/Interactive.hpp</file>
             <file>file:/home/j/project/millimeter/src/util/atomic.cpp</file>
             <file>file:/home/j/project/millimeter/include/avr/HardwareUART.hpp</file>
             <file>file:/home/j/project/millimeter/include/util/smart_ptr.hpp</file>
+            <file>file:/home/j/project/millimeter/include/Application.hpp</file>
             <file>file:/home/j/project/millimeter/include/Console.hpp</file>
             <file>file:/home/j/project/millimeter/include/util/meta.hpp</file>
             <file>file:/home/j/project/millimeter/include/util/String.hpp</file>
             <file>file:/home/j/project/millimeter/include/avr/atmega328p/DeviceUARTs.hpp</file>
             <file>file:/home/j/project/millimeter/include/test.SCL</file>
             <file>file:/home/j/project/millimeter/src/InductanceMeter.cpp</file>
+            <file>file:/home/j/project/millimeter/src/avr/system.c</file>
+            <file>file:/home/j/project/millimeter/include/commands/RebootCommand.hpp</file>
+            <file>file:/home/j/project/millimeter/src/command_handlers/RebootCommand.cpp</file>
+            <file>file:/home/j/project/millimeter/include/commands/UnknownCommand.hpp</file>
             <file>file:/home/j/project/millimeter/src/Application.cpp</file>
+            <file>file:/home/j/project/millimeter/include/avr/system.h</file>
             <file>file:/home/j/project/millimeter/src/util/cplusplus.cpp</file>
             <file>file:/home/j/project/millimeter/include/avr/avr_types.hpp</file>
             <file>file:/home/j/project/millimeter/src/avr/atmega328o/HWTimer_atmega328p.cpp</file>
@@ -25,6 +33,7 @@
             <file>file:/home/j/project/millimeter/src/command_handlers/CommandHandler.cpp</file>
             <file>file:/home/j/project/millimeter/include/ringbuffer.hpp</file>
             <file>file:/home/j/project/millimeter/src/command_handlers/UnknownCommand.cpp</file>
+            <file>file:/home/j/project/millimeter/include/avr/file.hpp</file>
             <file>file:/home/j/project/millimeter/include/util/algo.hpp</file>
             <file>file:/home/j/project/millimeter/src/avr/AnalogComparator.cpp</file>
             <file>file:/home/j/project/millimeter/src/Interactive.cpp</file>

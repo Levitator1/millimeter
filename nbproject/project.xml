@@ -6,15 +6,16 @@
             <name>millimeter</name>
             <creation-uuid>6108d8ab-ba24-4b35-90d6-960def2e935b</creation-uuid>
             <make-project-type>0</make-project-type>
-            <c-extensions/>
+            <c-extensions>c</c-extensions>
             <cpp-extensions>cpp</cpp-extensions>
-            <header-extensions>hpp</header-extensions>
+            <header-extensions>h,hpp</header-extensions>
             <asminc-extensions/>
             <sourceEncoding>ISO-8859-1</sourceEncoding>
             <make-dep-projects/>
             <sourceRootList>
                 <sourceRootElem>include</sourceRootElem>
                 <sourceRootElem>src/avr</sourceRootElem>
+                <sourceRootElem>src/command_handlers</sourceRootElem>
             </sourceRootList>
             <confList>
                 <confElem>

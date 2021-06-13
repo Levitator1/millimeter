@@ -149,10 +149,10 @@ namespace avr{
     template<size_t Address, class Guard = typename default_reg_guard<ioreg16>::guard_type>
     using sreg16addr = regaddr<ioreg16, Guard, util::static_const_storage_tag<size_t, Address>>;
     
-    template<size_t Address, class Guard = typename default_reg_guard<ioreg8>::guard_type>
+    template<class Guard = typename default_reg_guard<ioreg8>::guard_type>
     using dreg8addr = regaddr<ioreg8, Guard, util::dynamic_storage_tag>;
     
-    template<size_t Address, class Guard = typename default_reg_guard<ioreg16>::guard_type>
+    template<class Guard = typename default_reg_guard<ioreg16>::guard_type>
     using dreg16addr = regaddr<ioreg16, Guard, util::dynamic_storage_tag>;
     
 }
