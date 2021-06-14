@@ -56,33 +56,53 @@ namespace avr{
     T &regaddr_deref(size_t addr){
         return *reinterpret_cast<typename cpp::remove_reference<T>::type *>(addr);
     }
+        
+    //Demand a specific atomic guard for all register operations
+    template<typename T, typename Guard>
+    struct atomic_guard_policy_require{
+        using guard_type = Guard;
+    };
+    
+    //Use a certain guard unless the register is single-byte, then use a null guard
+    //because the word length is 8-bits and that's inherently atomic with respect to interrupts.
+    //By default, we assume non-ISR-space operation only, but otherwise use atomic_guard_restore.
+    template<typename T, typename Guard>
+    struct atomic_guard_policy_as_needed{
+        using guard_type = typename cpp::conditional< sizeof( util::integer_typeof<T> ) == 1,  util::null_type, Guard>::type;
+    };
     
     template<typename T>
-    struct default_reg_guard{
-        using guard_type = typename cpp::conditional< sizeof(T) == 1,  util::null_type, atomic_guard>::type;
-        using restore_guard_type = typename cpp::conditional< sizeof(T) == 1,  util::null_type, atomic_guard_restore>::type;
-    };        
+    using default_atomic_guard_policy = atomic_guard_policy_as_needed<T, atomic_guard_restore>;
+    
+    //template<typename T>
+    //struct default_reg_guard{
+    //    using guard_type = typename cpp::conditional< sizeof(T) == 1,  util::null_type, atomic_guard>::type;
+    //    using restore_guard_type = typename cpp::conditional< sizeof(T) == 1,  util::null_type, atomic_guard_restore>::type;
+    //};        
             
-    //Static version
+    //StorageTag determines whether this register interface is allocated statically,
+    //where all instances are empty and point to the same register, or dynamically,
+    //where each instance can be populated individually to point to a different destination
     template<typename T, class Guard, class StorageTag>
-    struct regaddr{
-    private:
-        using base_type = atomic_ref<T>;
+    struct regaddr{    
         
     public:
+        
+        //These two are subtly different, because dest_type is a memory-mapped register as a reference to volatile
+        //And value_type is the value which you would retrieve or store from that location,
+        //which is the same as the former, but with reference and volatile removed.
+        using dest_type = T; //The type of a reference to the register as it is mapped into memory (u8 or u16)
+        using value_type = regval<T>; //The value which passes in or out of the register
+        
         using regptr_type = regptr<T>;
-        using regptr_storage_type = util::storage<size_t, StorageTag>;
-        using dest_type = typename base_type::dest_type;
-        using value_type = typename base_type::value_type;        
+        using regptr_storage_type = util::storage<size_t, StorageTag>;        
         using guard_type = Guard;
-        using storage_tag = StorageTag;        
-        using atomic_type = base_type;        
-        using dest_pointer_type = typename cpp::remove_reference<T>::type *;        
+        using storage_tag = StorageTag;                        
         
         regptr_storage_type register_pointer;
 
     private:
-        T &ref() const{
+        dest_type ref() const{
             return *reinterpret_cast<regptr_type>( register_pointer.get() );
         }                
         
@@ -143,18 +163,17 @@ namespace avr{
     //template<typename T, size_t Address>
     //typename sregaddr<T, Address>::dest_pointer_type sregaddr<T, Address>::reg = reinterpret_cast<typename cpp::remove_reference<T>::type *>(Address);
     
-    template<size_t Address, class Guard = typename default_reg_guard<ioreg8>::guard_type>
-    using sreg8addr = regaddr<ioreg8, Guard, util::static_const_storage_tag<size_t, Address>>;
+    template<size_t Address, template<typename> class GuardPolicy = default_atomic_guard_policy>
+    using sreg8addr = regaddr<ioreg8, typename GuardPolicy<ioreg8>::guard_type, util::static_const_storage_tag<size_t, Address>>;
     
-    template<size_t Address, class Guard = typename default_reg_guard<ioreg16>::guard_type>
-    using sreg16addr = regaddr<ioreg16, Guard, util::static_const_storage_tag<size_t, Address>>;
+    template<size_t Address, template<typename> class GuardPolicy = default_atomic_guard_policy>
+    using sreg16addr = regaddr<ioreg16, typename GuardPolicy<ioreg16>::guard_type, util::static_const_storage_tag<size_t, Address>>;
     
-    template<class Guard = typename default_reg_guard<ioreg8>::guard_type>
-    using dreg8addr = regaddr<ioreg8, Guard, util::dynamic_storage_tag>;
+    template<template<typename> class GuardPolicy = default_atomic_guard_policy>
+    using dreg8addr = regaddr<ioreg8, typename GuardPolicy<ioreg8>::guard_type, util::dynamic_storage_tag>;
     
-    template<class Guard = typename default_reg_guard<ioreg16>::guard_type>
-    using dreg16addr = regaddr<ioreg16, Guard, util::dynamic_storage_tag>;
-    
+    template<template<typename> class GuardPolicy = default_atomic_guard_policy>
+    using dreg16addr = regaddr<ioreg16, typename GuardPolicy<ioreg16>::guard_type, util::dynamic_storage_tag>;
 }
 }
 

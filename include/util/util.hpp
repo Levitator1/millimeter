@@ -109,5 +109,24 @@ struct storage<T, static_const_storage_tag<InitType, InitVal>>{
     }   
 };
 
+
+//Converts something to an integer value without assuming what kind of integer it represents.
+namespace impl{    
+    template<typename T>
+    inline T integer_value_impl(const T& v){ return v; }
+}
+
+inline auto integer_value(unsigned char v){ return impl::integer_value_impl(v); }
+inline auto integer_value(signed char v){ return impl::integer_value_impl(v); }
+inline auto integer_value(int v){ return impl::integer_value_impl(v); }
+inline auto integer_value(unsigned int v){ return impl::integer_value_impl(v); }
+inline auto integer_value(long v){ return impl::integer_value_impl(v); }
+inline auto integer_value(unsigned long v){ return impl::integer_value_impl(v); }
+inline auto integer_value(long long v){ return impl::integer_value_impl(v); }
+inline auto integer_value(unsigned long long v){ return impl::integer_value_impl(v); }
+
+template<typename T>
+using integer_typeof = decltype( integer_value( cpp::declval<T>() ) );
+
 }
 }

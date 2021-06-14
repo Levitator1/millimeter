@@ -15,6 +15,11 @@
 namespace levitator{
 namespace arduino{   
 
+template<int I>
+using ArduinoDigital = avr::Digital<DigitalPinRegs<I>>;
+    
+    
+/*
 //Just takes avr::Digital and attaches a static singleton to it
 template<int I>
 class ArduinoDigital:public avr::Digital< DigitalPinRegs<I> >{
@@ -23,7 +28,8 @@ class ArduinoDigital:public avr::Digital< DigitalPinRegs<I> >{
 public:
     ArduinoDigital instance;
 };
-
+*/
+/*
 template<int I>
 ArduinoDigital<I> ArduinoDigital<I>::instance = {};
 
@@ -35,8 +41,8 @@ namespace impl{
     class DigitalWiring_impl< meta::types<I...> >{
         static avr::DigitalInterface *digital_pins[] = { ArduinoDigital<I>::undefined ? nullptr : &ArduinoDigital<I>::instance...  };
     };
-    
 }
+*/
 
 }
 }

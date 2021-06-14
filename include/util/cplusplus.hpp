@@ -197,11 +197,19 @@ struct is_same<T, T>:public true_type{};
 template<typename... Args>
 using void_t = void;
 
-// Don't have declval in AVR gcc. However, this hack should accomplish the same thing
-// and might even be compliant C++
+//Don't have declval in AVR gcc. If memory serves, to dereference a null pointer (regardless of accessing it)
+//is undefined behavior, but within the context of something like sizeof() or decltype()
+//it shouldn't generate any code or behavior, so presumably this is safe, noting also that
+//this is the same stipulation which applies to official or standard declval, but I'm
+//too lazy to play language lawyer. I assume it works.
 template<typename T>
-T *declptr(){
+inline T *declptr(){
     return nullptr;
+}
+
+template<typename T>
+inline T &declval(){
+    return *declptr<T>();
 }
 
 

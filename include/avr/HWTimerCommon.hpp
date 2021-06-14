@@ -2,6 +2,7 @@
 #include <stdint.h>
 #include <avr/io.h>
 #include "avr_types.hpp"
+#include "avr/regdef.hpp"
 #include "../util/util.hpp"
 #include "../util/meta.hpp"
 #include "device_property.hpp"
@@ -18,71 +19,54 @@
 */
 
 //A type named levitator::avr::Config must be defined (or aliased) before including this header
-//It must define static system_clock as the clock rate in Hz
+//It must define system_clock as the clock rate in Hz
 
 namespace levitator{
 namespace avr{
 
-template<
-    regptr<ioreg8> TCCRXA,
-    regptr<ioreg8> TCCRXB,
-    regptr<ioreg8> TIMSKX,
-    regptr<ioreg8> TIFRX,
-    bit_number TOIEX,
-    bit_number TOVX
-> 
-struct TimerRegisters{
-    static constexpr ioreg8
-        &tccrXa = *TCCRXA, //control register a
-        &tccrXb = *TCCRXB, //control register b        
-        &timskX = *TIMSKX, //interrupt mask register
-        &tifrX = *TIFRX;
+template<class RegList, class BitList>
+struct TimerRegs{
+private:
+    assert_regs_count<RegList, BitList, 7, 2> verify_def_counts;
 
-    static constexpr bit_number toie_bit = TOIEX, tov_bit = TOVX;
-
-    //We disregard control register C as it is not present in all timers
-    //and it's some obscure thing with two bits pertaining to waveform comparison
-};
+public:    
+    template<int I>
+    using regtype = regdecl<RegList, I>;
     
-//Obsolete dynamic register structs
-/*
-struct TimerRegisters{
-ioreg8
-    &tccrXa, //control register a
-    &tccrXb, //control register b
-    //&tccrXc, //control register c     
-    &timskX, //interrupt mask register
-    &tifrX;
+    template<int I>
+    using bittype = bitdecl<BitList, I>;
 
-    bit_number toie_bit, tov_bit;
-
-    //We disregard control register C as it is not present in all timers
-    //and it's some obscure thing with two bits pertaining to waveform comparison
-};
-
-struct TimerRegisters8 : public TimerRegisters{
-
-    ioreg8 &tcntX; //Counter register
-    TimerRegisters8( TimerRegisters &&regs, ioreg8 &tcntX_arg );
-};
-
-//We assume that capture capability is common to the 16-bit registers.
-//If it's not, we can stick the implementation in a mixin and inherit from it
-//with virtually.
-struct TimerRegisters16 : public TimerRegisters{
-    ioreg16 
-        &tcntX, //Counter register
-        &icr,   //capture register
-        &ocrXa, //Comparison register a
-        &ocrXb; //Comparison register b
+    regtype<0> tcntX;
+    regtype<1> tccrXa;
+    regtype<2> tccrXb;
+    regtype<3> timskX;
+    regtype<4> tifrX;
+    regtype<5> ocrXa;
+    regtype<6> ocrXb;
     
-    //Bit numbers
-    bit_number icie_bit, icf_bit, toie_bit; //Capture interrupt enable bit
-
-    TimerRegisters16( TimerRegisters &&regs, ioreg16 &tcntX_arg, const ioreg16 &icr_arg, 
-        ioreg16 ocrXa_arg, ioreg16 ocrXb_arg, bit_number icie, bit_number icf, bit_number toie );        
+    bittype<0> toie_bit;
+    bittype<1> tov_bit;    
 };
-*/
+
+//Some timers (Timer1 on the atmega328p) support hardware data capture. They can write a timestamp to an IO
+//register when triggered either by a digital comparators against the counter value, or by an analog comparator against
+//two voltages.
+template<class RegList, class BitList>
+struct CapturableTimerRegs:public TimerRegs< typename meta::split_type_list<RegList,1>::right_list, typename meta::split_type_list<BitList,3>::right_list>{
+    
+    template<int I>
+    using regtype = regdecl<RegList, I>;
+    
+    template<int I>
+    using bittype = bitdecl<BitList, I>;
+    
+    regtype<0> icrX;        //capture register
+    
+    bittype<1> icieX_bit;   //capture interrupt enable in TIMSK
+    bittype<2> toieX_bit;   //overflow interrupt enable in TIMSK
+    bittype<3> icfX_bit;    //capture flag in TIFR
+};
+
 //Hardware timer. The Arduino libs do this more abstractly, but here we ensure, at least, that
 //we are addressing the specific hardware timer we want because some have unique abilities.
 
@@ -100,15 +84,19 @@ public:
     
 private:
     regs_type m_regs;
-    
+        
     //Pushes a bunch of stuff onto the stack and mostly clears it, where the Arduino runtime
     //has mucked with it and made it all weird. Notably, it sets the counter multiplier to zero
     //and it turns off PWM mode, and it enables the full range of the count register (rather than being capped at 0xFF)
     //The noise canceler is turned off, too. Probably not safe to expect the Arduino runtime to keep time correctly having upended
     //all its counter and timer settings. But, hey, you've got direct control of the hardware instead.
+    
+    //Footnote: I've decided to develop under MPLAB because it knows how to build AVR binaries
+    //which will run on an AVR Arduino without the Arduino libraries. So, some of this is probably redundant now.
     pushbits<ioreg8> m_clear_tccrxa, m_clear_tccrxb;
 
 protected:
+    //Takes T, shifts high bits left by the size of T, and then ors in the low bits
     template<typename T>
     inline time_type merge_tick_bits( T low_bits ) const{
         unsigned long result = (((time_type)ticks_hi_bits) << (sizeof(low_bits) * avr::bits_per_byte)) | low_bits;
@@ -116,32 +104,77 @@ protected:
     }
     
 public:          
-    //bit_property<ioreg8> overflow_interrupt_enable,
-    //        overflow_flag;
-    
     TimerBase(regs_type &regs):
-        m_regs(regs){}
+        m_regs(regs),
+        m_clear_tccrxa{regs.tccrXa, 0xff},
+        m_clear_tccrxb{regs.tccrXb, 0xff},
+        counter(regs.tcntX),
+        comparator_a(regs.ocrXa),
+        comparator_b(regs.ocrXb){
+            
+        //Set the counter multiplier to 1
+        regs.tccrXb = 1;                
+    }
 
     inline regs_type &registers(){
         return m_regs;
-    }                        
+    }
+    
+    inline time_type ticks() const{
+        return this->merge_tick_bits(registers.tcntX); //TODO: this will probably complain because it doesn't know to convert to integer
+    }
+    
+    //Keep in mind that writing these at an inopportune time can lose a comparator event
+    register_property<decltype(regs_type::tcntx)> counter;
+    
+    //On capture-capable timers, these can trigger a capture event and optionally an interrupt.
+    //They can also be used for PWM generation.
+    register_property<decltype(regs_type::ocrXa)> comparator_a;
+    register_property<decltype(regs_type::ocrXb)> comparator_b;
 };
 
 template<typename Regs>
-class Timer8:public TimerBase<Regs>{
-    using base = TimerBase<Regs>;
+class CapturableTimer:public virtual TimerBase<Regs>{
+    using base_type = TimerBase<Regs>;
 public:
-    using time_type = typename base::time_type;
-    using regs_type = typename base::regs_type;
-    using value_type = uint8_t;
-    Timer8(regs_type &m_regs);
+    using regs_type = typename base_type::regs_type;
+    register_property<decltype(regs_type::icrX)> capture_value;
+    CapturableTimer(Regs &regs);
     
-    register_property<ioreg8> counter;
-
-    inline time_type ticks() const{
-        return base::merge_tick_bits(counter);
+    bit_property< decltype(Regs::timskX), decltype(Regs::toie_bit)> capture_interrupt_enable;
+    bit_property< decltype(Regs::tifrX),  decltype(Regs::icfX_bit)> capture_flag;        
+            
+    //Clears the capture flag, re-enabling the capture register for the next event
+    inline time_type capture_ticks(){
+        auto cap = util::integer_value(capture_value); 
+        
+        //DEBUG        
+        //cli();
+        //auto cap = ICR1;
+        //auto cap = TCNT1;
+        //sei();
+        
+        //DEBUG
+        //capture_flag = true;        //Cleared by reverse logic!
+        //TIFR1 &= ~_BV(ICF1);
+        //ACSR &= ~_BV(ACI);
+        
+        return base_type::merge_tick_bits(cap);
     }
+    
+};
 
+template<typename Regs>
+class Timer8:public virtual TimerBase<Regs>{
+    using base_type = TimerBase<Regs>;
+public:
+    using time_type = typename base_type::time_type;
+    using regs_type = typename base_type::regs_type;
+    using value_type = uint8_t;    
+    
+    using base_type::base_type;
+        
+    static_assert( sizeof( util::integer_value( *cpp::declptr<decltype(Timer8::counter)>() ) ) == 1, "Timer8 expects a single-byte counter" );    
 };
 
 template<typename Regs>
@@ -150,49 +183,12 @@ class Timer16:public TimerBase<Regs>{
     
 public:
     using regs_type = typename base_type::regs_type;
-    using time_type = typename base_type::time_type;
-    
-    inline regs_type &registers(){
-        return static_cast<regs_type &>( base_type::registers() );
-    }
-
-public:
+    using time_type = typename base_type::time_type;    
     using value_type = uint16_t;
-    Timer16(regs_type &regs);
-    register_property<ioreg16> 
-        counter,
-        capture,
-        comparison_register_a,
-        comparison_register_b;
     
-    bit_property<MEMBER_RETURN(regs_type, capture_interrupt_enable_regs())> capture_interrupt_enable;   
-    bit_property<MEMBER_RETURN(regs_type, capture_flag_regs())> capture_flag;    
+    using base_type::base_type;
     
-    inline time_type ticks() const{
-        return base_type::merge_tick_bits(counter);
-    }
-            
-    //Clears the capture flag, re-enabling the capture register for the next event
-    inline time_type capture_ticks(){
-        uint16_t cap = capture.get(); 
-        
-        //DEBUG        
-        cli();
-        //auto cap = ICR1;
-        //auto cap = TCNT1;
-        sei();
-        
-        //DEBUG
-        capture_flag = true;        //Cleared by reverse logic!
-        //TIFR1 &= ~_BV(ICF1);
-        //ACSR &= ~_BV(ACI);
-        
-        return base_type::merge_tick_bits(cap);
-    }
-    
-    //  inline value_type read() const{
-    //        return registers().tcntX;
-    //}
+    static_assert( sizeof( util::integer_value( *cpp::declptr<decltype(Timer16::counter)>() ) ) == 2, "Timer16 expects a two-byte counter" );        
 };
 
 }

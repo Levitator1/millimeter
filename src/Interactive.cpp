@@ -28,7 +28,7 @@ void Interactive::process(const String &str){
     //match a command name
     int i;
     for(i=0;m_handlers[i];++i){
-        if( ::strncasecmp( chars, m_handlers[i]->name(), namelen) == 0 )
+        if( ::strncasecmp( chars, m_handlers[i]->name(), strlen(m_handlers[i]->name())) == 0 )
             break;
     }    
     

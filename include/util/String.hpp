@@ -79,6 +79,11 @@ public:
         String(empty_string, 0, true, adopt_tag{}){            
     }
     
+    void init(const String &rhs){
+        m_state = rhs.m_state;
+        m_buf = immutable_data() ? rhs.m_buf : cp(rhs);
+    }
+    
     void init(const_pointer_type p, size_t len){
         m_state.length = len;
         if(m_state.length == 0){
@@ -103,9 +108,9 @@ public:
         init(p, len);
     }
     
-    String(const String &rhs):
-        m_state(rhs.m_state),        
-        m_buf( immutable_data() ? rhs.m_buf : cp(rhs) ){}
+    String(const String &rhs){
+        init(rhs);
+    }
         
     String(String &&rhs):
         m_state(rhs.m_state),
@@ -139,6 +144,12 @@ public:
     
     inline String substr(size_t start) const{
         return { m_buf + start, length() - start };
+    }
+
+    inline String &operator=(const String &rhs){
+        freebuf();
+        init(rhs);
+        return *this;
     }
     
     inline String &operator=(String &&rhs){

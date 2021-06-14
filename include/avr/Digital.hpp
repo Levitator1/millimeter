@@ -20,6 +20,27 @@ struct static_digital_regs{
     static_bit_property_regs8<ModeReg, mode_bit> mode_regs;
 };
 
+template<class RegList, class BitList>
+struct DIORegs{
+private:
+    assert_regs_count<RegList, BitList, 3, 3>;    
+
+public:    
+    template<int I>
+    using regtype = regdecl<RegList, I>;
+    
+    template<int I>
+    using bittype = bitdecl<BitList, I>;
+
+    regtype<0> ddr;
+    regtype<1> port;
+    regtype<2> pin;
+    
+    bittype<0> ddxn;
+    bittype<1> portxn;
+    bittype<2> pinxn;
+};
+
 //A virtual interface so that you can stuff a bunch of DIO references in an
 //array or something and access them uniformly
 class DigitalInterface{
@@ -34,37 +55,37 @@ template<class Regs>
 class Digital:public DigitalInterface{
 public:
     using regs_type = Regs;
-    
+
 private:
     regs_type m_regs;
-    
+
 protected:
     regs_type &regs(){
         return m_regs;
     }
-    
+
     const regs_type &regs() const{
         return m_regs;
     }
-    
+
 public:
-    bit_property<MEMBER_RETURN(regs_type, value_in_regs)> prop_value_in;
-    bit_property<MEMBER_RETURN(regs_type, value_out_regs)> prop_value_out;
-    bit_property<MEMBER_RETURN(regs_type, mode_regs)> prop_mode;
-    
+    bit_property<decltype(regs_type::port)> prop_value_in;
+    bit_property<decltype(regs_type::pin)> prop_value_out;
+    bit_property<decltype(regs_type::ddr)> prop_mode;
+
     Digital(regs_type &regs):        
         m_regs(m_regs),
-        prop_value_in(regs.value_in_regs),
-        prop_value_out(regs.value_out_regs),
-        prop_mode(regs.mode_regs){
+        prop_value_in(regs.port, regs.portxn),
+        prop_value_out(regs.pin, regs.pinxn),
+        prop_mode(regs.ddxn){
     }
-        
+
     inline operator bool() const{
         return value;
     }        
     
     inline Digital &operator=(bool v){
-        value = v;
+        prop_value_out = v;
         return *this;
     }    
     
@@ -72,9 +93,11 @@ public:
     virtual bool value_in() const{
         return prop_value_in;
     }
+
     inline void value_out(bool v) override{
         prop_value_out = v;
     }
+
     bool value_out() const override{
         return prop_value_out;
     }
@@ -96,7 +119,7 @@ struct DigitalPinRegMap{
 
 #define DEFINE_DIGITAL_PIN_REGS(i, port, pin) \
 template<> \
-struct DigitalPinRegMap<i>:public static_digital_regs< \
+struct DigitalPinRegMap<i>:public DIORegs< \
     &PIN##port, PIN##port##pin, \
     &PORT##port, PORT##port##pin, \
     &DDR##port, DD##port##pin>{ static constexpr bool undefined = false; }

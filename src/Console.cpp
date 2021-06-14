@@ -187,39 +187,62 @@ void Console::character_in(int ch ){
             break;
     }        
     
+    String tmp;
     switch(ch){
         
         //backspace
         case '\b':
-            m_linebuf = m_linebuf.substr(0, m_linebuf.length()-1);
+            
+            //Nothing to do if already at the start of the line
+            if(m_linepos < 1)
+                break;
+            
+            tmp = m_linebuf;
+            m_linebuf = m_linebuf.substr(0, m_linepos-1) + m_linebuf.substr(m_linepos);             
+            --m_linepos;
             
             //backspace is already echoing back, so space over the deleted character
             //and backspace again to push the cursor one net character left
-#           pragma GCC diagnostic push
-#           pragma GCC diagnostic ignored "-Wnonnull"  
-            m_out && fputs(" \b", m_out);
-#           pragma GCC diagnostic pop
+
+            //Echo back the backspace to move the cursor back one
+            //rewrite the end of the line and append a space to erase the previous last character on the line
+            if(m_out){
+                cputc('\b');
+                resend_line_end();                
+            }                                    
             break;       
             
         default:
             //buf += (char)ch;
             String tmp = cpp::move(m_linebuf);
-            m_linebuf = tmp.substr(0, m_linepos) + (char)ch;
-            ++m_linepos;
+            m_linebuf = tmp.substr(0, m_linepos) + (char)ch;            
             
             if(m_linepos < tmp.length())
                 m_linebuf = m_linebuf + tmp.substr(m_linepos);
             
+            ++m_linepos;
+            
             if(m_echo && m_out){
-#               pragma GCC diagnostic push
-#               pragma GCC diagnostic ignored "-Wnonnull" 
-                fputc((char)ch, m_out);
-#               pragma GCC diagnostic pop
+                cputc((char)ch);
+                resend_line_end();
             }
             
             break;
     }
     
+}
+
+void Console::resend_line_end(){
+    if(m_out){
+        String tmp = m_linebuf.substr(m_linepos);        
+        cputs(tmp.c_str());
+        cputc(' '); //In case the line shortened as in backspace, the extra space erases the end character from the terminal
+        
+        //Back up the cursor to where it started
+        for(size_t i = 0; i <= tmp.length();++i){
+            cputs("\e[D");
+        }
+    }
 }
 
 static bool is_eol(int ch){

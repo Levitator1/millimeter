@@ -19,6 +19,7 @@
           <logicalFolder name="atmega328p" displayName="atmega328p" projectFiles="true">
             <itemPath>include/avr/atmega328p/HWTimer.hpp</itemPath>
             <itemPath>include/avr/atmega328p/DeviceUARTs.hpp</itemPath>
+            <itemPath>include/avr/file.hpp</itemPath>
           </logicalFolder>
           <itemPath>include/avr/pushbits.hpp</itemPath>
           <itemPath>include/avr/avr_types.hpp</itemPath>
@@ -27,8 +28,9 @@
           <itemPath>include/avr/device_property.hpp</itemPath>
           <itemPath>include/avr/AnalogComparator.hpp</itemPath>
           <itemPath>include/avr/HardwareUART.hpp</itemPath>
-          <itemPath>include/register_addresses.hpp</itemPath>
           <itemPath>include/avr/system.h</itemPath>
+          <itemPath>include/avr/Digital.hpp</itemPath>
+          <itemPath>include/avr/regdef.hpp</itemPath>
         </logicalFolder>
         <logicalFolder name="commands" displayName="commands" projectFiles="true">
           <itemPath>include/commands/MeasureInductance.hpp</itemPath>

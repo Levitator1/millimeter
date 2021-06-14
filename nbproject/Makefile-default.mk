@@ -57,17 +57,17 @@ OBJECTDIR=build/${CND_CONF}/${IMAGE_TYPE}
 DISTDIR=dist/${CND_CONF}/${IMAGE_TYPE}
 
 # Source Files Quoted if spaced
-SOURCEFILES_QUOTED_IF_SPACED=src/avr/atmega328o/HWTimer_atmega328p.cpp src/util/atomic.cpp src/avr/system.c src/command_handlers/UnknownCommand.cpp src/command_handlers/MeasureInductance.cpp src/command_handlers/CommandHandler.cpp src/util/util.cpp src/util/cplusplus.cpp src/Application.cpp src/Console.cpp src/InductanceMeter.cpp src/Interactive.cpp src/main.cpp src/command_handlers/RebootCommand.cpp
+SOURCEFILES_QUOTED_IF_SPACED=src/avr/atmega328o/HWTimer_atmega328p.cpp src/util/atomic.cpp src/avr/system.c src/command_handlers/UnknownCommand.cpp src/command_handlers/MeasureInductance.cpp src/command_handlers/CommandHandler.cpp src/command_handlers/RebootCommand.cpp src/util/util.cpp src/util/cplusplus.cpp src/Application.cpp src/Console.cpp src/InductanceMeter.cpp src/Interactive.cpp src/main.cpp
 
 # Object Files Quoted if spaced
-OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/src/avr/atmega328o/HWTimer_atmega328p.o ${OBJECTDIR}/src/util/atomic.o ${OBJECTDIR}/src/avr/system.o ${OBJECTDIR}/src/command_handlers/UnknownCommand.o ${OBJECTDIR}/src/command_handlers/MeasureInductance.o ${OBJECTDIR}/src/command_handlers/CommandHandler.o ${OBJECTDIR}/src/util/util.o ${OBJECTDIR}/src/util/cplusplus.o ${OBJECTDIR}/src/Application.o ${OBJECTDIR}/src/Console.o ${OBJECTDIR}/src/InductanceMeter.o ${OBJECTDIR}/src/Interactive.o ${OBJECTDIR}/src/main.o ${OBJECTDIR}/src/command_handlers/RebootCommand.o
-POSSIBLE_DEPFILES=${OBJECTDIR}/src/avr/atmega328o/HWTimer_atmega328p.o.d ${OBJECTDIR}/src/util/atomic.o.d ${OBJECTDIR}/src/avr/system.o.d ${OBJECTDIR}/src/command_handlers/UnknownCommand.o.d ${OBJECTDIR}/src/command_handlers/MeasureInductance.o.d ${OBJECTDIR}/src/command_handlers/CommandHandler.o.d ${OBJECTDIR}/src/util/util.o.d ${OBJECTDIR}/src/util/cplusplus.o.d ${OBJECTDIR}/src/Application.o.d ${OBJECTDIR}/src/Console.o.d ${OBJECTDIR}/src/InductanceMeter.o.d ${OBJECTDIR}/src/Interactive.o.d ${OBJECTDIR}/src/main.o.d ${OBJECTDIR}/src/command_handlers/RebootCommand.o.d
+OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/src/avr/atmega328o/HWTimer_atmega328p.o ${OBJECTDIR}/src/util/atomic.o ${OBJECTDIR}/src/avr/system.o ${OBJECTDIR}/src/command_handlers/UnknownCommand.o ${OBJECTDIR}/src/command_handlers/MeasureInductance.o ${OBJECTDIR}/src/command_handlers/CommandHandler.o ${OBJECTDIR}/src/command_handlers/RebootCommand.o ${OBJECTDIR}/src/util/util.o ${OBJECTDIR}/src/util/cplusplus.o ${OBJECTDIR}/src/Application.o ${OBJECTDIR}/src/Console.o ${OBJECTDIR}/src/InductanceMeter.o ${OBJECTDIR}/src/Interactive.o ${OBJECTDIR}/src/main.o
+POSSIBLE_DEPFILES=${OBJECTDIR}/src/avr/atmega328o/HWTimer_atmega328p.o.d ${OBJECTDIR}/src/util/atomic.o.d ${OBJECTDIR}/src/avr/system.o.d ${OBJECTDIR}/src/command_handlers/UnknownCommand.o.d ${OBJECTDIR}/src/command_handlers/MeasureInductance.o.d ${OBJECTDIR}/src/command_handlers/CommandHandler.o.d ${OBJECTDIR}/src/command_handlers/RebootCommand.o.d ${OBJECTDIR}/src/util/util.o.d ${OBJECTDIR}/src/util/cplusplus.o.d ${OBJECTDIR}/src/Application.o.d ${OBJECTDIR}/src/Console.o.d ${OBJECTDIR}/src/InductanceMeter.o.d ${OBJECTDIR}/src/Interactive.o.d ${OBJECTDIR}/src/main.o.d
 
 # Object Files
-OBJECTFILES=${OBJECTDIR}/src/avr/atmega328o/HWTimer_atmega328p.o ${OBJECTDIR}/src/util/atomic.o ${OBJECTDIR}/src/avr/system.o ${OBJECTDIR}/src/command_handlers/UnknownCommand.o ${OBJECTDIR}/src/command_handlers/MeasureInductance.o ${OBJECTDIR}/src/command_handlers/CommandHandler.o ${OBJECTDIR}/src/util/util.o ${OBJECTDIR}/src/util/cplusplus.o ${OBJECTDIR}/src/Application.o ${OBJECTDIR}/src/Console.o ${OBJECTDIR}/src/InductanceMeter.o ${OBJECTDIR}/src/Interactive.o ${OBJECTDIR}/src/main.o ${OBJECTDIR}/src/command_handlers/RebootCommand.o
+OBJECTFILES=${OBJECTDIR}/src/avr/atmega328o/HWTimer_atmega328p.o ${OBJECTDIR}/src/util/atomic.o ${OBJECTDIR}/src/avr/system.o ${OBJECTDIR}/src/command_handlers/UnknownCommand.o ${OBJECTDIR}/src/command_handlers/MeasureInductance.o ${OBJECTDIR}/src/command_handlers/CommandHandler.o ${OBJECTDIR}/src/command_handlers/RebootCommand.o ${OBJECTDIR}/src/util/util.o ${OBJECTDIR}/src/util/cplusplus.o ${OBJECTDIR}/src/Application.o ${OBJECTDIR}/src/Console.o ${OBJECTDIR}/src/InductanceMeter.o ${OBJECTDIR}/src/Interactive.o ${OBJECTDIR}/src/main.o
 
 # Source Files
-SOURCEFILES=src/avr/atmega328o/HWTimer_atmega328p.cpp src/util/atomic.cpp src/avr/system.c src/command_handlers/UnknownCommand.cpp src/command_handlers/MeasureInductance.cpp src/command_handlers/CommandHandler.cpp src/util/util.cpp src/util/cplusplus.cpp src/Application.cpp src/Console.cpp src/InductanceMeter.cpp src/Interactive.cpp src/main.cpp src/command_handlers/RebootCommand.cpp
+SOURCEFILES=src/avr/atmega328o/HWTimer_atmega328p.cpp src/util/atomic.cpp src/avr/system.c src/command_handlers/UnknownCommand.cpp src/command_handlers/MeasureInductance.cpp src/command_handlers/CommandHandler.cpp src/command_handlers/RebootCommand.cpp src/util/util.cpp src/util/cplusplus.cpp src/Application.cpp src/Console.cpp src/InductanceMeter.cpp src/Interactive.cpp src/main.cpp
 
 # Pack Options 
 PACK_COMPILER_OPTIONS=-I "${DFP_DIR}/include"
@@ -178,6 +178,12 @@ ${OBJECTDIR}/src/command_handlers/CommandHandler.o: src/command_handlers/Command
 	@${RM} ${OBJECTDIR}/src/command_handlers/CommandHandler.o 
 	 ${MP_CPPC} $(MP_EXTRA_CC_PRE) -mmcu=atmega328p ${PACK_COMPILER_OPTIONS} ${PACK_COMMON_OPTIONS} -g -DDEBUG -D__MPLAB_DEBUGGER_SIMULATOR=1 -gdwarf-2  -x c++ -c -D__$(MP_PROCESSOR_OPTION)__  -funsigned-char -funsigned-bitfields -O1 -ffunction-sections -fdata-sections -fshort-enums -I "include" -Wall -MD -MP -MF "${OBJECTDIR}/src/command_handlers/CommandHandler.o.d" -MT "${OBJECTDIR}/src/command_handlers/CommandHandler.o.d" -MT ${OBJECTDIR}/src/command_handlers/CommandHandler.o  -o ${OBJECTDIR}/src/command_handlers/CommandHandler.o src/command_handlers/CommandHandler.cpp  -DXPRJ_default=$(CND_CONF)  $(COMPARISON_BUILD)  -std=c++17 -DARDUINO_PRO_MINI3_3V
 	
+${OBJECTDIR}/src/command_handlers/RebootCommand.o: src/command_handlers/RebootCommand.cpp  .generated_files/flags/default/a4111a5cd02b2fff785dd8c36ea7cba9464995bf .generated_files/flags/default/8fff49d0cb05b727cea9f8f21beb379e9251bb92
+	@${MKDIR} "${OBJECTDIR}/src/command_handlers" 
+	@${RM} ${OBJECTDIR}/src/command_handlers/RebootCommand.o.d 
+	@${RM} ${OBJECTDIR}/src/command_handlers/RebootCommand.o 
+	 ${MP_CPPC} $(MP_EXTRA_CC_PRE) -mmcu=atmega328p ${PACK_COMPILER_OPTIONS} ${PACK_COMMON_OPTIONS} -g -DDEBUG -D__MPLAB_DEBUGGER_SIMULATOR=1 -gdwarf-2  -x c++ -c -D__$(MP_PROCESSOR_OPTION)__  -funsigned-char -funsigned-bitfields -O1 -ffunction-sections -fdata-sections -fshort-enums -I "include" -Wall -MD -MP -MF "${OBJECTDIR}/src/command_handlers/RebootCommand.o.d" -MT "${OBJECTDIR}/src/command_handlers/RebootCommand.o.d" -MT ${OBJECTDIR}/src/command_handlers/RebootCommand.o  -o ${OBJECTDIR}/src/command_handlers/RebootCommand.o src/command_handlers/RebootCommand.cpp  -DXPRJ_default=$(CND_CONF)  $(COMPARISON_BUILD)  -std=c++17 -DARDUINO_PRO_MINI3_3V
+	
 ${OBJECTDIR}/src/util/util.o: src/util/util.cpp  .generated_files/flags/default/425127d23efe50d9b02125cd2956d3b89b463645 .generated_files/flags/default/8fff49d0cb05b727cea9f8f21beb379e9251bb92
 	@${MKDIR} "${OBJECTDIR}/src/util" 
 	@${RM} ${OBJECTDIR}/src/util/util.o.d 
@@ -220,12 +226,6 @@ ${OBJECTDIR}/src/main.o: src/main.cpp  .generated_files/flags/default/fd056573b0
 	@${RM} ${OBJECTDIR}/src/main.o 
 	 ${MP_CPPC} $(MP_EXTRA_CC_PRE) -mmcu=atmega328p ${PACK_COMPILER_OPTIONS} ${PACK_COMMON_OPTIONS} -g -DDEBUG -D__MPLAB_DEBUGGER_SIMULATOR=1 -gdwarf-2  -x c++ -c -D__$(MP_PROCESSOR_OPTION)__  -funsigned-char -funsigned-bitfields -O1 -ffunction-sections -fdata-sections -fshort-enums -I "include" -Wall -MD -MP -MF "${OBJECTDIR}/src/main.o.d" -MT "${OBJECTDIR}/src/main.o.d" -MT ${OBJECTDIR}/src/main.o  -o ${OBJECTDIR}/src/main.o src/main.cpp  -DXPRJ_default=$(CND_CONF)  $(COMPARISON_BUILD)  -std=c++17 -DARDUINO_PRO_MINI3_3V
 	
-${OBJECTDIR}/src/command_handlers/RebootCommand.o: src/command_handlers/RebootCommand.cpp  .generated_files/flags/default/a4111a5cd02b2fff785dd8c36ea7cba9464995bf .generated_files/flags/default/8fff49d0cb05b727cea9f8f21beb379e9251bb92
-	@${MKDIR} "${OBJECTDIR}/src/command_handlers" 
-	@${RM} ${OBJECTDIR}/src/command_handlers/RebootCommand.o.d 
-	@${RM} ${OBJECTDIR}/src/command_handlers/RebootCommand.o 
-	 ${MP_CPPC} $(MP_EXTRA_CC_PRE) -mmcu=atmega328p ${PACK_COMPILER_OPTIONS} ${PACK_COMMON_OPTIONS} -g -DDEBUG -D__MPLAB_DEBUGGER_SIMULATOR=1 -gdwarf-2  -x c++ -c -D__$(MP_PROCESSOR_OPTION)__  -funsigned-char -funsigned-bitfields -O1 -ffunction-sections -fdata-sections -fshort-enums -I "include" -Wall -MD -MP -MF "${OBJECTDIR}/src/command_handlers/RebootCommand.o.d" -MT "${OBJECTDIR}/src/command_handlers/RebootCommand.o.d" -MT ${OBJECTDIR}/src/command_handlers/RebootCommand.o  -o ${OBJECTDIR}/src/command_handlers/RebootCommand.o src/command_handlers/RebootCommand.cpp  -DXPRJ_default=$(CND_CONF)  $(COMPARISON_BUILD)  -std=c++17 -DARDUINO_PRO_MINI3_3V
-	
 else
 ${OBJECTDIR}/src/avr/atmega328o/HWTimer_atmega328p.o: src/avr/atmega328o/HWTimer_atmega328p.cpp  .generated_files/flags/default/fa3806026169edad2f7972b1fd1b161c88588f9f .generated_files/flags/default/8fff49d0cb05b727cea9f8f21beb379e9251bb92
 	@${MKDIR} "${OBJECTDIR}/src/avr/atmega328o" 
@@ -256,6 +256,12 @@ ${OBJECTDIR}/src/command_handlers/CommandHandler.o: src/command_handlers/Command
 	@${RM} ${OBJECTDIR}/src/command_handlers/CommandHandler.o.d 
 	@${RM} ${OBJECTDIR}/src/command_handlers/CommandHandler.o 
 	 ${MP_CPPC} $(MP_EXTRA_CC_PRE) -mmcu=atmega328p ${PACK_COMPILER_OPTIONS} ${PACK_COMMON_OPTIONS}  -x c++ -c -D__$(MP_PROCESSOR_OPTION)__  -funsigned-char -funsigned-bitfields -O1 -ffunction-sections -fdata-sections -fshort-enums -I "include" -Wall -MD -MP -MF "${OBJECTDIR}/src/command_handlers/CommandHandler.o.d" -MT "${OBJECTDIR}/src/command_handlers/CommandHandler.o.d" -MT ${OBJECTDIR}/src/command_handlers/CommandHandler.o  -o ${OBJECTDIR}/src/command_handlers/CommandHandler.o src/command_handlers/CommandHandler.cpp  -DXPRJ_default=$(CND_CONF)  $(COMPARISON_BUILD)  -std=c++17 -DARDUINO_PRO_MINI3_3V
+	
+${OBJECTDIR}/src/command_handlers/RebootCommand.o: src/command_handlers/RebootCommand.cpp  .generated_files/flags/default/11093ac9cd66fe06828f9da17e3a0933ea96990c .generated_files/flags/default/8fff49d0cb05b727cea9f8f21beb379e9251bb92
+	@${MKDIR} "${OBJECTDIR}/src/command_handlers" 
+	@${RM} ${OBJECTDIR}/src/command_handlers/RebootCommand.o.d 
+	@${RM} ${OBJECTDIR}/src/command_handlers/RebootCommand.o 
+	 ${MP_CPPC} $(MP_EXTRA_CC_PRE) -mmcu=atmega328p ${PACK_COMPILER_OPTIONS} ${PACK_COMMON_OPTIONS}  -x c++ -c -D__$(MP_PROCESSOR_OPTION)__  -funsigned-char -funsigned-bitfields -O1 -ffunction-sections -fdata-sections -fshort-enums -I "include" -Wall -MD -MP -MF "${OBJECTDIR}/src/command_handlers/RebootCommand.o.d" -MT "${OBJECTDIR}/src/command_handlers/RebootCommand.o.d" -MT ${OBJECTDIR}/src/command_handlers/RebootCommand.o  -o ${OBJECTDIR}/src/command_handlers/RebootCommand.o src/command_handlers/RebootCommand.cpp  -DXPRJ_default=$(CND_CONF)  $(COMPARISON_BUILD)  -std=c++17 -DARDUINO_PRO_MINI3_3V
 	
 ${OBJECTDIR}/src/util/util.o: src/util/util.cpp  .generated_files/flags/default/cf0a9a8c7904085c67a0c1a3f0c7d4e36afe107c .generated_files/flags/default/8fff49d0cb05b727cea9f8f21beb379e9251bb92
 	@${MKDIR} "${OBJECTDIR}/src/util" 
@@ -298,12 +304,6 @@ ${OBJECTDIR}/src/main.o: src/main.cpp  .generated_files/flags/default/fc3a2b86aa
 	@${RM} ${OBJECTDIR}/src/main.o.d 
 	@${RM} ${OBJECTDIR}/src/main.o 
 	 ${MP_CPPC} $(MP_EXTRA_CC_PRE) -mmcu=atmega328p ${PACK_COMPILER_OPTIONS} ${PACK_COMMON_OPTIONS}  -x c++ -c -D__$(MP_PROCESSOR_OPTION)__  -funsigned-char -funsigned-bitfields -O1 -ffunction-sections -fdata-sections -fshort-enums -I "include" -Wall -MD -MP -MF "${OBJECTDIR}/src/main.o.d" -MT "${OBJECTDIR}/src/main.o.d" -MT ${OBJECTDIR}/src/main.o  -o ${OBJECTDIR}/src/main.o src/main.cpp  -DXPRJ_default=$(CND_CONF)  $(COMPARISON_BUILD)  -std=c++17 -DARDUINO_PRO_MINI3_3V
-	
-${OBJECTDIR}/src/command_handlers/RebootCommand.o: src/command_handlers/RebootCommand.cpp  .generated_files/flags/default/11093ac9cd66fe06828f9da17e3a0933ea96990c .generated_files/flags/default/8fff49d0cb05b727cea9f8f21beb379e9251bb92
-	@${MKDIR} "${OBJECTDIR}/src/command_handlers" 
-	@${RM} ${OBJECTDIR}/src/command_handlers/RebootCommand.o.d 
-	@${RM} ${OBJECTDIR}/src/command_handlers/RebootCommand.o 
-	 ${MP_CPPC} $(MP_EXTRA_CC_PRE) -mmcu=atmega328p ${PACK_COMPILER_OPTIONS} ${PACK_COMMON_OPTIONS}  -x c++ -c -D__$(MP_PROCESSOR_OPTION)__  -funsigned-char -funsigned-bitfields -O1 -ffunction-sections -fdata-sections -fshort-enums -I "include" -Wall -MD -MP -MF "${OBJECTDIR}/src/command_handlers/RebootCommand.o.d" -MT "${OBJECTDIR}/src/command_handlers/RebootCommand.o.d" -MT ${OBJECTDIR}/src/command_handlers/RebootCommand.o  -o ${OBJECTDIR}/src/command_handlers/RebootCommand.o src/command_handlers/RebootCommand.cpp  -DXPRJ_default=$(CND_CONF)  $(COMPARISON_BUILD)  -std=c++17 -DARDUINO_PRO_MINI3_3V
 	
 endif
 

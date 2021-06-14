@@ -115,6 +115,33 @@ struct type_list_append_T_x_N{
     using type = typename append_type_lists< TypeList, typename fill_type_list<T, N>::type >::type;
 };
 
+namespace impl{
+
+    template<class ListL, class ListR, int Remain>
+    struct split_type_list_impl;
+
+    template<typename... LeftTypes, template<typename...> class ListL, typename RHead, typename... RightTypes, template<typename...> class ListR, int Remain >
+    struct split_type_list_impl<ListL<LeftTypes...>, ListR<RHead, RightTypes...>, Remain >{
+        using result = typename split_type_list_impl< ListL<LeftTypes..., RHead>, ListL<RightTypes...>, Remain-1  >::result;
+    };
+
+    template<typename... LeftTypes, template<typename...> class ListL, typename... RightTypes, template<typename...> class ListR>
+    struct split_type_list_impl<ListL<LeftTypes...>, ListR<RightTypes...>, 0 >{
+        struct result{
+            using left_list = ListL<LeftTypes...>;
+            using right_list = ListR< RightTypes... >;
+        };
+    };
+}
+
+//Split a list at index I so that the left result is [I0,I) and the right result is [I, In)
+template<typename TypeList, int I>
+using split_type_list = impl::split_type_list_impl<types<>, TypeList, I>;
+
+
+//Return a type list containing the last N elements
+template<typename TypeList, int N>
+using last_N_types = typename split_type_list<TypeList, TypeList::size - N>::right_list;
 
 /*
 template<typename TypeList, int Index>

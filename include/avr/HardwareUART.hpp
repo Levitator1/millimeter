@@ -5,9 +5,8 @@
 #include <stdio.h>
 #include <assert.h>
 #include "avr_types.hpp"
-//#include "Config.hpp"
 #include "file.hpp"
-#include "../util/meta.hpp"
+#include "regdef.hpp"
 
 namespace levitator{
 namespace avr{
@@ -34,16 +33,15 @@ struct UART_FILE:public FILE_EX{
     
 template<class RegList, class BitList>
 struct HardwareUARTRegs{
-private:
-    meta::assert_size_field<RegList, 5> check_reg_count;
-    meta::assert_size_field<BitList, 7> check_bit_count;
+private:        
+    static assert_regs_count<RegList, BitList, 5, 7> check_def_lengths;
         
 public:    
     template<int I>
-    using regtype = meta::type_i<RegList, I>;
+    using regtype = regdecl<RegList, I>;
     
     template<int I>
-    using bittype = meta::type_i<BitList, I>;
+    using bittype = bitdecl<BitList, I>;
     
     regtype<0> ubrrx;
     regtype<1> ucsrxa;
@@ -60,9 +58,9 @@ public:
     bittype<6> udrex_bit;       
 };
 
-template<typename Guard = atomic_guard>
+template<template<class> class GuardPolicy = default_atomic_guard_policy>
 struct DHardwareUARTRegs: HardwareUARTRegs< 
-    meta::types< dreg16addr<Guard>, dreg8addr<Guard>, dreg8addr<Guard>, dreg8addr<Guard>, dreg8addr<Guard> >,
+    meta::types< dreg16addr<GuardPolicy>, dreg8addr<GuardPolicy>, dreg8addr<GuardPolicy>, dreg8addr<GuardPolicy>, dreg8addr<GuardPolicy> >,
     typename meta::fill_type_list<bit_number, 7>::type
 >{
     
@@ -118,7 +116,7 @@ public:
                         
         //DEBUG
         
-        volatile int blarg;
+        //volatile int blarg;
         //auto blah = regs.ubrrx.debug_pointer();
         //assert(blah == &UBRR0);
         //auto blah2 = regs.ubrrx.reg;
