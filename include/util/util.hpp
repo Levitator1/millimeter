@@ -100,15 +100,41 @@ struct storage<T, static_const_storage_tag<InitType, InitVal>>{
     using init_type = InitType;
     static constexpr init_type value = InitVal;               
             
-    static inline constexpr const value_type &get(){
+    static inline constexpr value_type get(){
         return value;
     }        
     
-    inline constexpr operator const value_type &() const{
+    inline constexpr operator value_type () const{
         return get();
-    }   
+    } 
+    
+    /*
+    //Calculate new static storage class
+    template<typename RhsT, typename InitType2, InitType2 value2>
+    inline constexpr auto bitwise_or(const storage<RhsT, static_const_storage_tag<InitType2,value2> > &){
+        return storage<T, static_const_storage_tag<T, value | value2>>{};
+    }
+
+    inline constexpr auto bitwise_or(value_type v){        
+        return storage<T, static_const_storage_tag<T, value | v>>{};
+    } 
+    */   
 };
 
+template<typename T>
+struct is_static_storage : public cpp::false_type{
+};
+
+template<typename T, typename InitType, InitType InitVal>
+struct is_static_storage<storage< T, static_const_storage_tag<InitType, InitVal> >> : public cpp::true_type{
+};
+
+template<typename TL, typename InitTypeL, InitTypeL InitValL, typename TR, typename InitTypeR, InitTypeR InitValR>
+inline constexpr auto bitwise_or_storage( const storage<TL, static_const_storage_tag<InitTypeL, InitValL>> &lhs, const storage<TR, static_const_storage_tag<InitTypeR, InitValR>> &rhs){
+    constexpr auto result = InitValL | InitValR;
+    using result_type = decltype(result);
+    return storage<result_type, static_const_storage_tag<result_type, result>>();
+}
 
 //Converts something to an integer value without assuming what kind of integer it represents.
 namespace impl{    
@@ -128,5 +154,21 @@ inline auto integer_value(unsigned long long v){ return impl::integer_value_impl
 template<typename T>
 using integer_typeof = decltype( integer_value( cpp::declval<T>() ) );
 
+
 }
 }
+
+#define assert_string(expr, file, line) "ASSERT FAILED: " #expr ": " #file ": " #line "\n"
+
+//Always assert, whether debugging or not.
+//TODO: The message strings implicitly generated could add up to a lot of resource usage
+//so, PROGMEM might help. We use __FUNCTION__ instead of __FILE__, as function names
+//will tend to be shorter than full paths.
+#define aassert(x) { if(!x) puts(assert_string(x, __FUNCTION__, __LINE_NUMBER__)); }
+
+#ifndef NDEBUG
+#define assert(x) aassert(x)
+#else
+#define assert(x)
+#endif
+

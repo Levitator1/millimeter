@@ -12,6 +12,7 @@ namespace ardmeter{
 
 class Application:public arduino::Interactive{
 
+    arduino::ArduinoDigital<Config::reset_drive_pin> reset_drive_pin;
     UnknownCommand unknown_handler;
     MeasureInductance measure_inductance_handler;
     RebootCommand reboot_handler;
@@ -20,11 +21,11 @@ class Application:public arduino::Interactive{
 
 public:    
     Config config = {};
-    //InductanceMeter inductance_meter = {config, config.charge_inductance_pin};
+    InductanceMeter inductance_meter = {config};
 
     Application();
     void init();
-
+    void reboot();
     void measure_inductance();
     
 };

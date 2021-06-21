@@ -40,8 +40,8 @@ void Interactive::process(const String &str){
 
 void Interactive::run(){
     bool avail;
-    while(true){
-        
+            
+    while(true){                        
         auto result = console.read_line( &avail );
         if(avail)
             process(result);

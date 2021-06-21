@@ -8,6 +8,6 @@ MeasureInductance::MeasureInductance():
 }
 
 void MeasureInductance::handle(arduino::Interactive &state, const String &cmd, size_t pos){
-    state.upcast<Application>().measure_inductance();
+    state.downcast<Application>().measure_inductance();
 }
 

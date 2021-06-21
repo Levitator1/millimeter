@@ -22,7 +22,7 @@ using namespace levitator::ardmeter;
 //Application app(&command_names[0], &command_handlers[0], &unknown_handler);
 Application app;
 
-void setup(){    
+void setup(){            
     app.init();    
 }
 
@@ -78,6 +78,15 @@ void loop(){
 }
 
 int main(){
+    
+    /*
+    cli();
+    MCUSR &= ~(WDRF);
+    WDTCSR |= _BV(WDCE);   //enable watchdog editing
+    WDTCSR &= ~(WDE);
+    sei();
+    */
+    
     setup();
     loop();
     

@@ -21,7 +21,7 @@ public:
     inline virtual ~Interactive(){}
 
     template<typename T>
-    T &upcast(){
+    T &downcast(){
         //-fno-rtti by convention on Arduino, and maybe a good idea given memory constraints
         //return *dynamic_cast<T *>(this);
         return *static_cast<T *>(this); //unsafe

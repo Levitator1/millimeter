@@ -6,7 +6,9 @@
 #include "InductanceMeter.hpp"
 #include "avr/atmega328p/HWTimer.hpp"
 #include "avr/AnalogComparator.hpp"
+#include "arduino/ArduinoDigital.hpp"
 #include "Time.hpp"
+#include "System.hpp"
 
 using namespace levitator;
 using namespace levitator::ardmeter;
@@ -15,18 +17,44 @@ using namespace levitator::measurement;
 using namespace levitator::containers;
 using namespace levitator::avr;
 using namespace levitator::util;
+using namespace levitator::arduino;
 
-//DEBUG
-#ifdef false
+InductanceMeter::power_mask_type InductanceMeter::m_power_mask = {};
+InductanceMeter::power_pin_type InductanceMeter::vcc_power_pin = {};
+InductanceMeter::ground_pin_type InductanceMeter::ground_pin = {};
 
-levitator::ardmeter::InductanceMeter::InductanceMeter(levitator::ardmeter::Config const &config, pin_id charge_pin):
-    m_config(config),
-    m_charge_pin(charge_pin){
+levitator::ardmeter::InductanceMeter::InductanceMeter(const levitator::ardmeter::Config &config):
+    m_config(config){
 }
 
 void InductanceMeter::init(){
     //We assume the application globally initializes the AD reference to internal/vcc
+    
+    //Globally disable the pull-up resistors
+    //Normally, you're supposed to be able to alter the output bits while in input mode
+    //But it appears to be that if you disable the pullup resistors, this becomes undefined behavior?
+    //So, set the mode to output first, then update the high/low state
+    System::pullup_disable_bit = true;
+    
+    //Make sure the inductance charging circuit is off
+    //This really just sets the power pins to input/hi-z
     unload_device();
+    
+    //Set the power pin outputs to be + and - as appropriate
+    //Now, when they are switched back to output mode, they will instantly deliver power
+   // vcc_power_pin.prop_value_out.reg() = util::null_type();
+    
+    //console.cprintf("Setting vcc to + power. Reg address: %x", vcc_power_pin.prop_value_out.reg().address().get());
+    //console.cprintf(", value: %x", (int)vcc_power_pin.prop_value_out.reg());
+    //console.cprintf(", mask: %x\n", (int)vcc_power_pin.prop_value_out.mask());
+    vcc_power_pin = true;
+    //console.cprintf("After setting vcc to + power. Reg address: %x", vcc_power_pin.prop_value_out.reg().address().get());
+    //console.cprintf(", value: %x", (int)vcc_power_pin.prop_value_out.reg());
+    //console.cprintf(", mask: %x\n\n", (int)vcc_power_pin.prop_value_out.mask());
+    
+    //console.cputs("Setting ground to - power\n");
+    ground_pin = false;
+    
 }
 
 /*
@@ -41,6 +69,28 @@ void InductanceMeter::dump_samples( const ad_sample *samples, const microseconds
 */
 
 real InductanceMeter::measure(){
+    
+    
+    //ground_pin = false;
+    //power_pin = false;
+    //ground_pin.prop_mode = true;
+    //power_pin.prop_mode = true;
+    //power_pin = true;        
+    
+    //m_power_mask = true;
+    //ground_pin = false;
+    //vcc_power_pin = true;
+    
+    //PORTD |= 1;
+    //console.cprintf("Power pin: DDR: %x, PORT: %x, PIN: %x\n", DDRD, PORTD, PIND);
+    //console.cprintf( "BTW: PORTD2: %x PORTD4: %x, EICRA: %x\n", PORTD2, PORTD4, EICRA );
+    load_device();
+    
+    return 0.0;
+}
+
+#if false
+real InductanceMeter::measure(){    
     ad_sample maxDiff;        
     AnalogComparator comparator;
         
@@ -107,6 +157,7 @@ real InductanceMeter::measure(){
     
     return 0;
 }
+#endif
 
 /*
 real InductanceMeter::measure(){
@@ -174,5 +225,3 @@ ad_sample InductanceMeter::V2sample( real v ){
     return v * Config::ad_max / m_config.vcc;
 }
 */
-
-#endif

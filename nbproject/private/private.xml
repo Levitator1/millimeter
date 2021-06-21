@@ -8,9 +8,13 @@
             <file>file:/home/j/project/millimeter/include/avr/atmega328p/HWTimer.hpp</file>
             <file>file:/home/j/project/millimeter/include/Interactive.hpp</file>
             <file>file:/home/j/project/millimeter/src/util/atomic.cpp</file>
+            <file>file:/home/j/project/millimeter/include/avr/device_property.hpp</file>
+            <file>file:/home/j/project/millimeter/include/avr/Digital.hpp</file>
             <file>file:/home/j/project/millimeter/include/avr/HardwareUART.hpp</file>
             <file>file:/home/j/project/millimeter/include/util/smart_ptr.hpp</file>
             <file>file:/home/j/project/millimeter/include/Application.hpp</file>
+            <file>file:/home/j/project/millimeter/include/avr/HWTimerCommon.hpp</file>
+            <file>file:/home/j/project/millimeter/include/avr/pushbits.hpp</file>
             <file>file:/home/j/project/millimeter/include/Console.hpp</file>
             <file>file:/home/j/project/millimeter/include/util/meta.hpp</file>
             <file>file:/home/j/project/millimeter/include/util/String.hpp</file>
@@ -20,25 +24,32 @@
             <file>file:/home/j/project/millimeter/src/avr/system.c</file>
             <file>file:/home/j/project/millimeter/include/commands/RebootCommand.hpp</file>
             <file>file:/home/j/project/millimeter/src/command_handlers/RebootCommand.cpp</file>
+            <file>file:/home/j/project/millimeter/include/util/cplusplus.hpp</file>
             <file>file:/home/j/project/millimeter/include/commands/UnknownCommand.hpp</file>
+            <file>file:/home/j/project/millimeter/include/avr/AnalogComparator.hpp</file>
             <file>file:/home/j/project/millimeter/src/Application.cpp</file>
             <file>file:/home/j/project/millimeter/include/avr/system.h</file>
             <file>file:/home/j/project/millimeter/src/util/cplusplus.cpp</file>
             <file>file:/home/j/project/millimeter/include/avr/avr_types.hpp</file>
             <file>file:/home/j/project/millimeter/src/avr/atmega328o/HWTimer_atmega328p.cpp</file>
             <file>file:/home/j/project/millimeter/src/util/util.cpp</file>
+            <file>file:/home/j/project/millimeter/include/arduino/arduino_pro_mini/digital_regs.hpp</file>
             <file>file:/home/j/project/millimeter/stimulus.txt</file>
             <file>file:/home/j/project/millimeter/src/main.cpp</file>
             <file>file:/home/j/project/millimeter/src/Console.cpp</file>
             <file>file:/home/j/project/millimeter/src/command_handlers/CommandHandler.cpp</file>
             <file>file:/home/j/project/millimeter/include/ringbuffer.hpp</file>
             <file>file:/home/j/project/millimeter/src/command_handlers/UnknownCommand.cpp</file>
+            <file>file:/home/j/project/millimeter/include/arduino/arduino_pro_mini/BoardConfig.hpp</file>
             <file>file:/home/j/project/millimeter/include/avr/file.hpp</file>
             <file>file:/home/j/project/millimeter/include/util/algo.hpp</file>
             <file>file:/home/j/project/millimeter/src/avr/AnalogComparator.cpp</file>
+            <file>file:/home/j/project/millimeter/include/avr/regdef.hpp</file>
             <file>file:/home/j/project/millimeter/src/Interactive.cpp</file>
             <file>file:/home/j/project/millimeter/include/util/util.hpp</file>
             <file>file:/home/j/project/millimeter/src/command_handlers/MeasureInductance.cpp</file>
+            <file>file:/home/j/project/millimeter/include/arduino/BoardConfig.hpp</file>
+            <file>file:/home/j/project/millimeter/include/arduino/ArduinoDigital.hpp</file>
         </group>
     </open-files>
 </project-private>

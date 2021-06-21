@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../util/meta.hpp"
+#include "../avr/regdef.hpp"
 #include "../avr/Digital.hpp"
 
 //
@@ -8,15 +9,32 @@
 // Currently only the Pro Mini/atmega328p is defined, but it shouldn't be too hard to add more
 //
 
-#if defined( ARDUINO_PRO_MINI3_3V ) || defined( ARDUINO_PRO_MINI5V )
-#   include "arduino_pro_mini/digital_regs.hpp"
-#endif
-
 namespace levitator{
-namespace arduino{   
+namespace arduino{
+    
+//Map I to each register definition
+template< int I >
+struct DigitalPinRegMap{
+    static constexpr bool undefined = true;
+};
+
+#define DEFINE_DIGITAL_PIN_REGS(i, port, pin) \
+template<> \
+struct DigitalPinRegMap<i>:public ::levitator::avr::DIORegs< \
+    levitator::meta::types< \
+        SREG8ADDR(DDR##port), \
+        SREG8ADDR(PORT##port), \
+        SREG8ADDR(PIN##port)>, \
+    levitator::meta::types< \
+                ::levitator::avr::sbitno<DD##port##pin>, \
+                ::levitator::avr::sbitno<PORT##port##pin>, \
+                ::levitator::avr::sbitno<PIN##port##pin> \
+        >>{  \
+        static constexpr bool undefined = false;  \
+};
 
 template<int I>
-using ArduinoDigital = avr::Digital<DigitalPinRegs<I>>;
+using ArduinoDigital = avr::Digital<DigitalPinRegMap<I>>;
     
     
 /*
@@ -46,3 +64,9 @@ namespace impl{
 
 }
 }
+
+#if defined( ARDUINO_PRO_MINI3_3V ) || defined( ARDUINO_PRO_MINI5V )
+#   include "arduino_pro_mini/digital_regs.hpp"
+#endif
+
+

@@ -28,9 +28,10 @@
           <itemPath>include/avr/device_property.hpp</itemPath>
           <itemPath>include/avr/AnalogComparator.hpp</itemPath>
           <itemPath>include/avr/HardwareUART.hpp</itemPath>
-          <itemPath>include/avr/system.h</itemPath>
           <itemPath>include/avr/Digital.hpp</itemPath>
           <itemPath>include/avr/regdef.hpp</itemPath>
+          <itemPath>include/avr/asm.h</itemPath>
+          <itemPath>include/System.hpp</itemPath>
         </logicalFolder>
         <logicalFolder name="commands" displayName="commands" projectFiles="true">
           <itemPath>include/commands/MeasureInductance.hpp</itemPath>
@@ -70,6 +71,7 @@
         <itemPath>src/avr/atmega328o/HWTimer_atmega328p.cpp</itemPath>
         <itemPath>src/util/atomic.cpp</itemPath>
         <itemPath>src/avr/system.c</itemPath>
+        <itemPath>include/System.cpp</itemPath>
       </logicalFolder>
       <logicalFolder name="f3" displayName="command_handlers" projectFiles="true">
         <itemPath>src/command_handlers/UnknownCommand.cpp</itemPath>
@@ -232,7 +234,7 @@
         <property key="flash-segment" value=""/>
         <property key="generate-map-file" value="true"/>
         <property key="initial-stack-address" value=""/>
-        <property key="input-libraries" value="libm"/>
+        <property key="input-libraries" value="libm;libprintf_flt"/>
         <property key="no-default-libs" value="false"/>
         <property key="no-shared-libraries" value="true"/>
         <property key="no-startup-files" value="false"/>
@@ -714,6 +716,9 @@
         <property key="codecoverage.enabled" value="Disable"/>
         <property key="codecoverage.enableoutputtofile" value="false"/>
         <property key="codecoverage.outputfile" value=""/>
+        <property key="debugoptions.debug-startup" value="Use system settings"/>
+        <property key="debugoptions.reset-behaviour" value="Use system settings"/>
+        <property key="lastid" value=""/>
         <property key="oscillator.auxfrequency" value="120"/>
         <property key="oscillator.auxfrequencyunit" value="Mega"/>
         <property key="oscillator.frequency" value="1"/>
@@ -1309,7 +1314,7 @@
         <property key="flash-segment" value=""/>
         <property key="generate-map-file" value="true"/>
         <property key="initial-stack-address" value=""/>
-        <property key="input-libraries" value="libm"/>
+        <property key="input-libraries" value="libm;libprintf_flt"/>
         <property key="no-default-libs" value="false"/>
         <property key="no-shared-libraries" value="true"/>
         <property key="no-startup-files" value="false"/>
@@ -1328,7 +1333,7 @@
         <property key="oscillator.auxfrequencyunit" value="Mega"/>
         <property key="oscillator.frequency" value="8"/>
         <property key="oscillator.frequencyunit" value="Mega"/>
-        <property key="oscillator.rcfrequency" value="250"/>
+        <property key="oscillator.rcfrequency" value="8"/>
         <property key="oscillator.rcfrequencyunit" value="Mega"/>
         <property key="periphADC1.altscl" value="false"/>
         <property key="periphADC1.minTacq" value=""/>
@@ -1798,7 +1803,7 @@
         <property key="oscillator.auxfrequencyunit" value="Mega"/>
         <property key="oscillator.frequency" value="8"/>
         <property key="oscillator.frequencyunit" value="Mega"/>
-        <property key="oscillator.rcfrequency" value="250"/>
+        <property key="oscillator.rcfrequency" value="8"/>
         <property key="oscillator.rcfrequencyunit" value="Mega"/>
         <property key="periphADC1.altscl" value="false"/>
         <property key="periphADC1.minTacq" value=""/>

@@ -14,21 +14,48 @@ inline void memory_fence(){
     __asm__ volatile ("" ::: "memory");
 }
 
-//Assumes it's being used in a non-ISR context and interrupts should always
+//Assumes it's being used in a non-ISR or non-recursive context and interrupts should always
 //come on on exit. This is good for code that is not intended to ever run in an ISR.
+//It's not recursive. An inner one may override an outer one's state on exit.
 struct atomic_guard{
+    static constexpr bool recursive = false;
     atomic_guard();
     ~atomic_guard();
 };
 
 //Same as atomic_guard, but restores the interrupt status on exit
-//This is for code which could be called from either inside or outside an ISR
+//This is for code which could be called from either inside or outside an ISR.
+//Or where guards are nested.
+//Note that the interrupt flag read/update operations need not be atomic because
+//if initial value is false, it's not going to change by itself. If it's true, then it should
+//be restored back to true before the current sequence of instructions is able to proceed.
+//If you had an ISR return without re-enabling interrupts, it's then that you would have a problem.
 class atomic_guard_restore{
     bool m_was_on;
 public:
+    static constexpr bool recursive = true;
     atomic_guard_restore();
     ~atomic_guard_restore();
 };
+
+namespace impl{
+    template<class G, typename Foo=void>
+    struct guard_traits_recursive_impl{ static constexpr bool recursive = false; };
+    
+    template<class G>
+    struct guard_traits_recursive_impl<G, cpp::void_t<decltype(G::recursive)>>{ static constexpr bool result = G::recursive; };
+    
+    
+    //null_type serves as a recursive guard, because it is no-op and you can nest nothing all day without ill effects
+    template<>
+    struct guard_traits_recursive_impl<util::null_type, void>{ static constexpr bool result = true; };
+}
+
+template<class G>
+struct guard_traits{
+    static constexpr bool recursive = impl::guard_traits_recursive_impl<G>::result;
+};
+
 
 struct atomic_guard_tag{
     using type = atomic_guard;

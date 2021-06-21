@@ -1,6 +1,7 @@
 #include "Console.hpp"
 #include "commands/RebootCommand.hpp"
-#include "avr/system.h"
+#include "avr/asm.h"
+#include "Application.hpp"
 
 using namespace levitator::consolens;
 using namespace levitator::arduino;
@@ -10,7 +11,8 @@ RebootCommand::RebootCommand():
     CommandHandler("reboot"){
 }
 
-void RebootCommand::handle(Interactive &, const String &cmd, size_t pos ){
-    console.cprintf("Rebooting system...\n");
-    avr_reboot();
+void RebootCommand::handle(Interactive &app, const String &cmd, size_t pos ){
+    console.cprintf("Rebooting system...\n\n");
+    app.downcast<Application>().reboot();
+    //avr_reboot();
 }
