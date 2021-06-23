@@ -5,6 +5,7 @@
 #include "Config.hpp"
 #include "Measurement.hpp"
 #include "arduino/ArduinoDigital.hpp"
+#include "FrequencyCounter.hpp"
 
 namespace levitator{
 namespace ardmeter{

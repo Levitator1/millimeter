@@ -58,6 +58,7 @@
         <itemPath>include/Console.hpp</itemPath>
         <itemPath>include/CommandHandler.hpp</itemPath>
         <itemPath>include/util/algo.hpp</itemPath>
+        <itemPath>include/FrequencyCounter.hpp</itemPath>
       </logicalFolder>
     </logicalFolder>
     <logicalFolder name="LinkerScript"

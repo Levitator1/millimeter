@@ -121,7 +121,7 @@ public:
     }
     
     inline time_type ticks() const{
-        return this->merge_tick_bits(registers.tcntX); //TODO: this will probably complain because it doesn't know to convert to integer
+        return this->merge_tick_bits(util::integer_value(registers.tcntX)); //TODO: this will probably complain because it doesn't know to convert to integer
     }
     
     //Keep in mind that writing these at an inopportune time can lose a comparator event
@@ -161,33 +161,17 @@ public:
         
         return base_type::merge_tick_bits(cap);
     }
-    
 };
 
 template<typename Regs>
 class Timer8:public virtual TimerBase<Regs>{
-    using base_type = TimerBase<Regs>;
 public:
-    using time_type = typename base_type::time_type;
-    using regs_type = typename base_type::regs_type;
-    using value_type = uint8_t;    
-    
-    using base_type::base_type;
-        
     static_assert( sizeof( util::integer_value( *cpp::declptr<decltype(Timer8::counter)>() ) ) == 1, "Timer8 expects a single-byte counter" );    
 };
 
 template<typename Regs>
-class Timer16:public TimerBase<Regs>{
-    using base_type = TimerBase<Regs>;
-    
-public:
-    using regs_type = typename base_type::regs_type;
-    using time_type = typename base_type::time_type;    
-    using value_type = uint16_t;
-    
-    using base_type::base_type;
-    
+class Timer16:public TimerBase<Regs>{        
+public:    
     static_assert( sizeof( util::integer_value( *cpp::declptr<decltype(Timer16::counter)>() ) ) == 2, "Timer16 expects a two-byte counter" );        
 };
 

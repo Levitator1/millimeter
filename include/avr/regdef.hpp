@@ -1,4 +1,5 @@
 #pragma once
+#include "../util/util.hpp"
 #include "../util/meta.hpp"
 #include "avr_types.hpp"
 
@@ -256,6 +257,9 @@ using dreg8addr = regaddr<ioreg8, typename GuardPolicy<ioreg8>::guard_type, util
 template<template<typename> class GuardPolicy = default_atomic_guard_policy>
 using dreg16addr = regaddr<ioreg16, typename GuardPolicy<ioreg16>::guard_type, util::dynamic_storage_tag>;
 
+template<bit_number... No>
+using bitlist = meta::values<bit_number, No...>;
+
 //TODO: Can this be made to infer the register width? Right now you have to specify 8 or 16 bits.
 //It's a pain, because you're dealing with integer addresses instead of pointers which normally convey that type information
 #define REGADDR_NUMBER(x) ( reinterpret_cast<size_t>( &x ) )
@@ -264,6 +268,8 @@ using dreg16addr = regaddr<ioreg16, typename GuardPolicy<ioreg16>::guard_type, u
 #define SREG16ADDR(x) levitator::avr::sreg16addr< REGADDR_NUMBER(x) >
 #define DREG8ADDR(x) levitator::avr::dreg8addr< REGADDR_NUMBER(x) >
 #define DREG16ADDR(x) levitator::avr::dreg16addr< REGADDR_NUMBER(x) >
+
+#define SREGADDR(x) levitator::avr::regaddr<decltype(x), typename levitator::avr::default_atomic_guard_policy<decltype(x)>::guard_type, levitator::util::dynamic_storage_tag>
 
 }
 }
