@@ -1,6 +1,7 @@
 *.o
 build-*
 
-
 /build/
 /dist/
+
+workspace.code-workspace

@@ -322,18 +322,29 @@ struct va_guard{
     ~va_guard(){ va_end(list); }
 };
 
-int Console::cprintf(const char *format, ...){
+//Not sure why this stupid warning does not observe reachability based on nullity tests.
+//It warns even if you exclude null cases with conditionals.
+#   pragma GCC diagnostic push
+#   pragma GCC diagnostic ignored "-Wnonnull" 
+
+int Console::cprintf(const char *format, ...) {
     if(!m_out)
         return EOF;
     
     va_list args;
     va_start(args, format);
     va_guard guard = { args };
-    return vfprintf(m_out, format, args);    
+    if(m_out){
+        //auto outp  __attribute__((nonnull))) = m_out;
+        //decltype(m_out) outp __attribute__((nonnull));
+
+
+        return vfprintf(m_out, format, args);    
+    }
+    else
+        return -1;
 }
 
-#   pragma GCC diagnostic push
-#   pragma GCC diagnostic ignored "-Wnonnull" 
 int Console::cputs(const char *str){
     return m_out ? fputs(str, m_out) : EOF;
 }

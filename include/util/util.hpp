@@ -37,6 +37,10 @@ extern unsigned long time_diff( unsigned long lhs, unsigned long rhs );
 //Simplest/emptiest/most-NOP type possible
 struct null_type{};
 
+//Generic empty no-op function
+template<typename... Args>
+void null_function( Args... args ){}
+
 //Generalization over integral_constant so that you have a type whose instances
 //always map to the same statically allocated or constant value
 template<typename T, T Value>
@@ -69,7 +73,9 @@ struct storage<T, dynamic_storage_tag>{
     //using value_type = typename cpp::decay<T>::type;
     
     value_type value;
-    
+
+    static const storage instance;
+
     //Maybe generate an error for initialized, for now 
     storage() = delete;
     
@@ -99,7 +105,15 @@ struct storage<T, static_const_storage_tag<InitType, InitVal>>{
     using value_type = T;
     using init_type = InitType;
     static constexpr init_type value = InitVal;               
-            
+
+    
+    //storage(){
+        ////static_assert( is_static_storage<storage>::value, "Default initialization is probably an error for non-static storage"  );
+    //}
+
+    //static void bullshit();
+    //extern static const storage<T, static_const_storage_tag<InitType, InitVal>> instance;
+
     static inline constexpr value_type get(){
         return value;
     }        
@@ -118,8 +132,23 @@ struct storage<T, static_const_storage_tag<InitType, InitVal>>{
     inline constexpr auto bitwise_or(value_type v){        
         return storage<T, static_const_storage_tag<T, value | v>>{};
     } 
-    */   
+    */
 };
+
+//template<typename T, typename InitType, InitType InitVal>
+//const storage<T, static_const_storage_tag<InitType, InitVal>> storage<T, static_const_storage_tag<InitType, InitVal>>::instance = {};
+
+
+//template<typename T, typename StorageType>
+//const storage<T, StorageType> storage<T, StorageType>::instance = {};
+
+/*
+template<typename T, typename InitType, InitType InitVal>
+void storage<T, static_const_storage_tag<InitType, InitVal>>::bullshit(){
+    storage<T, static_const_storage_tag<InitType, InitVal>> whatevs;
+    util::null_function(whatevs);
+}
+*/
 
 template<typename T>
 struct is_static_storage : public cpp::false_type{

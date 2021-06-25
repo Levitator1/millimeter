@@ -1,9 +1,15 @@
 #pragma once
 #include "../../avr/Digital.hpp"
 #include "../ArduinoDigital.hpp"
+#include "avr/regdef.hpp"
 
 namespace levitator{
 namespace arduino{
+
+#undef _SFR_MEM8
+#define _SFR_MEM8(x) (x)
+#undef _SFR_MEM16
+#define _SFR_MEM16(x) (x)
 
 //On the Arduino Pro Mini with atmega328p
 //14 digital GPIOs, numbered 0-13

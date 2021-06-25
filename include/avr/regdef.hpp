@@ -142,18 +142,26 @@ private:
     }                
 
 public:
-    regaddr(){}
+    //template<typename... Args>
+    //regaddr( Args... args ):
+    //    register_pointer( cpp::forward<Args>(args)... ){}
+    /*
+    regaddr():
+        register_pointer(){}
 
     regaddr(regptr_type ptr):
         register_pointer(ptr){}
+    */
 
     value_type get() const{
         guard_type guard;
+        null_function(guard);
         return ref();
     }
     
     void set(value_type v){
         guard_type guard;
+        util::null_function(guard);
         ref() = v;
     }
     
@@ -174,12 +182,14 @@ public:
 
     regaddr &operator|=(value_type rhs){
         guard_type guard;
+        null_function(guard);
         ref() |= rhs;
         return *this;
     }
 
     regaddr &operator&=(value_type rhs){
         guard_type guard;
+        null_function(guard);
         ref() &= rhs;
         return *this;
     }
@@ -260,16 +270,50 @@ using dreg16addr = regaddr<ioreg16, typename GuardPolicy<ioreg16>::guard_type, u
 template<bit_number... No>
 using bitlist = meta::values<bit_number, No...>;
 
-//TODO: Can this be made to infer the register width? Right now you have to specify 8 or 16 bits.
-//It's a pain, because you're dealing with integer addresses instead of pointers which normally convey that type information
-#define REGADDR_NUMBER(x) ( reinterpret_cast<size_t>( &x ) )
+
+//In an earlier GCC, we were able to get a constexpr directly from the register macro, but now
+//we have to do that by shimming the underlying implementation of the register macros. This is left over from
+//the old way.
+#define REGADDR_NUMBER(x) ( x )
+
 //These macros allow you to do something like: my_template<SREG8ADDR(TIFR0)>
 #define SREG8ADDR(x) levitator::avr::sreg8addr< REGADDR_NUMBER(x) >
 #define SREG16ADDR(x) levitator::avr::sreg16addr< REGADDR_NUMBER(x) >
 #define DREG8ADDR(x) levitator::avr::dreg8addr< REGADDR_NUMBER(x) >
 #define DREG16ADDR(x) levitator::avr::dreg16addr< REGADDR_NUMBER(x) >
-
 #define SREGADDR(x) levitator::avr::regaddr<decltype(x), typename levitator::avr::default_atomic_guard_policy<decltype(x)>::guard_type, levitator::util::dynamic_storage_tag>
+
+/* 
+* The filthiest of hacks because AVR defines its registers in a rather stupid way,
+* and we need a way of getting at the address in a constexpr form. It casts an integer
+* to a pointer, and that's not considered constexpr, or at least not by current versions
+* of gcc. So, we replace the underlying implementation with a macro that returns
+* the integer address rather than the dereference of the pointer cast from the address.
+* Obviously, since we are making an assumption on how the register
+* macros are implemented, this could be brittle with respect to future AVR header releases.
+* or maybe even between target devices or MCUs.
+*
+* The registers seem to be defined as _SFR_MEMx(addr) or _MMIO_X(addr), which just performs
+* the above cast and dereference. So, we just redefine these to return x, which is the integer
+* address we needed in the first place.
+* 
+*/
+
+#undef _SFR_MEM8
+#define _SFR_MEM8(x) (x)
+
+#undef _SFR_MEM16
+#define _SFR_MEM16(x) (x)
+
+#undef _MMIO_BYTE
+#define _MMIO_BYTE(x) (x)
+
+#undef _MMIO_WORD
+#define _MMIO_WORD(x) (x)
+
+#undef _MMIO_DWORD
+#define _MMIO_DWORD(x) (x)
+
 
 }
 }

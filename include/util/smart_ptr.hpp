@@ -86,8 +86,9 @@ public:
     
     inline unique_ptr &operator=( unique_ptr &&rhs ){
         if( this == &rhs )
-            return;
-        do_move(rhs);        
+            return *this;
+        do_move(rhs);
+        return *this;     
     }
     
     inline ~unique_ptr(){

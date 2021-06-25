@@ -5,10 +5,9 @@
  *  MCU-specific UART definitions
  * 
  */
-
 #include <avr/io.h>
-#include "../avr_types.hpp"
-#include "../HardwareUART.hpp"
+#include "avr_types.hpp"
+#include "HardwareUART.hpp"
 
 namespace levitator{
 namespace avr{

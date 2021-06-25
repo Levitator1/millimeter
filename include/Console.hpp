@@ -65,9 +65,9 @@ public:
     //Resend the portion of the current line input, from the current position to the end
     void resend_line_end();
     
-    //stdio primitives for convenience and because it puts obnoxious warning pragmas in one place
-    //They have a prefix because some of these symbols are, archaically enough, preprocessor macros
-    int cprintf(const char *format, ...);
+    //stdio primitives for convenience and because it centralizes obnoxious warning pragmas.
+    //These have a prefix because some of these symbols are, archaically enough, preprocessor macros.
+    int cprintf(const char *format, ...) NONNULL(1);
     int cputs(const char *str);
     int cputc( int ch );
     int cgetc();

@@ -1,0 +1,44 @@
+//
+// !!! WARNING !!! AUTO-GENERATED FILE!
+// PLEASE DO NOT MODIFY IT AND USE "platformio.ini":
+// https://docs.platformio.org/page/projectconf/section_env_build.html#build-flags
+//
+{
+    "configurations": [
+        {
+            "name": "PlatformIO",
+            "includePath": [
+                "/home/j/project/millimeter/include",
+                "/home/j/project/millimeter/src",
+                ""
+            ],
+            "browse": {
+                "limitSymbolsToIncludedHeaders": true,
+                "path": [
+                    "/home/j/project/millimeter/include",
+                    "/home/j/project/millimeter/src",
+                    ""
+                ]
+            },
+            "defines": [
+                "F_CPU=8000000L",
+                "PLATFORMIO=50101",
+                "ARDUINO_AVR_PRO",
+                "ARDUINO_PRO_MINI3_3V",
+                "VCC=3.3",
+                "ARDUINO_PRO_MINI3_3V",
+                "VCC=3.3",
+                "__AVR_ATmega328P__",
+                ""
+            ],
+            "cStandard": "c11",
+            "cppStandard": "c++17",
+            "compilerPath": "/home/j/.platformio/packages/toolchain-atmelavr/bin/avr-gcc",
+            "compilerArgs": [
+                "-mmcu=atmega328p",
+                ""
+            ]
+        }
+    ],
+    "version": 4
+}

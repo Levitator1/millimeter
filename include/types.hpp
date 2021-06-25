@@ -24,3 +24,10 @@ using pin_state = uint8_t;
 
 }
 
+//This helps silence some warnings under GNU compilers, and omitting it
+//should present no other detriment
+#ifdef __GNUC__
+#   define NONNULL(...) __attribute__((nonnull (__VA_ARGS__)))
+#else
+#   define NONNULL(...)
+#endif

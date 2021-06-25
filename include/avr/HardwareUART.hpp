@@ -179,3 +179,17 @@ public:
 #   include "atmega328p/DeviceUARTs.hpp"
 #endif
 
+#define PASTE2(x, y) x##y
+#define PASTE(x, y) PASTE2(x, y)
+#define STRINGIZE2(x) #x
+#define STRINGIZE3(x) STRINGIZE2(x)
+#define STRINGIZE(x) STRINGIZE3(x)
+#define EXPAND(x) x
+#define STRPASTE2(x, y) x y
+#define STRPASTE(x, y) STRPASTE2(x,y)
+
+#define INCLUDE_FILE STRINGIZE(PASTE(__AVR_DEVICE_NAME__, _DeviceUARTs.hpp))
+
+#include "metainclude.h"
+
+
