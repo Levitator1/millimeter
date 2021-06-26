@@ -23,7 +23,8 @@ void Application::init(){
     console.cprintf("\n===========================================\n");
     console.cprintf(  "ardmeter v0.01\n" );
     console.cprintf(  "An inductance multimeter from a $5 Arduino\n");
-    console.cprintf(  "===========================================\n\n");                
+    console.cprintf(  "===========================================\n\n");
+    //console.cprintf( "sizeof(int): %i, sizeof(long): %i\n\n", sizeof(int), sizeof(long) );          
     
     //Analog reference is set to VCC which is probably 3.3V, or alternately 5V
     

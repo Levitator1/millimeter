@@ -19,8 +19,14 @@ inline void memory_fence(){
 //It's not recursive. An inner one may override an outer one's state on exit.
 struct atomic_guard{
     static constexpr bool recursive = false;
-    atomic_guard();
-    ~atomic_guard();
+
+    inline atomic_guard(){
+        cli();
+    }
+
+    inline ~atomic_guard(){
+        sei();
+    }
 };
 
 //Same as atomic_guard, but restores the interrupt status on exit
@@ -34,8 +40,15 @@ class atomic_guard_restore{
     bool m_was_on;
 public:
     static constexpr bool recursive = true;
-    atomic_guard_restore();
-    ~atomic_guard_restore();
+    inline atomic_guard_restore():
+        m_was_on( SREG & _BV(SREG_I)  ){
+        cli();
+    }
+
+    inline ~atomic_guard_restore(){
+        if(m_was_on)
+            sei();
+    }
 };
 
 namespace impl{
@@ -44,8 +57,7 @@ namespace impl{
     
     template<class G>
     struct guard_traits_recursive_impl<G, cpp::void_t<decltype(G::recursive)>>{ static constexpr bool result = G::recursive; };
-    
-    
+        
     //null_type serves as a recursive guard, because it is no-op and you can nest nothing all day without ill effects
     template<>
     struct guard_traits_recursive_impl<util::null_type, void>{ static constexpr bool result = true; };
@@ -55,7 +67,6 @@ template<class G>
 struct guard_traits{
     static constexpr bool recursive = impl::guard_traits_recursive_impl<G>::result;
 };
-
 
 struct atomic_guard_tag{
     using type = atomic_guard;

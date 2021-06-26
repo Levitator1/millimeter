@@ -255,6 +255,9 @@ constexpr bool registers_are_same( const volatile T *lhs, const volatile T *rhs 
 //template<typename T, size_t Address>
 //typename sregaddr<T, Address>::dest_pointer_type sregaddr<T, Address>::reg = reinterpret_cast<typename cpp::remove_reference<T>::type *>(Address);
 
+template<typename RegType, size_t Address, template<typename> class GuardPolicy = default_atomic_guard_policy>
+using sregaddr = regaddr<RegType, typename GuardPolicy<RegType>::guard_type, util::static_const_storage_tag<size_t, Address>>;
+
 template<size_t Address, template<typename> class GuardPolicy = default_atomic_guard_policy>
 using sreg8addr = regaddr<ioreg8, typename GuardPolicy<ioreg8>::guard_type, util::static_const_storage_tag<size_t, Address>>;
 
@@ -270,18 +273,17 @@ using dreg16addr = regaddr<ioreg16, typename GuardPolicy<ioreg16>::guard_type, u
 template<bit_number... No>
 using bitlist = meta::values<bit_number, No...>;
 
-
 //In an earlier GCC, we were able to get a constexpr directly from the register macro, but now
 //we have to do that by shimming the underlying implementation of the register macros. This is left over from
 //the old way.
 #define REGADDR_NUMBER(x) ( x )
 
 //These macros allow you to do something like: my_template<SREG8ADDR(TIFR0)>
-#define SREG8ADDR(x) levitator::avr::sreg8addr< REGADDR_NUMBER(x) >
-#define SREG16ADDR(x) levitator::avr::sreg16addr< REGADDR_NUMBER(x) >
-#define DREG8ADDR(x) levitator::avr::dreg8addr< REGADDR_NUMBER(x) >
-#define DREG16ADDR(x) levitator::avr::dreg16addr< REGADDR_NUMBER(x) >
-#define SREGADDR(x) levitator::avr::regaddr<decltype(x), typename levitator::avr::default_atomic_guard_policy<decltype(x)>::guard_type, levitator::util::dynamic_storage_tag>
+//#define SREG8ADDR(x) levitator::avr::sreg8addr< REGADDR_NUMBER(x) >
+//#define SREG16ADDR(x) levitator::avr::sreg16addr< REGADDR_NUMBER(x) >
+//#define DREG8ADDR(x) levitator::avr::dreg8addr< REGADDR_NUMBER(x) >
+//#define DREG16ADDR(x) levitator::avr::dreg16addr< REGADDR_NUMBER(x) >
+//#define SREGADDR(x) levitator::avr::regaddr<decltype(x), typename levitator::avr::default_atomic_guard_policy<decltype(x)>::guard_type, levitator::util::dynamic_storage_tag>
 
 /* 
 * The filthiest of hacks because AVR defines its registers in a rather stupid way,
@@ -299,21 +301,22 @@ using bitlist = meta::values<bit_number, No...>;
 * 
 */
 
+/*
 #undef _SFR_MEM8
 #define _SFR_MEM8(x) (x)
 
 #undef _SFR_MEM16
 #define _SFR_MEM16(x) (x)
+*/
 
 #undef _MMIO_BYTE
-#define _MMIO_BYTE(x) (x)
+#define _MMIO_BYTE(x) levitator::avr::sregaddr<volatile uint8_t &, x>
 
 #undef _MMIO_WORD
-#define _MMIO_WORD(x) (x)
+#define _MMIO_WORD(x) levitator::avr::sregaddr<volatile uint16_t &, x>
 
 #undef _MMIO_DWORD
-#define _MMIO_DWORD(x) (x)
-
+#define _MMIO_DWORD(x) levitator::avr::sregaddr<volatile uint32_t &, x>
 
 }
 }

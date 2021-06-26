@@ -15,7 +15,6 @@ namespace impl{
         using ref_type = atomic_ref<T>; //We refer to each register via atomic to ensure atomicity
         using value_type = typename ref_type::value_type;   //The values we pass around
         using dest_type = typename ref_type::dest_type;     //The actual backing variable or register
-        
     };
     
     template<typename T>

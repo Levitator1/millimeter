@@ -6,6 +6,11 @@
 namespace levitator{
 namespace avr{
 
+using Timer0RegList =  meta::types< 
+        SREGADDR(TCNT0), SREGADDR(TCCR0A),
+        SREGADDR(TCCR0B), SREGADDR(TIMSK0), SREGADDR(TIFR0),
+        SREGADDR(OCR0A), SREGADDR(OCR0B) >;
+
 using Timer1RegList = meta::types< SREGADDR(ICR1), 
         SREGADDR(TCNT1), SREGADDR(TCCR1A),
         SREGADDR(TCCR1B), SREGADDR(TIMSK1), SREGADDR(TIFR1),

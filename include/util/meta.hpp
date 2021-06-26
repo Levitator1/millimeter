@@ -214,26 +214,23 @@ struct return_type{
 
 namespace impl{
     
-    template<typename T, T I, T End, class Accum>
-    struct integer_sequence_impl;
-    
-    template<typename T, T I, T End, class... Args>
-    struct integer_sequence_impl<T, I, End, types<Args...>>{
-        using type = typename integer_sequence_impl<T, I+1, End, types<Args..., cpp::ic<T, I>>>::type;
+    template<typename T, T I, T End, T... Values>
+    struct integer_sequence_impl{
+        using type = typename integer_sequence_impl<T, I+1, End, I, Values...>::type;
     };
     
-    template<typename T, T End, class... Args>
-    struct integer_sequence_impl<T, End, End, types<Args...>>{
-        using type = types<Args...>;
+    template<typename T, T End, T... Values>
+    struct integer_sequence_impl<T, End, End, Values...>{
+        using type = values<T, Values...>;
     };
 }
 
 template<typename T, T Begin, T End>
-struct integer_sequence:public impl::integer_sequence_impl<T, Begin, End, types<>>{
+struct integer_sequence:public impl::integer_sequence_impl<T, Begin, End>{
     static constexpr T begin = Begin;
     static constexpr T end = End;    
 };
-    
+
 }
 }
 

@@ -183,7 +183,6 @@ inline auto integer_value(unsigned long long v){ return impl::integer_value_impl
 template<typename T>
 using integer_typeof = decltype( integer_value( cpp::declval<T>() ) );
 
-
 }
 }
 

@@ -1,5 +1,6 @@
 #pragma once
 #include "Config.hpp"
+#include "FrequencyCounter.hpp"
 #include "InductanceMeter.hpp"
 #include "CommandHandler.hpp"
 #include "commands/UnknownCommand.hpp"
@@ -21,6 +22,7 @@ class Application:public arduino::Interactive{
 
 public:    
     Config config = {};
+    
     InductanceMeter inductance_meter = {config};
 
     Application();
