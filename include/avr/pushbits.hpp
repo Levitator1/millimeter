@@ -12,87 +12,87 @@ namespace impl{
     
     template<typename T>
     struct pushbits_traits_base{
-        using ref_type = atomic_ref<T>; //We refer to each register via atomic to ensure atomicity
-        using value_type = typename ref_type::value_type;   //The values we pass around
-        using dest_type = typename ref_type::dest_type;     //The actual backing variable or register
+        using reg_type = T;                                 //We refer to each register via atomic to ensure atomicity
+        using value_type = typename reg_type::value_type;   //The values we pass around
+        using dest_type = typename reg_type::dest_type;     //The actual backing variable or register
     };
     
     template<typename T>
     struct pushbits_traits_clear:public pushbits_traits_base<T>{
         using base_type = pushbits_traits_base<T>;
-        using ref_type = typename base_type::ref_type;
+        using reg_type = typename base_type::reg_type;
         using value_type = typename base_type::value_type;
         using dest_type = typename base_type::dest_type;
         using impl_type = pushbits_impl<pushbits_traits_clear>;
         
-        static void init(ref_type &ref, value_type &old, const value_type &bits ){
-            old = ref;
-            ref &= ~bits;
+        static void init(reg_type &reg, value_type &old, const value_type &bits ){
+            old = reg;
+            reg &= ~bits;
         }
         
-        static void restore(ref_type &ref, value_type &old, const value_type &bits){
-            ref |= bits & old;
+        static void restore(reg_type &reg, value_type &old, const value_type &bits){
+            reg |= bits & old;
         }        
     };
     
     template<typename T>
     struct pushbits_traits_set:public pushbits_traits_base<T>{
         using base_type = pushbits_traits_base<T>;
-        using ref_type = typename base_type::ref_type;
+        using reg_type = typename base_type::reg_type;
         using value_type = typename base_type::value_type;
         using dest_type = typename base_type::dest_type;
         using impl_type = pushbits_impl<pushbits_traits_set>;
         
-        static void init(ref_type &ref, value_type &old, const value_type &bits ){
-            old = ref;
-            ref |= bits;
+        static void init(reg_type &reg, value_type &old, const value_type &bits ){
+            old = reg;
+            reg |= bits;
         }
         
-        static void restore(ref_type &ref, value_type &old, const value_type &bits){
-            ref &= ~(bits & ~old);
+        static void restore(reg_type &reg, value_type &old, const value_type &bits){
+            reg &= ~(bits & ~old);
         }        
     };
     
     template<typename T>
     struct pushbits_traits:public pushbits_traits_base<T>{
         using base_type = pushbits_traits_base<T>;
-        using ref_type = typename base_type::ref_type;
+        using reg_type = typename base_type::reg_type;
         using value_type = typename base_type::value_type;
         using dest_type = typename base_type::dest_type;
         using impl_type = pushbits_impl<pushbits_traits>;
         
-        static void init(ref_type &ref, value_type &old, const value_type &bits ){
-            old = ref;            
+        static void init(reg_type &reg, value_type &old, const value_type &bits ){
+            old = reg;
         }
         
-        static void restore(ref_type &ref, value_type &old, const value_type &bits){
-            pushbits_traits_set<T>::restore(ref, old, bits);
-            pushbits_traits_clear<T>::restore(ref, old, bits);
+        static void restore(reg_type &reg, value_type &old, const value_type &bits){
+            pushbits_traits_set<T>::restore(reg, old, bits);
+            pushbits_traits_clear<T>::restore(reg, old, bits);
         }        
     };
     
     template<class Traits>
     class pushbits_impl{
-        using ref_type = typename Traits::ref_type;
+        using reg_type = typename Traits::reg_type;
     public:
         using value_type = typename Traits::value_type;
         using dest_type = typename Traits::dest_type;
         
     private:
-        ref_type m_obj;
+        reg_type m_reg;
         value_type m_old, m_bits;
         
     public:
-        pushbits_impl(dest_type &dest, const value_type &bits):
-            m_obj(dest),
-            m_old(m_obj),
+        pushbits_impl(const reg_type &dest, const value_type &bits):
+            m_reg(dest),
+            m_old(m_reg),
             m_bits(bits){
                 
-            Traits::init(m_obj, m_old, bits);
+            Traits::init(m_reg, m_old, bits);
         }
         
         ~pushbits_impl(){
-            Traits::restore(m_obj, m_old,  m_bits);
+            Traits::restore(m_reg, m_old,  m_bits);
         }        
     };
 }

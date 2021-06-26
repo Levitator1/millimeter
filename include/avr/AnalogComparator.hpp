@@ -18,26 +18,21 @@
 
 namespace levitator {
 namespace avr {
-
-//DEBUG
-#if false
     
 class AnalogComparator{
 
     //As long as this object is live, hold ADC power management disabled
     //Otherwise, it can prevent stuff from working, or stretch the length of operations on resume
-    pushbits_clear<ioreg8> 
-        m_power_bits = {PRR, _BV(PRADC)}, 
-        m_multiplexer_bits = {ADCSRB, _BV(ACME) },      //Not interested in fancy analog signal routing. Just AIN0 and AIN1.
-        m_comparator_bits_off = {ACSR, _BV(ACD)  | _BV(ACIE)    }; //We leave the interrupts alone in case someone else is using them
+    pushbits_clear<PRR> m_power_bits = {PRR{}, _BV(PRADC)}; 
+    pushbits_clear<ADCSRB> m_multiplexer_bits = {ADCSRB{}, _BV(ACME) };      //Not interested in fancy analog signal routing. Just AIN0 and AIN1.
+    pushbits_clear<ACSR> m_comparator_bits_off = {ACSR{}, _BV(ACD)  | _BV(ACIE)    }; //We leave the interrupts alone in case someone else is using them
         //ACD off disabled power-cutoff to the comparator.
         //ACBG disables comparison to an internal reference voltage called the "bandgap voltage"
         //ACO disables mapping the compartor output to a bit in memory, which saves 2 clock cycles somewhere, maybe per state change?
 
-    pushbits_set<ioreg8> 
-        m_tccr1b_bits_on = {TCCR1B, _BV(ICES1)},    //Trigger on rising edge
-        m_comparator_bits_on = {ACSR, _BV(ACIC) | _BV(ACBG) };  //This actually turns on hardware timestamp collection
-                                                                //Also select the bandgap voltage as reference
+    pushbits_set<TCCR1B>    m_tccr1b_bits_on = {TCCR1B{}, _BV(ICES1)};                  //Trigger on rising edge
+    pushbits_set<ACSR>      m_comparator_bits_on = {ACSR{}, _BV(ACIC) | _BV(ACBG) };    //This actually turns on hardware timestamp collection
+                                                                                        //Also select the bandgap voltage as reference
 
     
     //Timer overflow interrupt-handling
@@ -52,6 +47,7 @@ public:
         
     //Probably much faster and efficient to timeout based on poll attempts
     //rather than to read a clock and calculate proper time units
+    #if false
     template<class Func>
     unsigned int collect_events(Timer16 &timer, unsigned long max_tries, uint n, const Func &func){
         
@@ -155,10 +151,9 @@ public:
         }while( i < n && --max_tries > 0 );        
                 
         return i;
-    }    
+    }
+    #endif
 };
-
-#endif
 
 }
 }

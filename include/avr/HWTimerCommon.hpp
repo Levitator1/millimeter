@@ -49,7 +49,7 @@ public:
 };
 
 //Some timers (Timer1 on the atmega328p) support hardware data capture. They can write a timestamp to an IO
-//register when triggered either by a digital comparators against the counter value, or by an analog comparator against
+//register when triggered either by digital comparators against the counter value, or by an analog comparator against
 //two voltages.
 template<class RegList, class BitList>
 struct CapturableTimerRegs:public TimerRegs< typename meta::split_type_list<RegList,1>::right_list, typename meta::split_type_list<BitList,3>::right_list>{
@@ -93,7 +93,8 @@ private:
     
     //Footnote: I've decided to develop under MPLAB because it knows how to build AVR binaries
     //which will run on an AVR Arduino without the Arduino libraries. So, some of this is probably redundant now.
-    pushbits<ioreg8> m_clear_tccrxa, m_clear_tccrxb;
+    pushbits<decltype(regs_type::tccrXa)> m_clear_tccrxa;
+    pushbits<decltype(regs_type::tccrXb)> m_clear_tccrxb;
 
 protected:
     //Takes T, shifts high bits left by the size of T, and then ors in the low bits
@@ -125,7 +126,7 @@ public:
     }
     
     //Keep in mind that writing these at an inopportune time can lose a comparator event
-    register_property<decltype(regs_type::tcntx)> counter;
+    register_property<decltype(regs_type::tcntX)> counter;
     
     //On capture-capable timers, these can trigger a capture event and optionally an interrupt.
     //They can also be used for PWM generation.
@@ -163,6 +164,7 @@ public:
     }
 };
 
+/*
 template<typename Regs>
 class Timer8:public virtual TimerBase<Regs>{
 public:
@@ -174,6 +176,7 @@ class Timer16:public TimerBase<Regs>{
 public:    
     static_assert( sizeof( util::integer_value( *cpp::declptr<decltype(Timer16::counter)>() ) ) == 2, "Timer16 expects a two-byte counter" );        
 };
+*/
 
 }
 }

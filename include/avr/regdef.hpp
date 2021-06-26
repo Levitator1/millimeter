@@ -270,8 +270,8 @@ using dreg8addr = regaddr<ioreg8, typename GuardPolicy<ioreg8>::guard_type, util
 template<template<typename> class GuardPolicy = default_atomic_guard_policy>
 using dreg16addr = regaddr<ioreg16, typename GuardPolicy<ioreg16>::guard_type, util::dynamic_storage_tag>;
 
-template<bit_number... No>
-using bitlist = meta::values<bit_number, No...>;
+//template<bit_number... No>
+//using bitlist = meta::values<bit_number, No...>;
 
 //In an earlier GCC, we were able to get a constexpr directly from the register macro, but now
 //we have to do that by shimming the underlying implementation of the register macros. This is left over from
