@@ -310,13 +310,13 @@ using bitlist = meta::values<bit_number, No...>;
 */
 
 #undef _MMIO_BYTE
-#define _MMIO_BYTE(x) levitator::avr::sregaddr<volatile uint8_t &, x>
+#define _MMIO_BYTE(x) levitator::avr::sreg8addr<x>
 
 #undef _MMIO_WORD
-#define _MMIO_WORD(x) levitator::avr::sregaddr<volatile uint16_t &, x>
+#define _MMIO_WORD(x) levitator::avr::sreg16addr<x>
 
-#undef _MMIO_DWORD
-#define _MMIO_DWORD(x) levitator::avr::sregaddr<volatile uint32_t &, x>
+//#undef _MMIO_DWORD
+//#define _MMIO_DWORD(x) levitator::avr::sregaddr<volatile uint32_t &, x>
 
 }
 }

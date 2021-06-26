@@ -13,8 +13,8 @@ namespace levitator{
 namespace avr{
 
 struct UART0Regs:public HardwareUARTRegs< 
-    meta::types<SREGADDR(UBRR0),
-        SREGADDR(UCSR0A),SREGADDR(UCSR0B), SREGADDR(UCSR0C), SREGADDR(UDR0)>,
+    meta::types<UBRR0,
+        UCSR0A,UCSR0B, UCSR0C, UDR0>,
     meta::types<sbitno<U2X0>, sbitno<RXC0>, sbitno<UCSZ00>, sbitno<UCSZ01>,
         sbitno<RXEN0>, sbitno<TXEN0>, sbitno<UDRE0>>
     >{};

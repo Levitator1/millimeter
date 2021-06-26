@@ -20,10 +20,10 @@ namespace avr{
 class System{
             
 public:    
-    using mcucr_type = SREG8ADDR(MCUCR);
+    using mcucr_type = MCUCR;
     using pud_bit_type = sbitno<PUD>;
     
-    using prr_type = SREG8ADDR(PRR);
+    using prr_type = PRR;
     using pradc_type = sbitno<PRADC>;
     
     //Globally disables all DIO pullup resistors

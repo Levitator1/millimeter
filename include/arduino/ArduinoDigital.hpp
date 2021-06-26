@@ -22,9 +22,9 @@ struct DigitalPinRegMap{
 template<> \
 struct DigitalPinRegMap<i>:public ::levitator::avr::DIORegs< \
     levitator::meta::types< \
-        SREGADDR(DDR##port), \
-        SREGADDR(PORT##port), \
-        SREGADDR(PIN##port)>, \
+        DDR##port, \
+        PORT##port, \
+        PIN##port>, \
     levitator::meta::types< \
                 ::levitator::avr::sbitno<DD##port##pin>, \
                 ::levitator::avr::sbitno<PORT##port##pin>, \
